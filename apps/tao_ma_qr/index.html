@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo mã QR nâng cao</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>TẠO MÃ QR NÂNG CAO</h1>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="controls-container form-container">
+                <h2>Tùy chọn</h2>
+
+                <div class="form-group">
+                    <label for="link-input">Nội dung QR (Link hoặc văn bản)</label>
+                    <input type="text" id="link-input" placeholder="https://example.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Màu điểm ảnh</label>
+                    <div id="dots-color-container" class="swatch-container">
+                        <div class="color-swatch active" data-color="#000000" style="background-color: #000000;"></div>
+                        <div class="color-swatch" data-color="#4A90E2" style="background-color: #4A90E2;"></div>
+                        <div class="color-swatch" data-color="#D0021B" style="background-color: #D0021B;"></div>
+                        <div class="color-swatch" data-color="#F5A623" style="background-color: #F5A623;"></div>
+                        <div class="color-swatch" data-color="#7ED321" style="background-color: #7ED321;"></div>
+                        <div class="color-swatch" data-color="#50E3C2" style="background-color: #50E3C2;"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="frame-select">Khung trang trí</label>
+                    <select id="frame-select">
+                        <option value="none">Không có</option>
+                        <option value="frame-1">Khung 1</option>
+                        <option value="frame-2">Khung 2</option>
+                        <option value="frame-3">Khung 3</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dots-style-select">Kiểu điểm ảnh</label>
+                    <select id="dots-style-select">
+                        <option value="square">Vuông</option>
+                        <option value="dots">Chấm</option>
+                        <option value="rounded">Bo tròn</option>
+                        <option value="extra-rounded">Bo tròn nhiều</option>
+                        <option value="classy">Cổ điển</option>
+                        <option value="classy-rounded">Cổ điển bo tròn</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="corners-square-style-select">Kiểu góc vuông</label>
+                    <select id="corners-square-style-select">
+                        <option value="square">Vuông</option>
+                        <option value="dot">Chấm</option>
+                        <option value="extra-rounded">Bo tròn nhiều</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="corners-dot-style-select">Kiểu điểm ở góc</label>
+                    <select id="corners-dot-style-select">
+                        <option value="square">Vuông</option>
+                        <option value="dot">Chấm</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="logo-input">Logo (URL hình ảnh)</label>
+                    <input type="text" id="logo-input" placeholder="Dán URL logo vào đây...">
+                </div>
+
+                <button id="reset-btn" class="btn">Reset về mặc định</button>
+            </div>
+
+            <div class="qrcode-wrapper">
+                <div id="qrcode-container" class="qrcode-container">
+                    <div id="qrcode"></div>
+                </div>
+                <div class="download-options">
+                     <button id="download-btn" class="btn">Tải xuống (PNG)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

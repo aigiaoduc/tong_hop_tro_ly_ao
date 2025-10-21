@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: 'Trợ lý tạo trò chơi dạy học', path: 'apps/tro_ly_tao_tro_choi_day_hoc/index.html' },
         { name: 'Trợ lý Ma trận đề kiểm tra', path: 'apps/ma_tran_de_kiem_tra/index.html' },
         { name: 'Trợ lý tạo Đề kiểm tra', path: 'apps/tao_de_kiem_tra/index.html' },
-        { name: 'Ứng dụng Ghi chú', path: '#' },
+        { name: 'Tạo mã Qr nâng cao', path: 'apps/tao_ma_qr/index.html' },
         { name: 'Dự báo thời tiết', path: '#' },
         { name: 'Trình phát Nhạc', path: '#' },
         { name: 'Quản lý Công việc', path: '#' },
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: 'Trình đọc RSS', path: '#' },
         { name: 'Bản đồ Tư duy', path: '#' },
         { name: 'Chuyển đổi Đơn vị', path: '#' },
-        { name: 'Trình tạo Mã QR', path: '#' },
+        { name: 'Ứng dụng Ghi chú', path: '#' },
         { name: 'Từ điển Anh-Việt', path: '#' },
         { name: 'Quản lý Chi tiêu', path: '#' }
     ];
