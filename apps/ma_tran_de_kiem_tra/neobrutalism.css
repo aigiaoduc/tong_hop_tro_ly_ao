@@ -151,6 +151,10 @@ input:focus, select:focus, textarea:focus {
     background-color: var(--warning-color);
 }
 
+.btn-danger {
+    background-color: var(--danger-color);
+}
+
 .topic-container {
     background-color: var(--background-color);
     border: 3px solid var(--border-color);
@@ -189,11 +193,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 .remove-unit, .remove-topic {
-    background: var(--danger-color);
-    color: white;
     border: 3px solid var(--border-color);
-    width: 30px;
-    height: 30px;
     cursor: pointer;
     font-size: 1.2rem;
     font-weight: bold;
@@ -290,7 +290,6 @@ input:focus, select:focus, textarea:focus {
 
 .copy-btn {
     margin-top: 1rem;
-    background-color: var(--warning-color);
 }
 
 .hidden {
