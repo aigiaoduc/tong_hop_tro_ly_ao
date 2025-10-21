@@ -1,0 +1,321 @@
+
+:root {
+    --background-color: #f0f0f0;
+    --text-color: #000000;
+    --primary-color: #4a4a4a;
+    --accent-color: #ffcc00;
+    --border-color: #000000;
+    --white: #ffffff;
+    --success-color: #3d9970;
+    --warning-color: #ff851b;
+    --danger-color: #ff4136;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+header {
+    background: var(--white);
+    border: 3px solid var(--border-color);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 8px 8px 0px var(--border-color);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-icon {
+    font-size: 3rem;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+}
+
+.subtitle {
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+.form-container, .prompt-container {
+    background-color: var(--white);
+    border: 3px solid var(--border-color);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 8px 8px 0px var(--border-color);
+}
+
+h2 {
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid var(--border-color);
+    font-size: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 3px solid var(--border-color);
+    border-radius: 0;
+    font-size: 1rem;
+    background-color: var(--white);
+    font-weight: bold;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -0.5rem;
+}
+
+.col {
+    flex: 1;
+    padding: 0 0.5rem;
+    min-width: 200px;
+}
+
+.btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 0.75rem 1.5rem;
+    border: 3px solid var(--border-color);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 4px 4px 0px var(--border-color);
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.btn:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--border-color);
+}
+
+.btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0px 0px 0px var(--border-color);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+}
+
+.btn-warning {
+    background-color: var(--warning-color);
+}
+
+.topic-container {
+    background-color: var(--background-color);
+    border: 3px solid var(--border-color);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.topic-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.topic-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.unit-container {
+    background-color: var(--white);
+    border: 3px solid var(--border-color);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.unit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.unit-title {
+    font-weight: bold;
+}
+
+.remove-unit, .remove-topic {
+    background: var(--danger-color);
+    color: white;
+    border: 3px solid var(--border-color);
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    box-shadow: 3px 3px 0px var(--border-color);
+}
+
+.remove-unit:hover, .remove-topic:hover {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0px var(--border-color);
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+    font-weight: normal;
+}
+
+.input-group input {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.question-type-group {
+    background-color: var(--background-color);
+    border: 3px solid var(--border-color);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.question-type-group h5 {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    border-bottom: 3px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 2rem;
+    border-bottom: 3px solid var(--border-color);
+}
+
+.tab-button {
+    background: var(--white);
+    border: 3px solid var(--border-color);
+    border-bottom: none;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-right: 0.5rem;
+    position: relative;
+    top: 3px;
+    box-shadow: 4px 0px 0px var(--border-color);
+}
+
+.tab-button.active {
+    background: var(--accent-color);
+    color: var(--border-color);
+    box-shadow: 4px -4px 0px var(--border-color);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.prompt-output {
+    background-color: var(--white);
+    border: 3px solid var(--border-color);
+    padding: 1rem;
+    font-family: 'Courier New', Courier, monospace;
+    white-space: pre-wrap;
+    max-height: 600px;
+    overflow-y: auto;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-top: 1rem;
+}
+
+.copy-btn {
+    margin-top: 1rem;
+    background-color: var(--warning-color);
+}
+
+.hidden {
+    display: none;
+}
+
+footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 1.5rem;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    font-weight: normal;
+}
+
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
+
+    .col {
+        margin-bottom: 1rem;
+    }
+
+    .input-grid {
+        grid-template-columns: 1fr;
+    }
+}
