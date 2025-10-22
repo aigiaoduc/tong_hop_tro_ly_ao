@@ -2,8 +2,18 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
     <title>Tạo mã QR nâng cao</title>
+    <meta name="description" content="Tạo mã QR nâng cao với nhiều tính năng: vCard, WiFi, Location, tùy chỉnh màu sắc và khung">
+    <meta name="theme-color" content="#ffcc00">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="QR Generator">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ffcc00'/%3E%3Ctext x='50' y='50' text-anchor='middle' dy='.3em' font-family='Arial' font-size='20' fill='%23000'%3EQR%3C/text%3E%3C/svg%3E">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23ffcc00'/%3E%3Ctext x='50' y='50' text-anchor='middle' dy='.3em' font-family='Arial' font-size='20' fill='%23000'%3EQR%3C/text%3E%3C/svg%3E">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,25 +29,102 @@
                 <h2>Tùy chọn</h2>
 
                 <div class="form-group">
+                    <label for="qr-type-select">Loại mã QR</label>
+                    <select id="qr-type-select" aria-label="Chọn loại mã QR">
+                        <option value="url">Link hoặc văn bản</option>
+                        <option value="vcard">Danh thiếp (vCard)</option>
+                        <option value="wifi">Mạng WiFi</option>
+                        <option value="location">Vị trí (Bản đồ)</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="url-input-group">
                     <label for="link-input">Nội dung QR (Link hoặc văn bản)</label>
-                    <input type="text" id="link-input" placeholder="https://example.com">
+                    <input type="text" id="link-input" placeholder="https://example.com" aria-label="Nhập link hoặc văn bản để tạo mã QR">
+                </div>
+
+                <!-- vCard Form -->
+                <div class="form-group hidden" id="vcard-notice">
+                    <div style="background: #fff3cd; border: 2px solid #ffeaa7; padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+                        <strong>📝 Lưu ý:</strong> Để QR code hoạt động tốt trên iOS, vui lòng nhập tên và địa chỉ <strong>không dấu</strong> (VD: Nguyen Van A thay vì Nguyễn Văn A).
+                    </div>
+                </div>
+
+                <!-- Keyboard shortcuts info -->
+                <div class="form-group" id="shortcuts-info" style="margin-top: 2rem; padding-top: 1rem; border-top: 2px solid #eee;">
+                    <details style="cursor: pointer;">
+                        <summary style="font-weight: bold; margin-bottom: 0.5rem;">⌨️ Phím tắt (Ctrl/Cmd +)</summary>
+                        <div style="font-size: 0.9rem; color: #666; line-height: 1.4;">
+                            <strong>R</strong> - Reset về mặc định<br>
+                            <strong>D</strong> - Tải xuống QR code<br>
+                            <strong>1-4</strong> - Chuyển loại QR (1: Link, 2: Danh thiếp, 3: WiFi, 4: Vị trí)
+                        </div>
+                    </details>
+                </div>
+                <div class="form-group hidden" id="vcard-input-group">
+                    <label for="vcard-name">Họ tên <small>(nhập không dấu)</small></label>
+                    <input type="text" id="vcard-name" placeholder="Nguyen Van A" aria-label="Nhập họ tên cho danh thiếp">
+                </div>
+                <div class="form-group hidden" id="vcard-phone-group">
+                    <label for="vcard-phone">Số điện thoại</label>
+                    <input type="tel" id="vcard-phone" placeholder="+84 123 456 789" aria-label="Nhập số điện thoại cho danh thiếp">
+                </div>
+                <div class="form-group hidden" id="vcard-email-group">
+                    <label for="vcard-email">Email</label>
+                    <input type="email" id="vcard-email" placeholder="example@email.com" aria-label="Nhập email cho danh thiếp">
+                </div>
+                <div class="form-group hidden" id="vcard-address-group">
+                    <label for="vcard-address">Địa chỉ <small>(nhập không dấu)</small></label>
+                    <input type="text" id="vcard-address" placeholder="123 Duong ABC, TP.HCM" aria-label="Nhập địa chỉ cho danh thiếp">
+                </div>
+
+                <!-- WiFi Form -->
+                <div class="form-group hidden" id="wifi-ssid-group">
+                    <label for="wifi-ssid">Tên mạng WiFi (SSID) <small>(nhập không dấu)</small></label>
+                    <input type="text" id="wifi-ssid" placeholder="MyWiFi" aria-label="Nhập tên mạng WiFi">
+                </div>
+                <div class="form-group hidden" id="wifi-password-group">
+                    <label for="wifi-password">Mật khẩu</label>
+                    <input type="password" id="wifi-password" placeholder="password123" aria-label="Nhập mật khẩu WiFi">
+                </div>
+                <div class="form-group hidden" id="wifi-security-group">
+                    <label for="wifi-security">Bảo mật</label>
+                    <select id="wifi-security" aria-label="Chọn loại bảo mật WiFi">
+                        <option value="WPA">WPA/WPA2</option>
+                        <option value="WEP">WEP</option>
+                        <option value="nopass">Không mật khẩu</option>
+                    </select>
+                </div>
+
+                <!-- Location Form -->
+                <div class="form-group hidden" id="location-name-group">
+                    <label for="location-name">Tên địa điểm <small>(nhập không dấu)</small></label>
+                    <input type="text" id="location-name" placeholder="Ca phe ABC" aria-label="Nhập tên địa điểm">
+                </div>
+                <div class="form-group hidden" id="location-lat-group">
+                    <label for="location-lat">Vĩ độ (Latitude)</label>
+                    <input type="number" id="location-lat" step="any" placeholder="10.8231" aria-label="Nhập vĩ độ">
+                </div>
+                <div class="form-group hidden" id="location-lng-group">
+                    <label for="location-lng">Kinh độ (Longitude)</label>
+                    <input type="number" id="location-lng" step="any" placeholder="106.6297" aria-label="Nhập kinh độ">
                 </div>
 
                 <div class="form-group">
                     <label>Màu điểm ảnh</label>
-                    <div id="dots-color-container" class="swatch-container">
-                        <div class="color-swatch active" data-color="#000000" style="background-color: #000000;"></div>
-                        <div class="color-swatch" data-color="#4A90E2" style="background-color: #4A90E2;"></div>
-                        <div class="color-swatch" data-color="#D0021B" style="background-color: #D0021B;"></div>
-                        <div class="color-swatch" data-color="#F5A623" style="background-color: #F5A623;"></div>
-                        <div class="color-swatch" data-color="#7ED321" style="background-color: #7ED321;"></div>
-                        <div class="color-swatch" data-color="#50E3C2" style="background-color: #50E3C2;"></div>
+                    <div id="dots-color-container" class="swatch-container" role="radiogroup" aria-label="Chọn màu cho mã QR">
+                        <div class="color-swatch active" data-color="#000000" style="background-color: #000000;" role="radio" aria-checked="true" aria-label="Màu đen"></div>
+                        <div class="color-swatch" data-color="#4A90E2" style="background-color: #4A90E2;" role="radio" aria-checked="false" aria-label="Màu xanh dương"></div>
+                        <div class="color-swatch" data-color="#D0021B" style="background-color: #D0021B;" role="radio" aria-checked="false" aria-label="Màu đỏ"></div>
+                        <div class="color-swatch" data-color="#F5A623" style="background-color: #F5A623;" role="radio" aria-checked="false" aria-label="Màu cam"></div>
+                        <div class="color-swatch" data-color="#7ED321" style="background-color: #7ED321;" role="radio" aria-checked="false" aria-label="Màu xanh lá"></div>
+                        <div class="color-swatch" data-color="#50E3C2" style="background-color: #50E3C2;" role="radio" aria-checked="false" aria-label="Màu xanh ngọc"></div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="frame-select">Khung trang trí</label>
-                    <select id="frame-select">
+                    <select id="frame-select" aria-label="Chọn khung trang trí cho mã QR">
                         <option value="none">Không có</option>
                         <option value="frame-1">Khung 1</option>
                         <option value="frame-2">Khung 2</option>
@@ -47,7 +134,7 @@
 
                 <div class="form-group">
                     <label for="dots-style-select">Kiểu điểm ảnh</label>
-                    <select id="dots-style-select">
+                    <select id="dots-style-select" aria-label="Chọn kiểu điểm ảnh cho mã QR">
                         <option value="square">Vuông</option>
                         <option value="dots">Chấm</option>
                         <option value="rounded">Bo tròn</option>
@@ -56,10 +143,10 @@
                         <option value="classy-rounded">Cổ điển bo tròn</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="corners-square-style-select">Kiểu góc vuông</label>
-                    <select id="corners-square-style-select">
+                    <select id="corners-square-style-select" aria-label="Chọn kiểu góc vuông cho mã QR">
                         <option value="square">Vuông</option>
                         <option value="dot">Chấm</option>
                         <option value="extra-rounded">Bo tròn nhiều</option>
@@ -68,26 +155,26 @@
 
                 <div class="form-group">
                     <label for="corners-dot-style-select">Kiểu điểm ở góc</label>
-                    <select id="corners-dot-style-select">
+                    <select id="corners-dot-style-select" aria-label="Chọn kiểu điểm ở góc cho mã QR">
                         <option value="square">Vuông</option>
                         <option value="dot">Chấm</option>
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label for="logo-input">Logo (URL hình ảnh)</label>
-                    <input type="text" id="logo-input" placeholder="Dán URL logo vào đây...">
-                </div>
-
-                <button id="reset-btn" class="btn">Reset về mặc định</button>
+                <button id="reset-btn" class="btn" aria-label="Reset tất cả tùy chọn về mặc định">Reset về mặc định</button>
             </div>
 
             <div class="qrcode-wrapper">
-                <div id="qrcode-container" class="qrcode-container">
-                    <div id="qrcode"></div>
+                <div id="qrcode-container" class="qrcode-container" role="img" aria-label="Mã QR được tạo">
+                    <div id="qrcode">
+                        <div id="loading-indicator" class="loading" style="display: none;">
+                            <div class="spinner"></div>
+                            <p>Đang tạo mã QR...</p>
+                        </div>
+                    </div>
                 </div>
                 <div class="download-options">
-                     <button id="download-btn" class="btn">Tải xuống (PNG)</button>
+                     <button id="download-btn" class="btn" aria-label="Tải xuống mã QR dưới dạng hình ảnh PNG">Tải xuống (PNG)</button>
                 </div>
             </div>
         </div>

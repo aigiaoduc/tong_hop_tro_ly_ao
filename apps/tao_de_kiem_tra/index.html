@@ -168,6 +168,91 @@
         .instructions ul {
             margin-top: 8px;
         }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                margin: 20px auto;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 4px 4px 0px var(--border-color);
+            }
+
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+
+            label {
+                font-size: 1em;
+                margin-bottom: 6px;
+            }
+
+            input[type="text"], input[type="number"], textarea {
+                padding: 10px;
+                font-size: 15px;
+                min-height: 44px; /* Ensure touch target size */
+            }
+
+            .input-grid {
+                grid-template-columns: 1fr; /* Stack inputs vertically on small screens */
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+
+            textarea#final-prompt {
+                height: 250px; /* Shorter height for mobile */
+            }
+
+            .btn {
+                padding: 14px 24px; /* Slightly larger padding for better touch target */
+                font-size: 17px; /* Slightly larger font for readability */
+                border-radius: 8px;
+                box-shadow: 4px 4px 0px var(--border-color);
+            }
+
+            .btn:hover {
+                transform: translate(-1px, -1px);
+                box-shadow: 5px 5px 0px var(--border-color);
+            }
+
+            .btn:active {
+                transform: translate(4px, 4px);
+                box-shadow: 0 0 0 var(--border-color);
+            }
+
+            .copy-btn {
+                top: 10px; /* Adjust position */
+                right: 10px; /* Adjust position */
+                padding: 6px 10px; /* Slightly larger padding */
+                font-size: 13px; /* Slightly larger font */
+                border-radius: 6px;
+                box-shadow: 2px 2px 0px var(--border-color);
+            }
+
+            .copy-btn:hover {
+                transform: translate(0, 0);
+                box-shadow: 3px 3px 0px var(--border-color);
+            }
+
+            .copy-btn:active {
+                transform: translate(2px, 2px);
+                box-shadow: 0 0 0 var(--border-color);
+            }
+
+            .instructions {
+                padding: 18px; /* Slightly more padding */
+                margin: 25px 0; /* Slightly more margin */
+            }
+
+            .instructions h4 {
+                font-size: 1.1em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -286,4 +371,3 @@ Xuất ra một đề kiểm tra hoàn chỉnh, chất lượng, sẵn sàng đ�
     </script>
 
 </body>
-</html>

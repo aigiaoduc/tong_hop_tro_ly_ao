@@ -28,61 +28,65 @@ body {
 .container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 1rem; /* Giảm padding cho mobile */
 }
 
 header {
     background: var(--white);
     border: 3px solid var(--border-color);
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    box-shadow: 8px 8px 0px var(--border-color);
+    padding: 1rem; /* Giảm padding cho mobile */
+    margin-bottom: 1.5rem; /* Giảm margin cho mobile */
+    box-shadow: 4px 4px 0px var(--border-color); /* Giảm box-shadow cho mobile */
 }
 
 .header-content {
     display: flex;
+    flex-direction: column; /* Xếp chồng nội dung header trên mobile */
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    text-align: center;
 }
 
 .logo {
     display: flex;
+    flex-direction: column; /* Xếp chồng logo và tiêu đề trên mobile */
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem; /* Giảm gap */
+    margin-bottom: 1rem;
 }
 
 .logo-icon {
-    font-size: 3rem;
+    font-size: 2.5rem; /* Giảm kích thước icon */
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: 1.5rem; /* Giảm kích thước font */
     margin-bottom: 0.25rem;
 }
 
 .subtitle {
-    font-size: 1rem;
+    font-size: 0.9rem; /* Giảm kích thước font */
     font-weight: normal;
 }
 
 .form-container, .prompt-container {
     background-color: var(--white);
     border: 3px solid var(--border-color);
-    padding: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 8px 8px 0px var(--border-color);
+    padding: 1.5rem; /* Giảm padding cho mobile */
+    margin-bottom: 1.5rem; /* Giảm margin cho mobile */
+    box-shadow: 4px 4px 0px var(--border-color); /* Giảm box-shadow cho mobile */
 }
 
 h2 {
     color: var(--text-color);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem; /* Giảm margin */
     padding-bottom: 0.5rem;
     border-bottom: 3px solid var(--border-color);
-    font-size: 1.5rem;
+    font-size: 1.25rem; /* Giảm kích thước font */
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem; /* Giảm margin */
 }
 
 label {
@@ -93,10 +97,10 @@ label {
 
 input, select, textarea {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.6rem; /* Giảm padding */
     border: 3px solid var(--border-color);
     border-radius: 0;
-    font-size: 1rem;
+    font-size: 0.9rem; /* Giảm kích thước font */
     background-color: var(--white);
     font-weight: bold;
 }
@@ -122,24 +126,24 @@ input:focus, select:focus, textarea:focus {
     display: inline-block;
     background-color: var(--primary-color);
     color: var(--white);
-    padding: 0.75rem 1.5rem;
+    padding: 0.8rem 1.2rem; /* Tăng padding cho dễ chạm */
     border: 3px solid var(--border-color);
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.9rem; /* Giảm kích thước font */
     font-weight: bold;
     text-align: center;
     text-decoration: none;
-    box-shadow: 4px 4px 0px var(--border-color);
+    box-shadow: 3px 3px 0px var(--border-color); /* Giảm box-shadow */
     transition: transform 0.1s, box-shadow 0.1s;
 }
 
 .btn:hover {
-    transform: translate(2px, 2px);
+    transform: translate(1px, 1px);
     box-shadow: 2px 2px 0px var(--border-color);
 }
 
 .btn:active {
-    transform: translate(4px, 4px);
+    transform: translate(3px, 3px);
     box-shadow: 0px 0px 0px var(--border-color);
 }
 
@@ -158,57 +162,64 @@ input:focus, select:focus, textarea:focus {
 .topic-container {
     background-color: var(--background-color);
     border: 3px solid var(--border-color);
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
+    padding: 1rem; /* Giảm padding */
+    margin-bottom: 1rem; /* Giảm margin */
 }
 
 .topic-header {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column; /* Xếp chồng tiêu đề và nút xóa */
+    justify-content: center;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
+    text-align: center;
 }
 
 .topic-title {
-    font-size: 1.25rem;
+    font-size: 1.1rem; /* Giảm kích thước font */
     font-weight: bold;
+    margin-bottom: 0.5rem;
 }
 
 .unit-container {
     background-color: var(--white);
     border: 3px solid var(--border-color);
-    padding: 1rem;
-    margin-bottom: 1rem;
+    padding: 0.8rem; /* Giảm padding */
+    margin-bottom: 0.8rem; /* Giảm margin */
 }
 
 .unit-header {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column; /* Xếp chồng tiêu đề và nút xóa */
+    justify-content: center;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
+    text-align: center;
 }
 
 .unit-title {
     font-weight: bold;
+    margin-bottom: 0.5rem;
 }
 
 .remove-unit, .remove-topic {
     border: 3px solid var(--border-color);
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1rem; /* Giảm kích thước font */
     font-weight: bold;
-    box-shadow: 3px 3px 0px var(--border-color);
+    box-shadow: 2px 2px 0px var(--border-color); /* Giảm box-shadow */
+    padding: 0.3rem 0.6rem; /* Điều chỉnh padding */
 }
 
 .remove-unit:hover, .remove-topic:hover {
-    transform: translate(1px, 1px);
-    box-shadow: 2px 2px 0px var(--border-color);
+    transform: translate(0, 0);
+    box-shadow: 1px 1px 0px var(--border-color);
 }
 
 .input-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
+    grid-template-columns: 1fr; /* Luôn là 1 cột trên mobile */
+    gap: 0.8rem; /* Giảm gap */
 }
 
 .input-group {
@@ -217,54 +228,57 @@ input:focus, select:focus, textarea:focus {
 }
 
 .input-group label {
-    font-size: 0.9rem;
-    margin-bottom: 0.25rem;
+    font-size: 0.85rem; /* Giảm kích thước font */
+    margin-bottom: 0.2rem;
     font-weight: normal;
 }
 
 .input-group input {
-    padding: 0.5rem;
-    font-size: 0.9rem;
+    padding: 0.4rem; /* Giảm padding */
+    font-size: 0.85rem; /* Giảm kích thước font */
 }
 
 .question-type-group {
     background-color: var(--background-color);
     border: 3px solid var(--border-color);
-    padding: 1rem;
-    margin-bottom: 1rem;
+    padding: 0.8rem; /* Giảm padding */
+    margin-bottom: 0.8rem; /* Giảm margin */
 }
 
 .question-type-group h5 {
-    margin-bottom: 1rem;
-    font-size: 1rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem; /* Giảm kích thước font */
     border-bottom: 3px solid var(--border-color);
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.4rem;
 }
 
 .tabs {
     display: flex;
-    margin-bottom: 2rem;
+    flex-wrap: wrap; /* Cho phép các tab xuống dòng */
+    margin-bottom: 1.5rem; /* Giảm margin */
     border-bottom: 3px solid var(--border-color);
+    justify-content: center; /* Căn giữa các tab */
 }
 
 .tab-button {
     background: var(--white);
     border: 3px solid var(--border-color);
     border-bottom: none;
-    padding: 0.75rem 1.5rem;
+    padding: 0.6rem 1rem; /* Giảm padding */
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.9rem; /* Giảm kích thước font */
     font-weight: bold;
-    margin-right: 0.5rem;
+    margin-right: 0.3rem; /* Giảm margin */
+    margin-bottom: 0.5rem; /* Thêm margin-bottom để các tab không dính vào nhau khi xuống dòng */
     position: relative;
     top: 3px;
-    box-shadow: 4px 0px 0px var(--border-color);
+    box-shadow: 3px 0px 0px var(--border-color); /* Giảm box-shadow */
 }
 
 .tab-button.active {
     background: var(--accent-color);
     color: var(--border-color);
-    box-shadow: 4px -4px 0px var(--border-color);
+    box-shadow: 3px -3px 0px var(--border-color); /* Giảm box-shadow */
 }
 
 .tab-content {
@@ -278,18 +292,18 @@ input:focus, select:focus, textarea:focus {
 .prompt-output {
     background-color: var(--white);
     border: 3px solid var(--border-color);
-    padding: 1rem;
+    padding: 0.8rem; /* Giảm padding */
     font-family: 'Courier New', Courier, monospace;
     white-space: pre-wrap;
-    max-height: 600px;
+    max-height: 300px; /* Giảm chiều cao tối đa cho mobile */
     overflow-y: auto;
-    font-size: 0.9rem;
+    font-size: 0.85rem; /* Giảm kích thước font */
     line-height: 1.4;
-    margin-top: 1rem;
+    margin-top: 0.8rem; /* Giảm margin */
 }
 
 .copy-btn {
-    margin-top: 1rem;
+    margin-top: 0.8rem; /* Giảm margin */
 }
 
 .hidden {
@@ -298,10 +312,10 @@ input:focus, select:focus, textarea:focus {
 
 footer {
     text-align: center;
-    margin-top: 3rem;
-    padding: 1.5rem;
+    margin-top: 2rem; /* Giảm margin */
+    padding: 1rem; /* Giảm padding */
     color: var(--primary-color);
-    font-size: 0.9rem;
+    font-size: 0.8rem; /* Giảm kích thước font */
     font-weight: normal;
 }
 

@@ -5,17 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: 'Trợ lý tạo trò chơi dạy học', path: 'apps/tro_ly_tao_tro_choi_day_hoc/index.html' },
         { name: 'Trợ lý Ma trận đề kiểm tra', path: 'apps/ma_tran_de_kiem_tra/index.html' },
         { name: 'Trợ lý tạo Đề kiểm tra', path: 'apps/tao_de_kiem_tra/index.html' },
-        { name: 'Tạo mã Qr nâng cao', path: 'apps/tao_ma_qr/index.html' },
-        { name: 'Dự báo thời tiết', path: '#' },
-        { name: 'Trình phát Nhạc', path: '#' },
-        { name: 'Quản lý Công việc', path: '#' },
-        { name: 'Lịch vạn niên', path: '#' },
-        { name: 'Trình đọc RSS', path: '#' },
-        { name: 'Bản đồ Tư duy', path: '#' },
-        { name: 'Chuyển đổi Đơn vị', path: '#' },
-        { name: 'Ứng dụng Ghi chú', path: '#' },
-        { name: 'Từ điển Anh-Việt', path: '#' },
-        { name: 'Quản lý Chi tiêu', path: '#' }
+        { name: 'Tạo mã Qr nâng cao', path: 'apps/tao_ma_qr/index.html' }
+
     ];
 
     const menuContainer = document.querySelector('.menu-items-container');
@@ -23,6 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');
     const toast = document.getElementById('toast-notification');
     const logoContainer = document.getElementById('logo-container');
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    const appMenu = document.getElementById('app-menu');
     let currentActiveButton = null;
     let menuButtons = [];
     let toastTimeout;
@@ -63,6 +56,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                     button.classList.add('active');
                     currentActiveButton = button;
+                    // Close menu on mobile after selecting an app
+                    if (window.innerWidth <= 768) {
+                        appMenu.classList.remove('open');
+                        hamburgerMenu.classList.remove('active');
+                    }
                 } else {
                     showToast('Chức năng đang được phát triển!');
                 }
@@ -112,6 +110,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (searchInput) {
         searchInput.addEventListener('input', filterMenu);
+    }
+
+    if (hamburgerMenu) {
+        hamburgerMenu.addEventListener('click', () => {
+            appMenu.classList.toggle('open');
+            hamburgerMenu.classList.toggle('active');
+        });
     }
 
     if (logoContainer) {

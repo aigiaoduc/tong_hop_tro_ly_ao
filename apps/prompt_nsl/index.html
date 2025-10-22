@@ -189,18 +189,18 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
 
             return (
                 <div className="min-h-screen">
-                    <div className="container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
-                        <header className="text-center mb-12">
-                            <h1 className="text-5xl sm:text-6xl font-extrabold text-black mb-4">
+                    <div className="container mx-auto p-4 max-w-5xl">
+                        <header className="text-center mb-8">
+                            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-black mb-2">
                                 Trợ lý Năng lực số
                             </h1>
-                            <p className="text-dark-blue mt-2 text-xl">Tạo prompt tích hợp NLS cho kế hoạch dạy học.</p>
-                            <div className="mt-6 flex flex-wrap justify-center items-center gap-4">
+                            <p className="text-dark-blue mt-1 text-base sm:text-lg">Tạo prompt tích hợp NLS cho kế hoạch dạy học.</p>
+                            <div className="mt-4 flex flex-wrap justify-center items-center gap-2">
                                 <a 
                                     href="https://kontum01-my.sharepoint.com/:f:/g/personal/quanth_c12sb_st_gdkontum_edu_vn/EuuHrh0ngWZEjhwtFRLyUa0B8pu7N9edZhyJvIy8Skh4SA?e=4fxnRr"
                                     target="_blank" 
                                     rel="noopener noreferrer"
-                                    className="inline-block p-2 bg-light-green border-2 border-black font-bold shadow-[4px_4px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
+                                    className="inline-block p-2 bg-light-green border-2 border-black font-bold shadow-[2px_2px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all text-xs sm:text-sm"
                                 >
                                     Tải Tài liệu
                                 </a>
@@ -208,7 +208,7 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
                                     href="https://ung-ho-tac-gia.netlify.app/"
                                     target="_blank" 
                                     rel="noopener noreferrer"
-                                    className="inline-block p-2 bg-light-yellow border-2 border-black font-bold shadow-[4px_4px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
+                                    className="inline-block p-2 bg-light-yellow border-2 border-black font-bold shadow-[2px_2px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all text-xs sm:text-sm"
                                 >
                                     Donate
                                 </a>
@@ -218,37 +218,37 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
                                         e.preventDefault();
                                         document.getElementById('video-guide')?.scrollIntoView({ behavior: 'smooth' });
                                     }}
-                                    className="inline-block p-2 bg-dark-blue text-white border-2 border-black font-bold shadow-[4px_4px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
+                                    className="inline-block p-2 bg-dark-blue text-white border-2 border-black font-bold shadow-[2px_2px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all text-xs sm:text-sm"
                                 >
                                     Video Hướng dẫn
                                 </a>
                             </div>
                         </header>
 
-                        <div className="bg-white border-2 border-black rounded-xl shadow-[8px_8px_0px_#000000] p-6 sm:p-8 mb-12">
-                            <h2 className="text-3xl font-bold mb-6 text-black flex items-center">
-                                <span className="bg-light-yellow text-black border-2 border-black rounded-full h-10 w-10 flex items-center justify-center mr-4 font-mono text-xl">1</span>
+                        <div className="bg-white border-2 border-black rounded-xl shadow-[4px_4px_0px_#000000] p-4 mb-8">
+                            <h2 className="text-xl sm:text-2xl font-bold mb-4 text-black flex items-center">
+                                <span className="bg-light-yellow text-black border-2 border-black rounded-full h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center mr-2 font-mono text-base sm:text-lg">1</span>
                                 Thông tin
                             </h2>
                             
-                            <div className="space-y-6">
+                            <div className="space-y-4">
                                 <div>
-                                    <label htmlFor="subject" className="block text-lg font-bold text-black mb-2">Tên môn học</label>
+                                    <label htmlFor="subject" className="block text-sm sm:text-base font-bold text-black mb-1">Tên môn học</label>
                                     <input 
                                         type="text" 
                                         id="subject"
                                         value={subject}
                                         onChange={(e) => setSubject(e.target.value)}
-                                        className="w-full p-3 bg-cream border-2 border-black rounded-lg text-lg focus:ring-0 focus:border-black focus:bg-white transition"
+                                        className="w-full p-2 bg-cream border-2 border-black rounded-lg text-sm sm:text-base focus:ring-0 focus:border-black focus:bg-white transition"
                                         placeholder="VD: giáo dục thể chất"
                                     />
                                 </div>
 
                                 <div>
-                                    <label className="block text-lg font-bold text-black mb-2">Khối lớp</label>
-                                    <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-6 gap-2">
+                                    <label className="block text-sm sm:text-base font-bold text-black mb-1">Khối lớp</label>
+                                    <div className="grid grid-cols-4 sm:grid-cols-6 gap-1">
                                         {gradeOptions.map(grade => (
-                                            <label key={grade} className={`flex items-center justify-center p-3 border-2 border-black rounded-lg cursor-pointer transition-all duration-200 font-bold ${grades.includes(grade) ? 'bg-black text-white' : 'bg-white hover:bg-light-yellow'}`}>
+                                            <label key={grade} className={`flex items-center justify-center p-2 border-2 border-black rounded-lg cursor-pointer transition-all duration-200 font-bold text-xs sm:text-sm ${grades.includes(grade) ? 'bg-black text-white' : 'bg-white hover:bg-light-yellow'}`}>
                                                 <input type="checkbox" checked={grades.includes(grade)} onChange={() => handleGradeChange(grade)} className="sr-only"/>
                                                 <span>{grade}</span>
                                             </label>
@@ -256,24 +256,24 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
                                     </div>
                                 </div>
                                 
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center pt-2">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center pt-2">
                                     <div>
-                                        <label className="block text-lg font-bold text-black mb-2">Chọn Phụ lục</label>
-                                        <div className="flex items-center space-x-6">
-                                            <label className="flex items-center space-x-3 cursor-pointer">
-                                                <input type="checkbox" checked={appendix1} onChange={() => setAppendix1(!appendix1)} className="h-6 w-6 text-black border-2 border-black rounded-md focus:ring-0 bg-cream" />
-                                                <span className="text-lg font-medium text-black">Phụ lục 1</span>
+                                        <label className="block text-sm sm:text-base font-bold text-black mb-1">Chọn Phụ lục</label>
+                                        <div className="flex items-center space-x-4">
+                                            <label className="flex items-center space-x-2 cursor-pointer">
+                                                <input type="checkbox" checked={appendix1} onChange={() => setAppendix1(!appendix1)} className="h-4 w-4 sm:h-5 sm:w-5 text-black border-2 border-black rounded-md focus:ring-0 bg-cream" />
+                                                <span className="text-sm sm:text-base font-medium text-black">Phụ lục 1</span>
                                             </label>
-                                            <label className="flex items-center space-x-3 cursor-pointer">
-                                                <input type="checkbox" checked={appendix3} onChange={() => setAppendix3(!appendix3)} className="h-6 w-6 text-black border-2 border-black rounded-md focus:ring-0 bg-cream" />
-                                                <span className="text-lg font-medium text-black">Phụ lục 3</span>
+                                            <label className="flex items-center space-x-2 cursor-pointer">
+                                                <input type="checkbox" checked={appendix3} onChange={() => setAppendix3(!appendix3)} className="h-4 w-4 sm:h-5 sm:w-5 text-black border-2 border-black rounded-md focus:ring-0 bg-cream" />
+                                                <span className="text-sm sm:text-base font-medium text-black">Phụ lục 3</span>
                                             </label>
                                         </div>
                                     </div>
                                     
                                     {(appendix1 || appendix3) && (
                                         <div>
-                                            <label htmlFor="file-upload" className="relative cursor-pointer bg-white p-3 border-2 border-black rounded-lg flex items-center justify-center font-bold shadow-[4px_4px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all">
+                                            <label htmlFor="file-upload" className="relative cursor-pointer bg-white p-2 border-2 border-black rounded-lg flex items-center justify-center font-bold shadow-[2px_2px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all text-xs sm:text-sm">
                                                 <span className={`${fileName ? 'text-light-green' : 'text-black'}`}>{fileName ? `Đã chọn: ${fileName}` : 'Chọn file KHDH...'}</span>
                                                 <input id="file-upload" type="file" className="sr-only" onChange={(e) => setFileName(e.target.files[0] ? e.target.files[0].name : '')} />
                                             </label>
@@ -282,10 +282,10 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
                                 </div>
                             </div>
 
-                            <div className="mt-10 border-t-2 border-black pt-6 text-center">
+                            <div className="mt-6 border-t-2 border-black pt-4 text-center">
                                 <button 
                                     onClick={handleGenerate}
-                                    className="w-full sm:w-auto px-12 py-4 border-2 border-black text-xl font-bold rounded-lg text-black bg-light-yellow shadow-[6px_6px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-1.5 hover:translate-y-1.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:shadow-none disabled:translate-x-0 disabled:translate-y-0"
+                                    className="w-full px-6 py-2 sm:w-auto sm:px-8 sm:py-3 border-2 border-black text-base sm:text-lg font-bold rounded-lg text-black bg-light-yellow shadow-[4px_4px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:shadow-none disabled:translate-x-0 disabled:translate-y-0"
                                     disabled={!subject || grades.length === 0 || (!appendix1 && !appendix3) || !fileName}
                                 >
                                     Tạo câu lệnh
@@ -294,53 +294,53 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
                         </div>
 
                         {showResults && (
-                            <div ref={resultsRef} className="bg-white border-2 border-black rounded-xl shadow-[8px_8px_0px_#000000] p-6 sm:p-8 mb-12">
-                                <div className="flex justify-between items-center mb-6">
-                                    <h2 className="text-3xl font-bold text-black flex items-center">
-                                        <span className="bg-light-green text-black border-2 border-black rounded-full h-10 w-10 flex items-center justify-center mr-4 font-mono text-xl">2</span>
+                            <div ref={resultsRef} className="bg-white border-2 border-black rounded-xl shadow-[4px_4px_0px_#000000] p-4 mb-8">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h2 className="text-xl sm:text-2xl font-bold text-black flex items-center">
+                                        <span className="bg-light-green text-black border-2 border-black rounded-full h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center mr-2 font-mono text-base sm:text-lg">2</span>
                                         Kết quả
                                     </h2>
                                     {(prompt1 && prompt3) && (
-                                        <BrutalButton id="copy-btn-all" onClick={copyAll} className="bg-light-yellow">Sao chép tất cả</BrutalButton>
+                                        <BrutalButton id="copy-btn-all" onClick={copyAll} className="bg-light-yellow text-xs sm:text-sm !py-1 !px-2">Sao chép tất cả</BrutalButton>
                                     )}
                                 </div>
 
                                 {prompt1 && (
-                                    <div className="mb-6">
-                                        <h3 className="text-xl font-bold text-black mb-3">Prompt cho Phụ lục 1</h3>
+                                    <div className="mb-4">
+                                        <h3 className="text-base sm:text-lg font-bold text-black mb-2">Prompt cho Phụ lục 1</h3>
                                         <div className="relative group">
-                                            <pre className="whitespace-pre-wrap text-base text-gray-200 bg-dark-blue p-4 rounded-lg max-h-72 overflow-y-auto font-mono border-2 border-black">{prompt1}</pre>
-                                            <BrutalButton id="copy-btn-1" onClick={() => copyToClipboard(prompt1, 'copy-btn-1')} className="absolute top-3 right-3 text-sm !py-1 !px-2 bg-light-yellow opacity-0 group-hover:opacity-100">Sao chép</BrutalButton>
+                                            <pre className="whitespace-pre-wrap text-xs sm:text-sm text-gray-200 bg-dark-blue p-3 rounded-lg max-h-48 overflow-y-auto font-mono border-2 border-black">{prompt1}</pre>
+                                            <BrutalButton id="copy-btn-1" onClick={() => copyToClipboard(prompt1, 'copy-btn-1')} className="absolute top-2 right-2 text-xs !py-1 !px-2 bg-light-yellow opacity-0 group-hover:opacity-100">Sao chép</BrutalButton>
                                         </div>
                                     </div>
                                 )}
                                 {prompt3 && (
                                     <div>
-                                        <h3 className="text-xl font-bold text-black mb-3">Prompt cho Phụ lục 3</h3>
+                                        <h3 className="text-base sm:text-lg font-bold text-black mb-2">Prompt cho Phụ lục 3</h3>
                                         <div className="relative group">
-                                            <pre className="whitespace-pre-wrap text-base text-gray-200 bg-dark-blue p-4 rounded-lg max-h-72 overflow-y-auto font-mono border-2 border-black">{prompt3}</pre>
-                                            <BrutalButton id="copy-btn-3" onClick={() => copyToClipboard(prompt3, 'copy-btn-3')} className="absolute top-3 right-3 text-sm !py-1 !px-2 bg-light-yellow opacity-0 group-hover:opacity-100">Sao chép</BrutalButton>
+                                            <pre className="whitespace-pre-wrap text-xs sm:text-sm text-gray-200 bg-dark-blue p-3 rounded-lg max-h-48 overflow-y-auto font-mono border-2 border-black">{prompt3}</pre>
+                                            <BrutalButton id="copy-btn-3" onClick={() => copyToClipboard(prompt3, 'copy-btn-3')} className="absolute top-2 right-2 text-xs !py-1 !px-2 bg-light-yellow opacity-0 group-hover:opacity-100">Sao chép</BrutalButton>
                                         </div>
                                     </div>
                                 )}
                             </div>
                         )}
 
-                        <div className="bg-white border-2 border-black rounded-xl shadow-[8px_8px_0px_#000000] p-6 sm:p-8">
-                             <h2 className="text-3xl font-bold mb-6 text-black flex items-center">
-                                <span className="bg-dark-blue text-white border-2 border-black rounded-full h-10 w-10 flex items-center justify-center mr-4 font-mono text-xl">3</span>
+                        <div className="bg-white border-2 border-black rounded-xl shadow-[4px_4px_0px_#000000] p-4 sm:p-6">
+                             <h2 className="text-xl sm:text-2xl font-bold mb-4 text-black flex items-center">
+                                <span className="bg-dark-blue text-white border-2 border-black rounded-full h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center mr-2 font-mono text-base sm:text-lg">3</span>
                                 Hướng dẫn
                             </h2>
-                            <div className="grid md:grid-cols-2 gap-8 text-black">
-                                <div className="space-y-3 text-lg">
-                                    <h3 className="font-extrabold text-xl mb-2">Các bước thực hiện</h3>
+                            <div className="grid md:grid-cols-2 gap-4 text-black">
+                                <div className="space-y-2 text-sm sm:text-base">
+                                    <h3 className="font-extrabold text-base sm:text-lg mb-1">Các bước thực hiện</h3>
                                     <p>1. Nhập Tên môn học và chọn Khối lớp.</p>
                                     <p>2. Chọn Phụ lục 1 và/hoặc Phụ lục 3.</p>
                                     <p>3. Nhấn để chọn file Kế hoạch dạy học.</p>
                                     <p>4. Nhấn nút "Tạo câu lệnh" và xem kết quả.</p>
                                 </div>
-                                <div className="space-y-3 text-lg">
-                                    <h3 className="font-extrabold text-xl mb-2">Sử dụng với AI</h3>
+                                <div className="space-y-2 text-sm sm:text-base">
+                                    <h3 className="font-extrabold text-base sm:text-lg mb-1">Sử dụng với AI</h3>
                                     <p>1. Nhấn nút "Sao chép" ở mục kết quả.</p>
                                     <p>2. Mở AI (ChatGPT, Gemini...), dán prompt vào.</p>
                                     <p>3. Đính kèm file Kế hoạch dạy học và gửi đi.</p>
@@ -348,14 +348,14 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
                             </div>
                         </div>
 
-                        <div id="video-guide" className="bg-white border-2 border-black rounded-xl shadow-[8px_8px_0px_#000000] p-6 sm:p-8 mt-12">
-                             <h2 className="text-3xl font-bold mb-6 text-black flex items-center">
-                                <span className="bg-light-yellow text-black border-2 border-black rounded-full h-10 w-10 flex items-center justify-center mr-4 font-mono text-xl">4</span>
+                        <div id="video-guide" className="bg-white border-2 border-black rounded-xl shadow-[4px_4px_0px_#000000] p-4 mt-8">
+                             <h2 className="text-xl sm:text-2xl font-bold mb-4 text-black flex items-center">
+                                <span className="bg-light-yellow text-black border-2 border-black rounded-full h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center mr-2 font-mono text-base sm:text-lg">4</span>
                                 Video Hướng dẫn
                             </h2>
                             <div className="rounded-lg overflow-hidden border-2 border-black">
                                 <iframe 
-                                    className="w-full h-[560px]"
+                                    className="w-full h-[200px] sm:h-[300px] md:h-[450px]"
                                     src="https://www.youtube.com/embed/iHMYNYoPcPA" 
                                     title="YouTube video player" 
                                     frameBorder="0" 
@@ -365,7 +365,7 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
                             </div>
                         </div>
                         
-                        <footer className="text-center mt-12 text-dark-blue text-sm">
+                        <footer className="text-center mt-8 text-dark-blue text-xs">
                             <p>Phát triển bởi Gemini - Google AI. Dự án phi lợi nhuận hỗ trợ giáo viên.</p>
                         </footer>
                     </div>
