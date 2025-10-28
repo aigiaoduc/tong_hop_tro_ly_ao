@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: 'Trợ lý tạo trò chơi dạy học', path: 'apps/tro_ly_tao_tro_choi_day_hoc/index.html' },
         { name: 'Trợ lý Ma trận đề kiểm tra', path: 'apps/ma_tran_de_kiem_tra/index.html' },
         { name: 'Trợ lý tạo Đề kiểm tra', path: 'apps/tao_de_kiem_tra/index.html' },
-        { name: 'Tạo mã Qr nâng cao', path: 'apps/tao_ma_qr/index.html' }
+        { name: 'Tạo mã Qr nâng cao', path: 'apps/tao_ma_qr/index.html' },
+        { name: 'Tối ưu hóa Prompt tự động', path: 'apps/toi_uu_hoa_prompt/index.html' }
 
     ];
 
