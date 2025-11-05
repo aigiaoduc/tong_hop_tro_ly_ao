@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đang mở ứng dụng...</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif; /* Consistent font */
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5; /* A light grey background from the theme */
+            color: #000000; /* Black text */
+            text-align: center;
+        }
+        .container {
+            background-color: #ffffff;
+            border: 3px solid #000000;
+            box-shadow: 5px 5px 0px #000000; /* Hard shadow */
+            padding: 2rem; /* More padding */
+            max-width: 500px;
+            transition: box-shadow 0.1s ease-in-out; /* Add a small transition for interaction */
+        }
+        .container:hover {
+            box-shadow: 7px 7px 0px #000000; /* Slightly larger shadow on hover */
+        }
+        h1 {
+            font-size: 1.75em; /* Larger, bolder title */
+            margin-bottom: 0.5em;
+        }
+        p {
+            font-size: 1em;
+            margin-bottom: 1.5em;
+        }
+        a {
+            display: inline-block; /* Make it a block to apply more styles */
+            background-color: #ffcc00; /* Accent color from the theme */
+            color: #000000;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 3px solid #000000;
+            box-shadow: 3px 3px 0px #000000;
+            transition: all 0.1s ease-in-out;
+        }
+        a:hover {
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0px #000000;
+        }
+        a:active {
+            transform: translate(3px, 3px);
+            box-shadow: 0px 0px 0px #000000;
+        }
+    </style>
+    <script>
+        // We use a flag to ensure this only runs once per session
+        if (!sessionStorage.getItem('veo3sora_redirected')) {
+            window.open('https://gemini.google.com/gem/1-FTkAWaFHNUEUKbys6eGhSgFpFP8TxvJ?usp=sharing', '_blank');
+            sessionStorage.setItem('veo3sora_redirected', 'true');
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Ứng dụng đã được mở trong một tab mới.</h1>
+        <p>Nếu tab mới không tự động mở, bạn có thể <a href="https://gemini.google.com/gem/1-FTkAWaFHNUEUKbys6eGhSgFpFP8TxvJ?usp=sharing" target="_blank">Nhấn vào đây</a>.</p>
+    </div>
+</body>
+</html>
