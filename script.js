@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: 'Trợ lý tạo Đề kiểm tra', path: 'apps/tao_de_kiem_tra/index.html' },
         { name: 'Tạo mã Qr nâng cao', path: 'apps/tao_ma_qr/index.html' },
         { name: 'Tối ưu hóa Prompt tự động', path: 'apps/toi_uu_hoa_prompt/index.html' },
-        { name: 'Trợ lý tạo Prompt Veo3 Sora', path: 'apps/tro_ly_veo3_sora/index.html' }
+        { name: 'Trợ lý tạo Prompt Veo3 Sora', path: 'apps/tro_ly_veo3_sora/index.html' },
+        { name: 'Trợ lý tạo Sơ đồ Tư duy', path: 'apps/so_do_tu_duy/index.html' }
     ];
 
     const menuContainer = document.querySelector('.menu-items-container');
