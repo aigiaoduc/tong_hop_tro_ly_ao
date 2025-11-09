@@ -1,14 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
     // --- TRUNG TÂM CẤU HÌNH ---
     const apps = [
-        { name: 'Trợ lý tích hợp năng lực số', path: 'apps/prompt_nsl/index.html' },
-        { name: 'Trợ lý tạo trò chơi dạy học', path: 'apps/tro_ly_tao_tro_choi_day_hoc/index.html' },
-        { name: 'Trợ lý Ma trận đề kiểm tra', path: 'apps/ma_tran_de_kiem_tra/index.html' },
-        { name: 'Trợ lý tạo Đề kiểm tra', path: 'apps/tao_de_kiem_tra/index.html' },
-        { name: 'Tạo mã Qr nâng cao', path: 'apps/tao_ma_qr/index.html' },
-        { name: 'Tối ưu hóa Prompt tự động', path: 'apps/toi_uu_hoa_prompt/index.html' },
-        { name: 'Trợ lý tạo Prompt Veo3 Sora', path: 'apps/tro_ly_veo3_sora/index.html' },
-        { name: 'Trợ lý tạo Sơ đồ Tư duy', path: 'apps/so_do_tu_duy/index.html' }
+        { name: 'Tích hợp Năng Lực Số', path: 'apps/prompt_nsl/index.html' },
+        { name: 'Trò chơi Dạy Học', path: 'apps/tro_ly_tao_tro_choi_day_hoc/index.html' },
+        { name: 'Ma trận đề kiểm tra', path: 'apps/ma_tran_de_kiem_tra/index.html' },
+        { name: 'Tạo đề kiểm tra', path: 'apps/tao_de_kiem_tra/index.html' },
+        { name: 'Tạo mã QR', path: 'apps/tao_ma_qr/index.html' },
+        { name: 'Tối Ưu Hóa Prompt', path: 'apps/toi_uu_hoa_prompt/index.html' },
+        { name: 'Tạo Prompt Veo3 Sora', path: 'apps/tro_ly_veo3_sora/index.html' },
+        { name: 'Sơ đồ tư duy', path: 'apps/so_do_tu_duy/index.html' }
     ];
 
     const menuContainer = document.querySelector('.menu-items-container');
@@ -38,19 +38,25 @@ document.addEventListener('DOMContentLoaded', function() {
     function generateMenu() {
         if (!menuContainer) return;
 
+        // Dọn dẹp menu cũ trước khi tạo mới
+        menuContainer.innerHTML = '';
+        menuButtons = [];
+
         apps.forEach((app, index) => {
             const button = document.createElement('button');
-            button.textContent = app.name;
+            button.title = app.name;
             button.classList.add('menu-button');
             button.dataset.path = app.path;
-            button.style.animationDelay = `${index * 0.07}s`; // Hiệu ứng xuất hiện lần lượt
+            
+            // Bọc văn bản trong một span để kiểm tra và cuộn
+            const textWrap = document.createElement('span');
+            textWrap.classList.add('text-wrap');
+            textWrap.textContent = app.name;
+            button.appendChild(textWrap);
 
             button.addEventListener('click', () => {
                 if (app.path && app.path !== '#') {
-                    // Thêm hiệu ứng loading cho iframe
                     appFrame.classList.add('loading');
-                    
-                    // Chỉ thay đổi src sau một khoảng trễ ngắn để hiệu ứng kịp thực thi
                     setTimeout(() => { appFrame.src = app.path; }, 150);
 
                     if (currentActiveButton) {
@@ -58,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                     button.classList.add('active');
                     currentActiveButton = button;
-                    // Close menu on mobile after selecting an app
                     if (window.innerWidth <= 768) {
                         appMenu.classList.remove('open');
                         hamburgerMenu.classList.remove('active');
@@ -70,14 +75,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
             menuContainer.appendChild(button);
             menuButtons.push(button);
-        });
 
-        // Đánh dấu active cho nút đầu tiên có path hợp lệ, nhưng không load
-        const firstValidButton = menuButtons.find(btn => btn.dataset.path && btn.dataset.path !== '#');
-        if (firstValidButton) {
-            // firstValidButton.classList.add('active');
-            // currentActiveButton = firstValidButton;
-        }
+            // --- Logic cho hiệu ứng cuộn chữ ---
+            // Phải kiểm tra sau khi nút đã được thêm vào DOM để có kích thước chính xác
+            const isOverflowing = textWrap.scrollWidth > button.clientWidth;
+            
+            if (isOverflowing) {
+                button.classList.add('marquee');
+                // Nhân đôi văn bản để tạo hiệu ứng cuộn liền mạch
+                textWrap.textContent = `${app.name} \u00A0 | \u00A0 ${app.name}`;
+            }
+        });
     }
 
     // Lọc menu theo từ khóa tìm kiếm

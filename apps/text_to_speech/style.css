@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+:root {
+    --primary-color: #007BFF;
+    --secondary-color: #6C757D;
+    --background-color: #ffffff;
+    --surface-color: #f8f9fa;
+    --text-color: #212529;
+    --border-color: #dee2e6;
+    --shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.07);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    min-height: 100vh;
+}
+
+#app {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+header, footer {
+    padding: 1rem 2rem;
+    background: var(--surface-color);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
+    z-index: 1;
+}
+
+footer {
+    border-top: 1px solid var(--border-color);
+    border-bottom: none;
+}
+
+header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-align: center;
+    background: linear-gradient(90deg, var(--primary-color), #343A40);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+main {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.controls, .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+}
+
+textarea, select {
+    width: 100%;
+    padding: 1rem;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    resize: vertical;
+    min-height: 200px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05) inset;
+}
+
+textarea {
+    flex-grow: 1;
+}
+
+textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+button {
+    padding: 0.8rem 1.5rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    background: #aab2b9;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.voice-select-wrapper {
+    flex-grow: 1;
+    max-width: 400px;
+}
+
+label {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+footer {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #6c757d;
+}

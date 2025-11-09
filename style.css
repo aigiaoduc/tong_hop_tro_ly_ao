@@ -144,18 +144,38 @@ body {
 .menu-button {
     display: block;
     width: 100%;
-    padding: 15px 20px;
-    margin-bottom: 18px;
+    padding: 12px 18px;
+    margin-bottom: 16px;
     border: var(--border-thickness) solid var(--text-color);
     border-radius: 8px; /* Slightly rounded corners are acceptable in modern Neo-brutalism */
     background-color: #ffffff;
     color: var(--text-color);
     text-align: left;
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: 700;
     cursor: pointer;
     box-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--text-color);
     transition: all 0.15s ease-out;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip; /* Or 'clip' if you prefer to just cut it off */
+}
+
+.menu-button .text-wrap {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.menu-button.marquee .text-wrap {
+    /* Thêm khoảng đệm bên phải để tạo khoảng cách giữa các lần lặp lại */
+    padding-right: 30px; 
+    animation: marquee-scroll 10s linear infinite;
+}
+
+@keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
 }
 
 .menu-button:hover {
