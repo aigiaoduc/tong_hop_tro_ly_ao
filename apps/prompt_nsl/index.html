@@ -32,7 +32,8 @@
             const [grades, setGrades] = React.useState([]);
             const [appendix1, setAppendix1] = React.useState(false);
             const [appendix3, setAppendix3] = React.useState(false);
-            const [fileName, setFileName] = React.useState('');
+            const [khdhFileName, setKhdhFileName] = React.useState('');
+            const [appendix3FileName, setAppendix3FileName] = React.useState('');
 
             const [prompt1, setPrompt1] = React.useState('');
             const [prompt3, setPrompt3] = React.useState('');
@@ -49,8 +50,21 @@
             };
 
             const handleGenerate = () => {
-                if (!subject || grades.length === 0 || (!appendix1 && !appendix3) || !fileName) {
-                    alert('Vui lòng nhập đầy đủ thông tin: Môn học, Khối lớp, chọn ít nhất một Phụ lục và tải lên file KHDH.');
+                const appendix1Selected = appendix1;
+                const appendix3Selected = appendix3;
+
+                if (!subject || grades.length === 0 || (!appendix1Selected && !appendix3Selected)) {
+                    alert('Vui lòng nhập đầy đủ thông tin: Môn học, Khối lớp và chọn ít nhất một Phụ lục.');
+                    return;
+                }
+
+                if ((appendix1Selected || appendix3Selected) && !khdhFileName) {
+                    alert('Vui lòng chọn file Kế hoạch dạy học (KHDH).');
+                    return;
+                }
+
+                if (appendix1Selected && !appendix3FileName) {
+                    alert('Khi tạo Phụ lục 1, bạn phải chọn cả file Phụ lục 3 đã làm.');
                     return;
                 }
 
@@ -60,44 +74,42 @@
                     const p1 = `Tạo **PHỤ LỤC 1: TÍCH HỢP NĂNG LỰC SỐ VÀO KẾ HOẠCH DẠY HỌC (Dành cho Tổ chuyên môn)**
 
 **Bối cảnh:**
-Bạn là chuyên gia giáo dục Việt Nam, am hiểu sâu sắc Chương trình GDPT 2018. Nhiệm vụ của bạn là hỗ trợ Tổ chuyên môn môn **\`${subject}\`** xây dựng một phụ lục tích hợp Năng lực số (NLS), trong đó **diễn giải chi tiết** hoạt động thực tế để hình thành NLS cho học sinh khối **\`${selectedGrades}\`**.
+Bạn là chuyên gia giáo dục Việt Nam. Nhiệm vụ của bạn là **hiện thực hóa** các Năng lực số (NLS) đã được xác định trong file Phụ lục 3 thành các hoạt động dạy học cụ thể.
 
 **Tài liệu nguồn (BẮT BUỘC):**
-1.  **\`Thông tư 02/2025/TT-BGDĐT\` (Khung NLS):** Tài liệu gốc để hiểu bản chất của từng năng lực.
-2.  **\`Công văn 3456_BGDDT-GDPT\`:** Đây là tài liệu định hướng để xác định **MỨC ĐỘ** năng lực phù hợp cho từng khối lớp, được quy định rõ trong Phụ lục đính kèm Công văn 405. Cụ thể:
-    *   **Lớp 1, 2:** Ưu tiên mức **"Cơ bản 1"** (tương ứng cột L1-L2).
-    *   **Lớp 3, 4, 5:** Ưu tiên mức **"Cơ bản 2"** (tương ứng cột L3-L4-L5).
-    *   **Lớp 6, 7:** Ưu tiên mức **"Trung cấp 1"** (tương ứng cột L6-L7).
-    *   **Lớp 8, 9:** Ưu tiên mức **"Trung cấp 2"** (tương ứng cột L8-L9).
-    *   **Lớp 10, 11, 12:** Ưu tiên mức **"Nâng cao 1"** (tương ứng cột L10-L11-L12).
-    *   *Lưu ý: Có thể linh hoạt sử dụng mức độ cao hơn nếu nội dung bài học đòi hỏi.*
-3.  **\`${fileName}\` (Kế hoạch dạy học đính kèm):** Tài liệu chính để phân tích nội dung bài học.
+1.  **\`${appendix3FileName}\` (Phụ lục 3 đã làm):** Đây là tài liệu **QUAN TRỌNG NHẤT**, chứa bản đồ các NLS đã được gán cho từng tiết học. Bạn phải tuân thủ tuyệt đối theo bảng này.
+2.  **\`${khdhFileName}\` (Kế hoạch dạy học):** Dùng để hiểu bối cảnh và nội dung của từng tiết học được đề cập trong Phụ lục 3.
+3.  **\`Thông tư 02/2025/TT-BGDĐT\` (Khung NLS):** Dùng để tra cứu lại mô tả chi tiết của chỉ báo NLS nếu cần.
 
 **Yêu cầu chi tiết về quy trình (CỰC KỲ QUAN TRỌNG):**
 
-1.  **Phân tích KHDH:** Từ file **\`${fileName}\`**, xác định các tiết học (PP) phù hợp để tích hợp NLS.
-2.  **Xác định NLS và CHỈ BÁO:**
-    *   Với mỗi tiết học đã chọn, tìm đến Năng lực thành phần tương ứng trong Thông tư 02 (ví dụ: 1.1).
-    *   Dựa vào định hướng mức độ cho khối **\`${selectedGrades}\`** từ Công văn 3456, xác định đúng cột mức độ trong bảng mô tả của Thông tư 02.
-    *   Trong cột đó, có nhiều **chỉ báo được đánh dấu bằng gạch đầu dòng (-)**. Bạn phải **chọn ra MỘT chỉ báo (một gạch đầu dòng)** cụ thể, phù hợp nhất với hoạt động dạy học.
-3.  **DIỄN GIẢI HOẠT ĐỘNG THỰC TẾ:**
-    *   Đây là yêu cầu then chốt. Dựa trên chỉ báo đã chọn, hãy **diễn giải nó thành một hoạt động học tập cụ thể, sinh động, gắn chặt với bài học của tiết đó**.
-    *   **Ví dụ (Lớp 6):** Nếu chọn chỉ báo "- Giải thích được nhu cầu thông tin" cho bài "Chạy cự li ngắn", bạn phải diễn giải thành: **"TC 1.1.a: HS được giao nhiệm vụ tìm kiếm video về 'kỹ thuật chạy giữa quãng 60m' để hiểu rõ hơn về cách duy trì tốc độ."**
-4.  **Trình bày kết quả:**
-    *   Ghi kết quả vào bảng theo định dạng yêu cầu.
-    *   Phần "Năng lực số hình thành" phải bắt đầu bằng mã viết tắt (CB, TC, NC, CS) + mã năng lực + ký hiệu chỉ báo (a,b,c...), theo sau là phần diễn giải thực tế.
+1.  **Phân tích Phụ lục 3:** Đọc file **\`${appendix3FileName}\`**. Với mỗi dòng trong bảng, xác định:
+    *   Tiết PP và Chủ đề/Bài học.
+    *   Mã và nội dung chỉ báo NLS đã được gán (ví dụ: "TC 3.1.a: ...").
+2.  **Hiện thực hóa NLS:**
+    *   Với mỗi chỉ báo NLS đã xác định ở trên, hãy **diễn giải nó thành một hoạt động học tập cụ thể, sinh động, gắn chặt với bài học của tiết đó** (tham khảo nội dung trong file **\`${khdhFileName}\`**).
+    *   Phần diễn giải phải **chỉ rõ hành động của giáo viên/học sinh và công cụ/phần mềm/nền tảng số được sử dụng**.
+3.  **Trình bày kết quả:** Tạo bảng Phụ lục 1 với các cột tương ứng. Cột "Năng lực số hình thành" phải chứa nội dung đã được hiện thực hóa.
+
+**Ví dụ (CỰC KỲ QUAN TRỌNG):**
+*   **Trong file \`${appendix3FileName}\` có dòng:**
+    *   **Bài học:** "Unit 5: Food and drink - Skills 2"
+    *   **Năng lực số:** "TC 3.1.a: Chỉ ra được cách tạo và chỉnh sửa nội dung có khái niệm cụ thể và mang tính phổ thông bằng những định dạng rõ ràng, phổ biến".
+*   **Kết quả bạn cần tạo ra trong Phụ lục 1:**
+    *   **Bài học:** "Unit 5: Food and drink - Skills 2"
+    *   **Năng lực số hình thành (Đã được hiện thực hóa):** "TC 3.1.a: GV hướng dẫn HS sử dụng ứng dụng Canva để tạo một infographic (sản phẩm dạng phổ biến) trình bày về các món ăn/đồ uống yêu thích (nội dung cụ thể)."
 
 **Định dạng đầu ra:**
 
 **PHỤ LỤC 1: TÍCH HỢP NĂNG LỰC SỐ VÀO KẾ HOẠCH DẠY HỌC MÔN \`${subject}\` - KHỐI \`${selectedGrades}\`**
 *(Phiên bản diễn giải chi tiết cho Tổ chuyên môn)*
 
-| Tiết PP | Chủ đề/Bài học | Năng lực số hình thành |
+| Tiết PP | Chủ đề/Bài học | Năng lực số hình thành (Đã được hiện thực hóa) |
 | :--- | :--- | :--- |
 | *(Dữ liệu do bạn tạo ra)* |
 
 **Lưu ý:**
-File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy xác nhận đã nhận và phân tích được file này trước khi bắt đầu.`;
+Các file tài liệu đính kèm có tên là **\`${khdhFileName}\`** và **\`${appendix3FileName}\`**. Hãy xác nhận đã nhận và phân tích được cả hai file này trước khi bắt đầu.`;
                     setPrompt1(p1);
                 } else {
                     setPrompt1('');
@@ -117,20 +129,29 @@ Bạn là chuyên gia giáo dục Việt Nam. Nhiệm vụ của bạn là hỗ 
     *   **Lớp 6, 7:** Ưu tiên mức **"Trung cấp 1"** (tương ứng cột L6-L7).
     *   **Lớp 8, 9:** Ưu tiên mức **"Trung cấp 2"** (tương ứng cột L8-L9).
     *   **Lớp 10, 11, 12:** Ưu tiên mức **"Nâng cao 1"** (tương ứng cột L10-L11-L12).
-3.  **\`${fileName}\` (Kế hoạch dạy học đính kèm):** Tài liệu chính để phân tích nội dung bài học.
+3.  **\`${khdhFileName}\` (Kế hoạch dạy học đính kèm):** Tài liệu chính để phân tích nội dung bài học.
 
 **Yêu cầu chi tiết về quy trình (CỰC KỲ QUAN TRỌNG):**
 
-1.  **Phân tích KHDH:** Từ file **\`${fileName}\`**, xác định các tiết học (PP) phù hợp để tích hợp NLS.
-2.  **Xác định NLS và CHỈ BÁO:**
-    *   Với mỗi tiết học đã chọn, tìm đến Năng lực thành phần tương ứng trong Thông tư 02 (ví dụ: 1.1).
-    *   Dựa vào định hướng mức độ cho khối **\`${selectedGrades}\`** từ Công văn 3456, xác định đúng cột mức độ trong bảng mô tả của Thông tư 02.
-    *   Trong cột đó, bạn phải **chọn ra MỘT chỉ báo (nội dung của một gạch đầu dòng "-")** cụ thể, phù hợp nhất với hoạt động dạy học.
+1.  **Phân tích KHDH:** Từ file **\`${khdhFileName}\`**, bạn phải **xét TẤT CẢ các tiết học (PP)** có trong kế hoạch. **Mục tiêu là tích hợp NLS cho mọi tiết học.**
+2.  **Xác định NLS và CHỈ BÁO (QUY TẮC CỐT LÕI):**
+    *   Với mỗi tiết học, hãy phân tích kỹ nội dung và hoạt động dạy học.
+    *   Dựa vào định hướng mức độ cho khối **\`${selectedGrades}\`** (theo Công văn 3456), tìm đến các Năng lực thành phần phù hợp trong Thông tư 02.
+    *   **QUAN TRỌNG NHẤT:** Bạn phải **tích cực tìm kiếm và chọn ra TỪ MỘT ĐẾN BA (1-3) chỉ báo** phù hợp nhất. **KHUYẾN KHÍCH MẠNH MẼ việc chọn 2 hoặc 3 chỉ báo nếu nội dung bài học cho phép.** Đừng chỉ dừng lại ở 1 chỉ báo nếu có thể tích hợp thêm.
 3.  **TRÍCH DẪN NGUYÊN VĂN:**
     *   Đây là yêu cầu then chốt. Bạn phải **sao chép chính xác từng từ** của chỉ báo đã chọn từ Thông tư 02 vào bảng kết quả. **TUYỆT ĐỐI KHÔNG** diễn giải, tóm tắt hay thay đổi bất kỳ từ ngữ nào.
 4.  **Trình bày kết quả:**
-    *   Ghi kết quả vào bảng theo định dạng yêu cầu.
+    *   Ghi kết quả vào bảng theo định dạng yêu cầu. **Mỗi chỉ báo NLS tích hợp trong cùng một tiết học phải được xuống dòng và bắt đầu bằng dấu gạch ngang (-).**
     *   Phần "Năng lực số hình thành" phải bắt đầu bằng mã viết tắt (CB, TC, NC, CS) + mã năng lực + ký hiệu chỉ báo (a,b,c...), theo sau là phần mô tả được sao chép nguyên văn.
+5.  **Yêu cầu bổ sung (CỰC KỲ QUAN TRỌNG):**
+    *   **BẮT BUỘC tích hợp NLS cho TẤT CẢ các tiết học.**
+    *   Chỉ trong trường hợp **bất khả kháng** không thể tìm thấy NLS phù hợp, bạn có thể để trống. Tuy nhiên, hãy **hạn chế tối đa** việc này.
+
+**Ví dụ về kết quả có nhiều NLS trong 1 tiết:**
+
+| Tiết PP | Chủ đề/Bài học | Năng lực số hình thành |
+| :--- | :--- | :--- |
+| 25 | Bài 10: Giao tiếp và ứng xử có văn hóa | - TC 1.1.a: Giải thích được nhu cầu thông tin.<br>- TC 2.2.b: Trình bày được cách sử dụng các dịch vụ số phổ biến (thư điện tử, mạng xã hội,...) để tương tác với những người khác. |
 
 **Định dạng đầu ra:**
 
@@ -139,10 +160,10 @@ Bạn là chuyên gia giáo dục Việt Nam. Nhiệm vụ của bạn là hỗ 
 
 | Tiết PP | Chủ đề/Bài học | Năng lực số hình thành |
 | :--- | :--- | :--- |
-| *(Dữ liệu do bạn tạo ra. Ví dụ: "TC 1.1.a: Giải thích được nhu cầu thông tin.")* |
+| *(Dữ liệu do bạn tạo ra)* |
 
 **Lưu ý:**
-File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy xác nhận đã nhận và phân tích được file này trước khi bắt đầu.`;
+File Kế hoạch dạy học đính kèm có tên là **\`${khdhFileName}\`**. Hãy xác nhận đã nhận và phân tích được file này trước khi bắt đầu.`;
                     setPrompt3(p3);
                 } else {
                     setPrompt3('');
@@ -271,14 +292,24 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
                                         </div>
                                     </div>
                                     
-                                    {(appendix1 || appendix3) && (
-                                        <div>
-                                            <label htmlFor="file-upload" className="relative cursor-pointer bg-white p-2 border-2 border-black rounded-lg flex items-center justify-center font-bold shadow-[2px_2px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all text-xs sm:text-sm">
-                                                <span className={`${fileName ? 'text-light-green' : 'text-black'}`}>{fileName ? `Đã chọn: ${fileName}` : 'Chọn file KHDH...'}</span>
-                                                <input id="file-upload" type="file" className="sr-only" onChange={(e) => setFileName(e.target.files[0] ? e.target.files[0].name : '')} />
-                                            </label>
-                                        </div>
-                                    )}
+                                    <div className="space-y-2">
+                                        {(appendix1 || appendix3) && (
+                                            <div>
+                                                <label htmlFor="khdh-file-upload" className="relative cursor-pointer bg-white p-2 border-2 border-black rounded-lg flex items-center justify-center font-bold shadow-[2px_2px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all text-xs sm:text-sm">
+                                                    <span className={`${khdhFileName ? 'text-light-green' : 'text-black'}`}>{khdhFileName ? `KHDH: ${khdhFileName}` : '1. Chọn file KHDH...'}</span>
+                                                    <input id="khdh-file-upload" type="file" className="sr-only" onChange={(e) => setKhdhFileName(e.target.files[0] ? e.target.files[0].name : '')} />
+                                                </label>
+                                            </div>
+                                        )}
+                                        {appendix1 && (
+                                            <div>
+                                                <label htmlFor="pl3-file-upload" className="relative cursor-pointer bg-white p-2 border-2 border-black rounded-lg flex items-center justify-center font-bold shadow-[2px_2px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all text-xs sm:text-sm">
+                                                    <span className={`${appendix3FileName ? 'text-light-green' : 'text-black'}`}>{appendix3FileName ? `PL3: ${appendix3FileName}` : '2. Chọn file Phụ lục 3...'}</span>
+                                                    <input id="pl3-file-upload" type="file" className="sr-only" onChange={(e) => setAppendix3FileName(e.target.files[0] ? e.target.files[0].name : '')} />
+                                                </label>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
 
@@ -286,7 +317,7 @@ File Kế hoạch dạy học đính kèm có tên là **\`${fileName}\`**. Hãy
                                 <button 
                                     onClick={handleGenerate}
                                     className="w-full px-6 py-2 sm:w-auto sm:px-8 sm:py-3 border-2 border-black text-base sm:text-lg font-bold rounded-lg text-black bg-light-yellow shadow-[4px_4px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:shadow-none disabled:translate-x-0 disabled:translate-y-0"
-                                    disabled={!subject || grades.length === 0 || (!appendix1 && !appendix3) || !fileName}
+                                    disabled={!subject || grades.length === 0 || (!appendix1 && !appendix3) || !khdhFileName || (appendix1 && !appendix3FileName)}
                                 >
                                     Tạo câu lệnh
                                 </button>
