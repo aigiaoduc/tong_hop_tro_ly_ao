@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&display=swap');
+
+:root {
+    --primary-color: #FFC700; /* Bright Yellow */
+    --text-color: #000000;
+    --bg-color: #FAF9F6;
+    --board-bg-color: #FFFFFF;
+    --border-width: 3px;
+    --shadow-offset: 8px;
+}
+
+body {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    margin: 0;
+    padding: 2rem;
+    height: 100vh;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+}
+
+.main-content {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.board {
+    background: var(--board-bg-color);
+    padding: 2.5rem 3rem;
+    border: var(--border-width) solid var(--text-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--text-color);
+    text-align: center;
+    flex-grow: 1;
+    max-width: 500px;
+    position: relative;
+    z-index: 10;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.board:hover {
+    box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--text-color);
+}
+
+.character-gif {
+    width: 260px;
+    height: auto;
+    margin-bottom: -5px;
+    margin-left: -40px;
+    z-index: 1;
+    /* Removed filter and animation for a more raw feel */
+}
+
+.title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0 0 0.75rem 0;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin: 0 0 1.5rem 0;
+}
+
+.fallback {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: var(--border-width) solid var(--text-color);
+    display: none; /* Initially hidden, will be shown by JS */
+}
+
+.fallback p {
+    margin: 0 0 1rem 0;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.fallback-button {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-color);
+    background-color: var(--primary-color);
+    border: var(--border-width) solid var(--text-color);
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 var(--text-color);
+    transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+}
+
+.fallback-button:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--text-color);
+}
+
+.fallback-button:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 var(--text-color);
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .character-gif {
+        order: -1; /* Show character on top */
+        width: 180px;
+        margin-bottom: -25px;
+        margin-left: 0;
+    }
+    .board {
+        padding: 2rem 1.5rem;
+        box-shadow: 6px 6px 0 var(--text-color);
+    }
+    .title {
+        font-size: 1.8rem;
+    }
+}

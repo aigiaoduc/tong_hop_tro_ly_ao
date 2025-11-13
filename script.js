@@ -1,14 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
     // --- TRUNG TÂM CẤU HÌNH ---
     const apps = [
-        { name: 'Tích hợp Năng Lực Số', path: 'apps/prompt_nsl/index.html' },
+        { name: 'Tích Hợp Năng Lực Số', path: 'apps/prompt_nsl/index.html' },
+        { name: 'Gợi Ý Năng Lực Số', path: 'apps/goi_y_nang_luc_so/index.html' },
         { name: 'Trò chơi Dạy Học', path: 'apps/tro_ly_tao_tro_choi_day_hoc/index.html' },
-        { name: 'Ma trận đề kiểm tra', path: 'apps/ma_tran_de_kiem_tra/index.html' },
-        { name: 'Tạo đề kiểm tra', path: 'apps/tao_de_kiem_tra/index.html' },
-        { name: 'Tạo mã QR', path: 'apps/tao_ma_qr/index.html' },
+        { name: 'Ma Trận Đề Kiểm Tra', path: 'apps/ma_tran_de_kiem_tra/index.html' },
+        { name: 'Tạo Đề Kiểm Tra', path: 'apps/tao_de_kiem_tra/index.html' },
+        { name: 'Tạo Mã QR', path: 'apps/tao_ma_qr/index.html' },
         { name: 'Tối Ưu Hóa Prompt', path: 'apps/toi_uu_hoa_prompt/index.html' },
         { name: 'Tạo Prompt Veo3 Sora', path: 'apps/tro_ly_veo3_sora/index.html' },
-        { name: 'Sơ đồ tư duy', path: 'apps/so_do_tu_duy/index.html' }
+        { name: 'Sơ Đồ Tư Duy', path: 'apps/so_do_tu_duy/index.html' }
     ];
 
     const menuContainer = document.querySelector('.menu-items-container');
