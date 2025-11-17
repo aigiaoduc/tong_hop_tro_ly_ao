@@ -9,7 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: 'Tạo Mã QR', path: 'apps/tao_ma_qr/index.html' },
         { name: 'Tối Ưu Hóa Prompt', path: 'apps/toi_uu_hoa_prompt/index.html' },
         { name: 'Tạo Prompt Veo3 Sora', path: 'apps/tro_ly_veo3_sora/index.html' },
-        { name: 'Sơ Đồ Tư Duy', path: 'apps/so_do_tu_duy/index.html' }
+        { name: 'Sơ Đồ Tư Duy', path: 'apps/so_do_tu_duy/index.html' },
+        { name: 'Tạo Truyện Tranh Đồng Bộ Nhân Vật', path: 'apps/tao_prompt_truyen_tranh/index.html' }
     ];
 
     const menuContainer = document.querySelector('.menu-items-container');
