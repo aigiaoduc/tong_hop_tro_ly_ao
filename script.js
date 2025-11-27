@@ -10,7 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: 'Tối Ưu Hóa Prompt', path: 'apps/toi_uu_hoa_prompt/index.html' },
         { name: 'Tạo Prompt Veo3 Sora', path: 'apps/tro_ly_veo3_sora/index.html' },
         { name: 'Sơ Đồ Tư Duy', path: 'apps/so_do_tu_duy/index.html' },
-        { name: 'Tạo Truyện Tranh Đồng Bộ Nhân Vật', path: 'apps/tao_prompt_truyen_tranh/index.html' }
+        { name: 'Tạo Truyện Tranh Đồng Bộ Nhân Vật', path: 'apps/tao_prompt_truyen_tranh/index.html' },
+        { name: 'Tạo Prompt Infographic Chuyên Nghiệp', path: 'apps/prompt_infographic/index.html' }
     ];
 
     const menuContainer = document.querySelector('.menu-items-container');
@@ -20,6 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const logoContainer = document.getElementById('logo-container');
     const hamburgerMenu = document.getElementById('hamburger-menu');
     const appMenu = document.getElementById('app-menu');
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+    const contentFrame = document.querySelector('.content-frame');
+    const fullscreenIcon = document.querySelector('.icon-fullscreen');
+    const exitFullscreenIcon = document.querySelector('.icon-exit-fullscreen');
     let currentActiveButton = null;
     let menuButtons = [];
     let toastTimeout;
@@ -135,6 +140,28 @@ document.addEventListener('DOMContentLoaded', function() {
         logoContainer.addEventListener('click', goHome);
         logoContainer.style.cursor = 'pointer'; // Thêm con trỏ chuột
     }
+
+    // --- FULLSCREEN LOGIC ---
+    function updateFullscreenIcons() {
+        const isFullscreen = !!document.fullscreenElement;
+        fullscreenIcon.style.display = isFullscreen ? 'none' : 'block';
+        exitFullscreenIcon.style.display = isFullscreen ? 'block' : 'none';
+    }
+
+    if (fullscreenBtn && contentFrame) {
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                contentFrame.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        });
+    }
+
+    document.addEventListener('fullscreenchange', updateFullscreenIcons);
+
 
     // Xóa class loading sau khi iframe đã tải xong
     appFrame.addEventListener('load', () => {

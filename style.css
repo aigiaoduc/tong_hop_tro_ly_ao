@@ -200,7 +200,43 @@ body {
     flex-grow: 1;
     padding: 25px;
     padding-left: 0;
+    position: relative; /* Thêm để định vị nút con */
 }
+
+#fullscreen-btn {
+    position: absolute;
+    top: 40px; /* Di chuyển xuống 1 chút */
+    right: 45px; /* Di chuyển vào trong lề phải */
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    background-color: var(--accent-primary); /* Làm cho nó nổi bật */
+    border: var(--border-thickness) solid var(--text-color);
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0px var(--text-color);
+    transition: all 0.15s ease-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color); /* Thêm màu cho SVG kế thừa */
+}
+
+#fullscreen-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--text-color);
+}
+
+#fullscreen-btn:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+}
+
+#fullscreen-btn svg {
+    width: 24px;  /* Tăng kích thước icon một chút */
+    height: 24px; /* Tăng kích thước icon một chút */
+}
+
 
 #app-frame {
     width: 100%;
