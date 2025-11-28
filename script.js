@@ -89,8 +89,22 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (isOverflowing) {
                 button.classList.add('marquee');
-                // Nhân đôi văn bản để tạo hiệu ứng cuộn liền mạch
-                textWrap.textContent = `${app.name} \u00A0 | \u00A0 ${app.name}`;
+                const originalText = app.name;
+                // Chuẩn bị sẵn văn bản sẽ cuộn
+                const marqueeText = `${originalText} \u00A0 | \u00A0 ${originalText}`;
+
+                button.addEventListener('mouseenter', () => {
+                    // Khi di chuột vào, nếu text đang ở dạng gốc thì đổi sang dạng cuộn
+                    if (textWrap.textContent === originalText) {
+                        textWrap.textContent = marqueeText;
+                    }
+                });
+
+                button.addEventListener('mouseleave', () => {
+                    // Khi chuột rời đi, ngay lập tức đặt lại text gốc
+                    // Animation sẽ dừng lại nhờ CSS :hover
+                    textWrap.textContent = originalText;
+                });
             }
         });
     }

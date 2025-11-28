@@ -167,9 +167,14 @@ body {
     white-space: nowrap;
 }
 
+
 .menu-button.marquee .text-wrap {
     /* Thêm khoảng đệm bên phải để tạo khoảng cách giữa các lần lặp lại */
     padding-right: 30px; 
+    /* animation: marquee-scroll 10s linear infinite; */ /* Xóa animation tự động */
+}
+
+.menu-button.marquee:hover .text-wrap {
     animation: marquee-scroll 10s linear infinite;
 }
 
@@ -177,6 +182,7 @@ body {
     from { transform: translateX(0); }
     to { transform: translateX(-100%); }
 }
+
 
 .menu-button:hover {
     background-color: var(--accent-secondary);
