@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: 'Tạo Prompt Veo3 Sora', path: 'apps/tro_ly_veo3_sora/index.html' },
         { name: 'Sơ Đồ Tư Duy', path: 'apps/so_do_tu_duy/index.html' },
         { name: 'Tạo Truyện Tranh Đồng Bộ Nhân Vật', path: 'apps/tao_prompt_truyen_tranh/index.html' },
-        { name: 'Tạo Prompt Infographic Chuyên Nghiệp', path: 'apps/prompt_infographic/index.html' }
+        { name: 'Tạo Prompt Infographic Chuyên Nghiệp', path: 'apps/prompt_infographic/index.html' },
+        { name: 'Tạo Prompt Veo 3', path: 'apps/prompt_veo3/index.html' }
     ];
 
     const menuContainer = document.querySelector('.menu-items-container');
