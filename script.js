@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         'Trả phí': {
             apps: [
-             { name: 'Trợ lý viết SKKN', path: 'apps/Tro_ly_viet_SKKN/index.html' }   
+             { name: 'Trợ lý viết SKKN', path: 'apps/Tro_ly_viet_SKKN/index.html' },
+             { name: 'Trợ lý viết Biện pháp thi GVG', path: 'apps/tro_ly_bien_phap_gvg/index.html' } 
             ],
             isLocked: false,
             unlocked: true
