@@ -52,6 +52,21 @@
         </main>
     </div>
     <div id="toast-notification" class="toast"></div>
+
+    <!-- Password Modal -->
+    <div id="password-modal-overlay" class="modal-overlay">
+        <div id="password-modal" class="modal">
+            <h3 id="password-modal-title">Mở khóa mục Thành viên</h3>
+            <p>Vui lòng nhập mật khẩu để tiếp tục.</p>
+            <input type="password" id="password-input" class="modal-input" placeholder="Mật khẩu...">
+            <div id="password-error-message" class="modal-error"></div>
+            <div class="modal-buttons">
+                <button id="password-cancel-btn" class="modal-button cancel">Hủy</button>
+                <button id="password-submit-btn" class="modal-button submit">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

@@ -142,45 +142,25 @@ body {
 }
 
 .menu-button {
-    display: block;
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center text vertically */
     width: 100%;
-    padding: 12px 18px;
+    min-height: 45px; /* Set a minimum height */
+    padding: 10px 15px; /* Adjust padding */
     margin-bottom: 16px;
     border: var(--border-thickness) solid var(--text-color);
-    border-radius: 8px; /* Slightly rounded corners are acceptable in modern Neo-brutalism */
+    border-radius: 8px;
     background-color: #ffffff;
     color: var(--text-color);
     text-align: left;
-    font-size: 1em;
+    font-size: 0.9em;
     font-weight: 700;
     cursor: pointer;
     box-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--text-color);
     transition: all 0.15s ease-out;
-    line-height: 1.2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: clip; /* Or 'clip' if you prefer to just cut it off */
-}
-
-.menu-button .text-wrap {
-    display: inline-block;
-    white-space: nowrap;
-}
-
-
-.menu-button.marquee .text-wrap {
-    /* Thêm khoảng đệm bên phải để tạo khoảng cách giữa các lần lặp lại */
-    padding-right: 30px; 
-    /* animation: marquee-scroll 10s linear infinite; */ /* Xóa animation tự động */
-}
-
-.menu-button.marquee:hover .text-wrap {
-    animation: marquee-scroll 10s linear infinite;
-}
-
-@keyframes marquee-scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-100%); }
+    line-height: 1.4; /* Increase line-height for readability */
+    white-space: normal; /* Allow text to wrap */
+    overflow-wrap: break-word; /* Break long words if necessary */
 }
 
 
@@ -409,4 +389,175 @@ body {
     .hamburger-menu {
         display: none; /* Ẩn hamburger trên desktop */
     }
+}
+
+/* --- Styles for Collapsible Menu Categories --- */
+.menu-category-header {
+    font-weight: 700;
+    font-size: 1.1em;
+    padding: 12px 10px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: var(--border-thickness) solid var(--text-color);
+    border-radius: 8px;
+    background-color: var(--accent-secondary);
+    box-shadow: 4px 4px 0px var(--text-color);
+    transition: all 0.15s ease-out;
+}
+
+.menu-category-header:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--text-color);
+}
+
+.menu-category-header::after {
+    content: '▼'; /* Down arrow for collapsed */
+    font-size: 0.8em;
+    transition: transform 0.2s ease-in-out;
+}
+
+.menu-category-header.expanded::after {
+    transform: rotate(180deg); /* Up arrow for expanded */
+}
+
+.menu-category-header.locked {
+    background-color: #f0f0f0; /* A more muted color for locked state */
+    color: #888;
+}
+
+.menu-category-header.locked::before {
+    content: '🔒';
+    margin-right: 8px;
+}
+
+.menu-category-header.unlocked {
+    background-color: var(--accent-primary);
+}
+
+.menu-app-container {
+    padding-left: 10px; /* Indent app buttons */
+    border-left: 2px dashed rgba(0,0,0,0.2);
+    margin-left: 10px;
+    /* display: none; /* Hidden by default, controlled by JS */
+}
+
+.menu-item-placeholder {
+    padding: 10px;
+    font-style: italic;
+    color: #777;
+    text-align: center;
+}
+
+/* --- Styles for Password Modal --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal {
+    background-color: var(--background);
+    padding: 25px 35px;
+    border: var(--border-thickness) solid var(--text-color);
+    border-radius: 8px;
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--text-color);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.visible .modal {
+    transform: scale(1);
+}
+
+.modal h3 {
+    margin-top: 0;
+    font-size: 1.5em;
+}
+
+.modal p {
+    margin-bottom: 20px;
+    font-size: 1em;
+}
+
+.modal-input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: var(--border-thickness) solid var(--text-color);
+    border-radius: 8px;
+    background-color: #ffffff;
+    font-family: var(--font-main);
+    font-size: 1em;
+    box-sizing: border-box;
+    box-shadow: inset 3px 3px 0px rgba(0,0,0,0.1);
+}
+
+.modal-input:focus {
+    outline: none;
+    background-color: var(--accent-secondary);
+}
+
+.modal-error {
+    color: #e53935;
+    font-weight: 700;
+    height: 20px;
+    margin-bottom: 15px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.modal-button {
+    flex-grow: 1;
+    padding: 12px 18px;
+    border: var(--border-thickness) solid var(--text-color);
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--text-color);
+    transition: all 0.15s ease-out;
+}
+
+.modal-button.submit {
+    background-color: var(--accent-primary);
+}
+
+.modal-button.cancel {
+    background-color: #f0f0f0;
+}
+
+.modal-button:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0px var(--text-color);
+}
+
+.modal-button:active {
+    transform: translate(var(--shadow-offset), var(--shadow-offset));
+    box-shadow: none;
 }
