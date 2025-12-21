@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { HashRouter, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   Package, 
@@ -20,7 +20,10 @@ import {
   Lock,
   RefreshCw,
   Zap,
-  Home as HomeIcon
+  Home as HomeIcon,
+  Crown,
+  History,
+  Info
 } from 'lucide-react';
 import Home from './pages/Home';
 import AppsList from './pages/AppsList';
@@ -61,20 +64,22 @@ export const getDaysUntilExpiry = (dateStr: string): number => {
   return Math.ceil((expiry.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
 };
 
-const ForcedExpiredModal: React.FC<{ isOpen: boolean; onLogout: () => void }> = ({ isOpen, onLogout }) => {
+const MembershipPromptModal: React.FC<{ isOpen: boolean; onLogin: () => void; onClose: () => void }> = ({ isOpen, onLogin, onClose }) => {
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 z-[1000] flex items-center justify-center px-4">
-      <div className="absolute inset-0 bg-slate-950/95 backdrop-blur-xl" />
-      <div className="relative w-full max-w-md bg-[#0f172a] rounded-[2.5rem] p-8 border border-rose-500/30 shadow-[0_0_100px_rgba(244,63,94,0.2)] text-center animate-in zoom-in duration-300">
-        <div className="w-20 h-20 bg-rose-500/10 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-6 border border-rose-500/20 shadow-2xl">
-          <ShieldAlert className="w-10 h-10" />
+      <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-xl" onClick={onClose} />
+      <div className="relative w-full max-w-md bg-[#0f172a] rounded-[3rem] p-10 border border-indigo-500/20 shadow-[0_0_100px_rgba(99,102,241,0.2)] text-center animate-in zoom-in duration-300">
+        <div className="w-20 h-20 bg-indigo-500/10 text-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6 border border-indigo-500/20">
+          <Crown className="w-10 h-10" />
         </div>
-        <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-4">Tài khoản hết hạn</h3>
-        <p className="text-gray-400 text-sm mb-8 leading-relaxed px-4">Gói hội viên VIP của bạn đã kết thúc. Vui lòng gia hạn để tiếp tục sử dụng các ứng dụng đặc quyền từ Thầy Quân.</p>
+        <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-4">Bạn chưa là Hội viên VIP</h3>
+        <p className="text-gray-400 text-sm mb-8 leading-relaxed px-4">Tính năng này chỉ dành riêng cho các thành viên trong cộng đồng VIP của Thầy Quân.</p>
         <div className="space-y-3">
-          <Link to="/membership" onClick={onLogout} className="w-full flex items-center justify-center gap-3 bg-indigo-600 py-4 rounded-2xl text-white font-black uppercase text-xs tracking-widest hover:bg-indigo-500 transition-all shadow-2xl shadow-indigo-600/30 active:scale-95">Gia hạn ngay</Link>
-          <button onClick={onLogout} className="w-full py-3 text-gray-500 hover:text-white text-[10px] font-black uppercase tracking-[0.2em] transition-colors">Đăng xuất</button>
+          <Link to="/membership" onClick={onClose} className="w-full flex items-center justify-center gap-3 bg-indigo-600 py-5 rounded-2xl text-white font-black uppercase text-xs tracking-widest hover:bg-indigo-500 transition-all shadow-xl shadow-indigo-600/20 active:scale-95">Đăng ký ngay</Link>
+          <button onClick={() => { onLogin(); onClose(); }} className="w-full py-4 text-gray-400 hover:text-white text-[10px] font-black uppercase tracking-[0.2em] transition-colors flex items-center justify-center gap-2">
+            Đã là thành viên? <span className="text-indigo-400 underline underline-offset-4">Đăng nhập tại đây</span>
+          </button>
         </div>
       </div>
     </div>
@@ -197,7 +202,7 @@ const AuthModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen,
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[120] flex items-center justify-center px-4">
+    <div className="fixed inset-0 z-[1200] flex items-center justify-center px-4">
       <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-md" onClick={() => !isLoading && !isSuccess && onClose()} />
       <div className="relative w-full max-w-md bg-[#0f172a] rounded-[3rem] p-10 border border-white/10 shadow-2xl animate-in zoom-in duration-300">
         {!isLoading && !isSuccess && <button onClick={onClose} className="absolute top-6 right-6 text-gray-500 hover:text-white transition-colors"><X className="w-6 h-6" /></button>}
@@ -288,12 +293,12 @@ const Navbar: React.FC<{ onOpenLogin: () => void }> = ({ onOpenLogin }) => {
           <button onClick={user ? () => setShowUserMenu(!showUserMenu) : onOpenLogin} 
             className={`flex items-center gap-4 transition-all duration-300 ${
               user 
-                ? 'p-1 md:p-2 rounded-full border border-indigo-500/40 bg-indigo-500/10 pr-6' 
+                ? 'p-1 rounded-full border border-indigo-500/40 bg-indigo-500/10 pr-6 hover:border-indigo-500' 
                 : 'px-8 py-4 md:py-5 rounded-2xl md:rounded-3xl border border-indigo-500/30 bg-indigo-600/10 hover:bg-indigo-600/20 hover:border-indigo-500/60 shadow-lg shadow-indigo-600/5 group/login'
             }`}>
             {user ? (
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border border-indigo-500/50 shadow-lg">
-                <img src={DEFAULT_AVATAR} className="w-full h-full object-cover" alt="Avatar" />
+              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-indigo-500 shadow-lg relative shrink-0 flex items-center justify-center">
+                <img src={DEFAULT_AVATAR} className="w-full h-full object-cover aspect-square rounded-full" alt="Avatar" />
               </div>
             ) : (
               <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-indigo-600/20 flex items-center justify-center border border-indigo-500/20 group-hover/login:scale-110 transition-transform">
@@ -318,21 +323,47 @@ const Navbar: React.FC<{ onOpenLogin: () => void }> = ({ onOpenLogin }) => {
           {user && showUserMenu && (
             <>
               <div className="fixed inset-0 z-10" onClick={() => setShowUserMenu(false)} />
-              <div className="absolute top-full right-0 mt-4 w-72 bg-[#0f172a] rounded-[2rem] p-6 shadow-2xl z-20 border border-white/10 animate-in fade-in slide-in-from-top-4">
-                <div className="flex items-center gap-4 pb-5 border-b border-white/5">
-                  <img src={DEFAULT_AVATAR} className="w-12 h-12 rounded-full border border-indigo-500/30" alt="Avatar" />
-                  <div className="overflow-hidden">
-                    <p className="text-white font-black text-sm truncate uppercase">{user.name}</p>
-                    <p className="text-[9px] text-indigo-400 font-black uppercase tracking-widest mt-1">VIP Member</p>
+              <div className="absolute top-full right-0 mt-6 w-85 bg-[#0f172a]/95 backdrop-blur-2xl rounded-[3rem] p-0 shadow-[0_30px_120px_rgba(0,0,0,0.9)] z-20 border border-white/10 animate-in fade-in slide-in-from-top-4 overflow-hidden">
+                <div className="p-10 bg-gradient-to-br from-indigo-600/30 via-indigo-600/5 to-transparent border-b border-white/5 relative">
+                  <div className="absolute top-6 right-6"><Crown className="w-8 h-8 text-indigo-500/30" /></div>
+                  <div className="flex items-center gap-6">
+                    <div className="w-20 h-20 rounded-full border-2 border-indigo-500 p-1.5 bg-slate-900 shadow-2xl overflow-hidden shrink-0 flex items-center justify-center">
+                      <img src={DEFAULT_AVATAR} className="w-full h-full rounded-full object-cover aspect-square" alt="Avatar" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-white font-black text-xl truncate uppercase tracking-tighter leading-tight mb-1">{user.name}</p>
+                      <div className="flex items-center gap-2">
+                        <span className="flex h-2 w-2 relative">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        <p className="text-[11px] text-indigo-400 font-black uppercase tracking-[0.2em]">VIP MEMBER</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div className="py-4 space-y-3">
-                  <div className="p-4 bg-white/5 rounded-2xl border border-white/5 flex justify-between items-center">
-                    <span className="text-[9px] text-gray-500 font-black uppercase">Hết hạn:</span>
-                    <span className="text-[11px] text-white font-black">{user.expiryDate}</span>
+                
+                <div className="p-10 space-y-5">
+                  <div className="flex flex-col gap-4">
+                    <div className="p-5 bg-white/5 rounded-3xl border border-white/5 flex flex-col gap-1.5 hover:bg-white/10 transition-all group/info">
+                      <div className="flex items-center gap-2.5 text-gray-500 group-hover/info:text-indigo-400 transition-colors">
+                        <Calendar className="w-4 h-4" />
+                        <span className="text-[10px] font-black uppercase tracking-widest">Thời hạn hội viên:</span>
+                      </div>
+                      <span className="text-sm text-indigo-100 font-black tracking-widest pl-6.5 uppercase">{user.expiryDate}</span>
+                    </div>
+                    
+                    <div className="p-5 bg-white/5 rounded-3xl border border-white/5 flex flex-col gap-1.5 hover:bg-white/10 transition-all group/key">
+                      <div className="flex items-center gap-2.5 text-gray-500 group-hover/key:text-indigo-400 transition-colors">
+                        <Key className="w-4 h-4" />
+                        <span className="text-[10px] font-black uppercase tracking-widest">Mã kích hoạt VIP:</span>
+                      </div>
+                      <span className="text-sm text-indigo-100 font-black tracking-widest pl-6.5">{user.key.slice(0, 8)}...{user.key.slice(-4)}</span>
+                    </div>
                   </div>
-                  <button onClick={handleLogout} className="w-full py-4 rounded-2xl bg-rose-500/10 text-rose-500 text-[11px] font-black uppercase tracking-widest hover:bg-rose-500 hover:text-white transition-all border border-rose-500/20 flex items-center justify-center gap-3">
-                    <LogOut className="w-5 h-5" /> Đăng xuất
+
+                  <button onClick={handleLogout} className="w-full mt-4 py-5 rounded-2xl bg-rose-500/10 text-rose-500 text-[11px] font-black uppercase tracking-[0.2em] hover:bg-rose-500 hover:text-white transition-all border border-rose-500/20 flex items-center justify-center gap-3 active:scale-95 shadow-xl shadow-rose-900/10">
+                    <LogOut className="w-5 h-5" /> Rời khỏi hệ thống
                   </button>
                 </div>
               </div>
@@ -346,15 +377,21 @@ const Navbar: React.FC<{ onOpenLogin: () => void }> = ({ onOpenLogin }) => {
 
 const App: React.FC = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isPromptOpen, setIsPromptOpen] = useState(false);
   const [activeApp, setActiveApp] = useState<{ url: string; name: string } | null>(null);
 
   useEffect(() => {
     const handleOpenLogin = () => setIsLoginOpen(true);
+    const handleOpenPrompt = () => setIsPromptOpen(true);
     const handleOpenApp = (e: any) => setActiveApp(e.detail);
+    
     window.addEventListener('trigger-login-modal', handleOpenLogin);
+    window.addEventListener('trigger-membership-prompt', handleOpenPrompt);
     window.addEventListener('trigger-app-viewer', handleOpenApp as EventListener);
+    
     return () => {
       window.removeEventListener('trigger-login-modal', handleOpenLogin);
+      window.removeEventListener('trigger-membership-prompt', handleOpenPrompt);
       window.removeEventListener('trigger-app-viewer', handleOpenApp as EventListener);
     };
   }, []);
@@ -364,6 +401,11 @@ const App: React.FC = () => {
       <div className="min-h-screen pt-24 md:pt-40 pb-10">
         <Navbar onOpenLogin={() => setIsLoginOpen(true)} />
         <AuthModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
+        <MembershipPromptModal 
+          isOpen={isPromptOpen} 
+          onLogin={() => setIsLoginOpen(true)} 
+          onClose={() => setIsPromptOpen(false)} 
+        />
         <AppViewerModal url={activeApp?.url || null} name={activeApp?.name || null} onClose={() => setActiveApp(null)} />
         <main className="max-w-7xl mx-auto px-4 md:px-8">
           <Routes>

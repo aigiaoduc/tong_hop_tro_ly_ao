@@ -1,12 +1,12 @@
 
 import React, { useState } from 'react';
-// Added Smartphone to the imports from lucide-react
-import { Check, Star, Zap, MessageSquare, X, Copy, CheckCircle2, CreditCard, Smartphone } from 'lucide-react';
+import { Check, Star, Zap, MessageSquare, X, Copy, CheckCircle2, CreditCard, Smartphone, Info, UserCheck } from 'lucide-react';
 import { MEMBERSHIP_TIERS } from '../constants';
 
 const Membership: React.FC = () => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
+  const [showZaloInstructions, setShowZaloInstructions] = useState(false);
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [username, setUsername] = useState('');
 
@@ -90,8 +90,40 @@ const Membership: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                <a href="https://zalo.me/0355213107" target="_blank" className="w-full flex items-center justify-center gap-3 bg-indigo-600 text-center text-white py-4 md:py-5 rounded-xl font-black uppercase text-xs tracking-widest shadow-xl shadow-indigo-600/20 active:scale-95 transition-all"><Smartphone className="w-4 h-4" /> Báo đã chuyển (Zalo)</a>
+                {/* THAY ĐỔI: Chuyển nút báo đã chuyển Zalo thành modal hướng dẫn */}
+                <button onClick={() => setShowZaloInstructions(true)} className="w-full flex items-center justify-center gap-3 bg-indigo-600 text-center text-white py-4 md:py-5 rounded-xl font-black uppercase text-xs tracking-widest shadow-xl shadow-indigo-600/20 active:scale-95 transition-all">
+                  <Smartphone className="w-4 h-4" /> Báo đã chuyển (Zalo)
+                </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL HƯỚNG DẪN ZALO CHI TIẾT */}
+      {showZaloInstructions && (
+        <div className="fixed inset-0 z-[160] flex items-center justify-center px-4">
+          <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={() => setShowZaloInstructions(false)} />
+          <div className="relative bg-[#0f172a] w-full max-w-md rounded-[2.5rem] p-8 md:p-10 border border-indigo-500/20 shadow-2xl animate-in zoom-in duration-300">
+            <button onClick={() => setShowZaloInstructions(false)} className="absolute top-5 right-5 text-gray-500 hover:text-white"><X className="w-5 h-5" /></button>
+            <div className="text-center space-y-6">
+              <div className="w-16 h-16 bg-indigo-600 rounded-3xl flex items-center justify-center mx-auto shadow-xl"><Info className="w-8 h-8 text-white" /></div>
+              <h3 className="text-2xl font-black text-white uppercase tracking-tight">Hướng dẫn kích hoạt</h3>
+              <div className="space-y-4 text-left">
+                <div className="flex gap-4 p-4 bg-white/5 rounded-2xl border border-white/5">
+                  <div className="w-7 h-7 rounded-full bg-indigo-600 flex items-center justify-center text-[10px] font-black shrink-0">1</div>
+                  <p className="text-gray-300 text-[13px] font-bold leading-relaxed">Truy cập vào ứng dụng <span className="text-indigo-400">Zalo</span>.</p>
+                </div>
+                <div className="flex gap-4 p-4 bg-white/5 rounded-2xl border border-white/5">
+                  <div className="w-7 h-7 rounded-full bg-indigo-600 flex items-center justify-center text-[10px] font-black shrink-0">2</div>
+                  <p className="text-gray-300 text-[13px] font-bold leading-relaxed">Tìm kiếm số điện thoại: <span className="text-indigo-400 font-black">0355 213 107</span></p>
+                </div>
+                <div className="flex gap-4 p-4 bg-white/5 rounded-2xl border border-white/5">
+                  <div className="w-7 h-7 rounded-full bg-indigo-600 flex items-center justify-center text-[10px] font-black shrink-0">3</div>
+                  <p className="text-gray-300 text-[13px] font-bold leading-relaxed">Gửi minh chứng chuyển khoản cho Zalo tên <span className="text-indigo-400 font-black">Trần Hồng Quân</span> để kích hoạt mã VIP.</p>
+                </div>
+              </div>
+              <button onClick={() => setShowZaloInstructions(false)} className="w-full bg-indigo-600 text-white py-4.5 rounded-xl font-black uppercase text-[11px] tracking-widest active:scale-95 transition-all shadow-lg shadow-indigo-600/20">Đã hiểu</button>
             </div>
           </div>
         </div>
