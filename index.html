@@ -5,84 +5,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kho Trợ lý AI Thầy Quân</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-      :root {
-        --font-main: 'Be Vietnam Pro', sans-serif;
-        --font-secondary: 'Inter', sans-serif;
-      }
-      body {
-        font-family: var(--font-main);
-        background-color: #020617;
-        color: #f1f5f9;
-        letter-spacing: -0.015em;
-        line-height: 1.6;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-      .font-title {
-        font-family: var(--font-main);
-      }
-      .font-inter {
-        font-family: var(--font-secondary);
-      }
-      .glass {
-        background: rgba(15, 23, 42, 0.6);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-      }
-      .gradient-text {
-        background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #fb7185 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        display: inline-block;
-      }
-      h1, h2, h3, h4 {
-        font-family: var(--font-main);
-        font-weight: 800;
-        letter-spacing: -0.035em;
-        line-height: 1.15;
-      }
-      .custom-scrollbar::-webkit-scrollbar {
-        width: 8px;
-      }
-      .custom-scrollbar::-webkit-scrollbar-track {
-        background: #020617;
-      }
-      .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #1e293b;
-        border-radius: 20px;
-      }
-      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #334155;
-      }
-      p, span, li, button {
-        font-weight: 400;
-      }
-      @keyframes shake {
-        0%, 100% { transform: translateX(0); }
-        25% { transform: translateX(-6px); }
-        75% { transform: translateX(6px); }
-      }
-      .animate-shake {
-        animation: shake 0.2s ease-in-out 0s 2;
-      }
-    </style>
   <script type="importmap">
 {
   "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
     "react": "https://esm.sh/react@^19.2.3",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
     "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
     "recharts": "https://esm.sh/recharts@^3.6.0",
     "vite": "https://esm.sh/vite@^7.3.0",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
   }
 }
 </script>

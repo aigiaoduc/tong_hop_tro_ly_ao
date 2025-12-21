@@ -121,7 +121,15 @@ const AppViewerModal: React.FC<{ url: string | null; name: string | null; onClos
             <p className="text-gray-500 text-[9px] font-bold uppercase tracking-widest">Vui lòng chờ...</p>
           </div>
         )}
-        <iframe key={iframeKey} src={url} className="w-full h-full border-none bg-white" onLoad={() => setIsLoading(false)} title={name || 'AI App'} sandbox="allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-scripts allow-same-origin allow-downloads" allow="clipboard-read; clipboard-write; display-capture; autoplay" />
+        <iframe 
+          key={iframeKey} 
+          src={url} 
+          className="w-full h-full border-none bg-white" 
+          onLoad={() => setIsLoading(false)} 
+          title={name || 'AI App'} 
+          sandbox="allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-scripts allow-same-origin allow-downloads" 
+          allow="clipboard-read; clipboard-write; display-capture; autoplay" 
+        />
       </div>
     </div>
   );
