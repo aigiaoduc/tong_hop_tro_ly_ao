@@ -1,0 +1,265 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap');
+
+:root {
+    --primary-color-main: #7F5AF0;
+    --primary-color-light: #9D81F7;
+    --secondary-color: #6C757D;
+    --text-color: #2D3748;
+    --text-color-muted: #718096;
+    --surface-color: rgba(255, 255, 255, 0.7);
+    --border-color: rgba(0, 0, 0, 0.08);
+    --background-color: #F7F7FC;
+    --background-glow: radial-gradient(ellipse at 80% 20%, rgba(127, 90, 240, 0.1) 0%, transparent 50%),
+                       radial-gradient(ellipse at 20% 80%, rgba(0, 123, 255, 0.1) 0%, transparent 50%);
+    --font-family: 'Be Vietnam Pro', sans-serif;
+    --border-radius: 16px;
+    --shadow: 0 8px 32px rgba(100, 100, 150, 0.15);
+    --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    background-image: var(--background-glow);
+    background-attachment: fixed;
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.app-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 40px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, var(--primary-color-main), #4D9FFF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+}
+
+header p {
+    font-size: 1.1rem;
+    color: var(--text-color-muted);
+    margin-top: 8px;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.04);
+    border-radius: 12px;
+    padding: 5px;
+}
+
+.tab-link {
+    background-color: transparent;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-color-muted);
+    border-radius: 10px;
+    transition: var(--transition-smooth);
+    position: relative;
+    z-index: 1;
+}
+
+.tab-link.active {
+    color: white;
+    background-color: var(--primary-color-main);
+    box-shadow: 0 2px 10px rgba(127, 90, 240, 0.3);
+}
+
+.tab-link:hover:not(.active) {
+    color: var(--text-color);
+}
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--primary-color-main);
+}
+
+textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    font-family: var(--font-family);
+    font-size: 1rem;
+    resize: vertical;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.02);
+    color: var(--text-color);
+    transition: var(--transition-smooth);
+}
+
+textarea::placeholder {
+    color: var(--text-color-muted);
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color-main);
+    box-shadow: 0 0 0 4px rgba(127, 90, 240, 0.15);
+    background-color: white;
+}
+
+#mindmapData {
+    min-height: 280px;
+}
+
+.btn {
+    background: linear-gradient(90deg, var(--primary-color-main), var(--primary-color-light));
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    transition: var(--transition-smooth);
+    box-shadow: 0 4px 15px rgba(127, 90, 240, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(127, 90, 240, 0.35);
+}
+
+.btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 10px rgba(127, 90, 240, 0.2);
+}
+
+.btn-secondary {
+    background: #E2E8F0;
+    color: var(--text-color);
+    box-shadow: none;
+}
+
+.btn-secondary:hover {
+    background: #CBD5E0;
+    box-shadow: none;
+    transform: translateY(-2px);
+}
+
+.btn-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 30px 0;
+}
+
+.error {
+    color: #9B2C2C;
+    background-color: #FED7D7;
+    border: 1px solid #FBB6B6;
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 10px;
+    transition: opacity 0.3s ease;
+}
+
+.error:empty {
+    display: none;
+}
+
+.mindmap-container {
+    width: 100%;
+    height: 500px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    background-color: #FFFFFF;
+}
+
+#mindmap {
+    width: 100%;
+    height: 100%;
+}
+
+/* Custom Markmap Theme */
+#mindmap {
+    --markmap-text-color: var(--text-color);
+    --markmap-line-color: #D1D5DB;
+    --markmap-node-color: var(--primary-color-main);
+    --markmap-node-padding: 0.2em 0.5em;
+    --markmap-font-size: 15px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    .app-container {
+        margin: 10px;
+        padding: 20px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    .tabs {
+        flex-wrap: wrap;
+    }
+    .tab-link {
+        flex-grow: 1;
+        text-align: center;
+    }
+    .btn-group {
+        flex-direction: column;
+    }
+    .btn {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
+}
