@@ -278,14 +278,20 @@ const Navbar: React.FC<{ onOpenLogin: () => void }> = ({ onOpenLogin }) => {
 
         <div className="flex items-center gap-1 md:gap-4 relative shrink-0">
           <button onClick={user ? () => setShowUserMenu(!showUserMenu) : onOpenLogin} 
-            className={`flex items-center gap-4 p-1 md:p-2 rounded-full border transition-all duration-300 ${
-              user ? 'border-indigo-500/40 bg-indigo-500/10 pr-6' : 'border-white/10 hover:border-indigo-500/50 bg-white/5 px-8'
+            className={`flex items-center gap-4 transition-all duration-300 ${
+              user 
+                ? 'p-1 md:p-2 rounded-full border border-indigo-500/40 bg-indigo-500/10 pr-6' 
+                : 'px-8 py-4 md:py-5 rounded-2xl md:rounded-3xl border border-indigo-500/30 bg-indigo-600/10 hover:bg-indigo-600/20 hover:border-indigo-500/60 shadow-lg shadow-indigo-600/5 group/login'
             }`}>
             {user ? (
               <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border border-indigo-500/50 shadow-lg">
                 <img src={DEFAULT_AVATAR} className="w-full h-full object-cover" alt="Avatar" />
               </div>
-            ) : null}
+            ) : (
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-indigo-600/20 flex items-center justify-center border border-indigo-500/20 group-hover/login:scale-110 transition-transform">
+                <UserIcon className="w-4 h-4 md:w-5 md:h-5 text-indigo-400" />
+              </div>
+            )}
             <div className="text-left">
               <p className="text-white text-xs md:text-sm font-black uppercase tracking-tight leading-none">
                 {user ? user.name : 'Khách'}
@@ -296,7 +302,7 @@ const Navbar: React.FC<{ onOpenLogin: () => void }> = ({ onOpenLogin }) => {
                    <ChevronDown className={`w-3 h-3 text-gray-500 transition-transform ${showUserMenu ? 'rotate-180' : ''}`} />
                 </div>
               ) : (
-                <p className="text-[9px] text-gray-500 font-black uppercase tracking-[0.2em] mt-1.5">Đăng nhập</p>
+                <p className="text-[9px] text-indigo-400/60 font-black uppercase tracking-[0.2em] mt-1.5 group-hover/login:text-indigo-400 transition-colors">Đăng nhập ngay</p>
               )}
             </div>
           </button>
