@@ -1,72 +1,95 @@
+
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tổng Hợp Ứng Dụng</title>
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kho Trợ lý AI Thầy Quân</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --font-main: 'Be Vietnam Pro', sans-serif;
+        --font-secondary: 'Inter', sans-serif;
+      }
+      body {
+        font-family: var(--font-main);
+        background-color: #020617;
+        color: #f1f5f9;
+        letter-spacing: -0.015em;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      .font-title {
+        font-family: var(--font-main);
+      }
+      .font-inter {
+        font-family: var(--font-secondary);
+      }
+      .glass {
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #818cf8 0%, #c084fc 50%, #fb7185 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+      }
+      h1, h2, h3, h4 {
+        font-family: var(--font-main);
+        font-weight: 800;
+        letter-spacing: -0.035em;
+        line-height: 1.15;
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #020617;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #1e293b;
+        border-radius: 20px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #334155;
+      }
+      p, span, li, button {
+        font-weight: 400;
+      }
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-6px); }
+        75% { transform: translateX(6px); }
+      }
+      .animate-shake {
+        animation: shake 0.2s ease-in-out 0s 2;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
+    "recharts": "https://esm.sh/recharts@^3.6.0",
+    "vite": "https://esm.sh/vite@^7.3.0",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
 </head>
-<body>
-    <div class="app-container">
-        <button id="hamburger-menu" class="hamburger-menu" aria-label="Mở/Đóng Menu">
-            <span class="hamburger-icon"></span>
-        </button>
-        <nav id="app-menu" class="app-menu">
-                                    <div class="menu-header">
-                                        <div id="logo-container" class="logo-frame">
-                                            <img src="https://res.cloudinary.com/dejnvixvn/image/upload/v1756888673/logo_she91a.png" alt="Logo" class="app-logo">
-                                        </div>
-                                        <div class="social-links">
-                                            <a href="https://www.youtube.com/@quanh95" target="_blank" title="YouTube">
-                                                <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M20.2838235,29.7208546 L20.2817697,19.3775851 L30.0092421,24.5671906 L20.2838235,29.7208546 Z M41.6409276,17.5856462 C41.6409276,17.5856462 41.2890436,15.0488633 40.2097727,13.9319394 C38.8405739,12.4655276 37.3060444,12.4583393 36.6026186,12.3724221 C31.5649942,12 24.008044,12 24.008044,12 L23.9922983,12 C23.9922983,12 16.4356904,12 11.398066,12.3724221 C10.6939556,12.4583393 9.16045298,12.4655276 7.79091194,13.9319394 C6.71164104,15.0488633 6.36009927,17.5856462 6.36009927,17.5856462 C6.36009927,17.5856462 6,20.5646804 6,23.5437145 L6,26.3365376 C6,29.3152295 6.36009927,32.2946059 6.36009927,32.2946059 C6.36009927,32.2946059 6.71164104,34.8310466 7.79091194,35.9483127 C9.16045298,37.4147246 10.9592378,37.3681718 11.7605614,37.5218644 C14.6406709,37.8042616 24.0001711,37.8915481 24.0001711,37.8915481 C24.0001711,37.8915481 31.5649942,37.8799099 36.6026186,37.5074878 C37.3060444,37.4219129 38.8405739,37.4147246 40.2097727,35.9483127 C41.2890436,34.8310466 41.6409276,32.2946059 41.6409276,32.2946059 C41.6409276,32.2946059 42,29.3152295 42,26.3365376 L42,23.5437145 C42,20.5646804 41.6409276,17.5856462 41.6409276,17.5856462 L41.6409276,17.5856462 Z" fill="#000000"></path></svg>
-                                            </a>
-                                            <a href="https://www.facebook.com/tran.hong.quan.216221/" target="_blank" title="Facebook">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/></svg>
-                                            </a>
-                                            <a href="https://ung-ho-tac-gia.netlify.app/" target="_blank" title="Ủng hộ tác giả">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-                                                </svg>
-                                            </a>
-                                            <a href="https://zalo.me/g/cmqxwt805" target="_blank" title="Zalo">Z</a>
-
-                                        </div>
-                                        <input type="text" id="search-input" class="search-input" placeholder="Tìm kiếm ứng dụng...">
-                                    </div>
-                                    <div class="menu-items-container">
-                                        <!-- Menu items will be generated by JavaScript -->
-                                    </div>        </nav>
-        <main class="content-frame">
-            <button id="fullscreen-btn" aria-label="Toàn màn hình / Thoát toàn màn hình">
-                <svg class="icon-fullscreen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M20.25 3.75v4.5m0-4.5h-4.5m4.5 0L15 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15m11.25 5.25v-4.5m0 4.5h-4.5m4.5 0L15 15" />
-                </svg>
-                <svg class="icon-exit-fullscreen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="display: none;">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v5.5M9 15H4.5M9 15l-5.25 5.25M15 9V4.5M15 9h5.5M15 9l5.25-5.25M15 15v5.5M15 15h5.5M15 15l5.25 5.25" />
-                </svg>
-            </button>
-            <iframe id="app-frame" src="welcome.html" frameborder="0"></iframe>
-        </main>
-    </div>
-    <div id="toast-notification" class="toast"></div>
-
-    <!-- Password Modal -->
-    <div id="password-modal-overlay" class="modal-overlay">
-        <div id="password-modal" class="modal">
-            <h3 id="password-modal-title">Mở khóa mục Thành viên</h3>
-            <p>Vui lòng nhập mật khẩu để tiếp tục.</p>
-            <input type="password" id="password-input" class="modal-input" placeholder="Mật khẩu...">
-            <div id="password-error-message" class="modal-error"></div>
-            <div class="modal-buttons">
-                <button id="password-cancel-btn" class="modal-button cancel">Hủy</button>
-                <button id="password-submit-btn" class="modal-button submit">Xác nhận</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
+  <body class="custom-scrollbar">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
 </html>
