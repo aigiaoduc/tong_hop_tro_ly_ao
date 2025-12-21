@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trợ lý Tích hợp Năng lực số</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cream': '#FDF8F0',
+                        'light-yellow': '#F2CC8F',
+                        'light-green': '#81B29A',
+                        'dark-blue': '#3D405B',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-cream font-sans">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const App = () => {
+            const [subject, setSubject] = React.useState('');
+            const [grades, setGrades] = React.useState([]);
+            const [appendix1, setAppendix1] = React.useState(false);
+            const [appendix3, setAppendix3] = React.useState(false);
+            const [khdhFileName, setKhdhFileName] = React.useState('');
+            const [appendix3FileName, setAppendix3FileName] = React.useState('');
+
+            const [prompt1, setPrompt1] = React.useState('');
+            const [prompt3, setPrompt3] = React.useState('');
+            
+            const [showResults, setShowResults] = React.useState(false);
+            const resultsRef = React.useRef(null);
+
+            const handleGradeChange = (grade) => {
+                setGrades(prev => 
+                    prev.includes(grade) 
+                        ? prev.filter(g => g !== grade) 
+                        : [...prev, grade].sort((a,b) => a-b)
+                );
+            };
+
+            const handleGenerate = () => {
+                const appendix1Selected = appendix1;
+                const appendix3Selected = appendix3;
+
+                if (!subject || grades.length === 0 || (!appendix1Selected && !appendix3Selected)) {
+                    alert('Vui lòng nhập đầy đủ thông tin: Môn học, Khối lớp và chọn ít nhất một Phụ lục.');
+                    return;
+                }
+
+                if ((appendix1Selected || appendix3Selected) && !khdhFileName) {
+                    alert('Vui lòng chọn file Kế hoạch dạy học (KHDH).');
+                    return;
+                }
+
+                if (appendix1Selected && !appendix3FileName) {
+                    alert('Khi tạo Phụ lục 1, bạn phải chọn cả file Phụ lục 3 đã làm.');
+                    return;
+                }
+
+                const selectedGrades = grades.join(', ');
+
+                if (appendix1) {
+                    const p1 = `Tạo **PHỤ LỤC 1: TÍCH HỢP NĂNG LỰC SỐ VÀO KẾ HOẠCH DẠY HỌC (Dành cho Tổ chuyên môn)**
+
+**Bối cảnh:**
+Bạn là chuyên gia giáo dục Việt Nam. Nhiệm vụ của bạn là **hiện thực hóa** các Năng lực số (NLS) đã được xác định trong file Phụ lục 3 thành các hoạt động dạy học cụ thể.
+
+**Tài liệu nguồn (BẮT BUỘC):**
+1.  **\`${appendix3FileName}\` (Phụ lục 3 đã làm):** Đây là tài liệu **QUAN TRỌNG NHẤT**, chứa bản đồ các NLS đã được gán cho từng tiết học. Bạn phải tuân thủ tuyệt đối theo bảng này.
+2.  **\`${khdhFileName}\` (Kế hoạch dạy học):** Dùng để hiểu bối cảnh và nội dung của từng tiết học được đề cập trong Phụ lục 3.
+3.  **\`Thông tư 02/2025/TT-BGDĐT\` (Khung NLS):** Dùng để tra cứu lại mô tả chi tiết của chỉ báo NLS nếu cần.
+
+**Yêu cầu chi tiết về quy trình (CỰC KỲ QUAN TRỌNG):**
+
+1.  **Phân tích Phụ lục 3:** Đọc file **\`${appendix3FileName}\`**. Với mỗi dòng trong bảng, xác định:
+    *   Tiết PP và Chủ đề/Bài học.
+    *   Mã và nội dung chỉ báo NLS đã được gán (ví dụ: "TC 3.1.a: ...").
+2.  **Hiện thực hóa NLS:**
+    *   Với mỗi chỉ báo NLS đã xác định ở trên, hãy **diễn giải nó thành một hoạt động học tập cụ thể, sinh động, gắn chặt với bài học của tiết đó** (tham khảo nội dung trong file **\`${khdhFileName}\`**).
+    *   Phần diễn giải phải **chỉ rõ hành động của giáo viên/học sinh và công cụ/phần mềm/nền tảng số được sử dụng**.
+3.  **Trình bày kết quả:** Tạo bảng Phụ lục 1 với các cột tương ứng. Cột "Năng lực số hình thành" phải chứa nội dung đã được hiện thực hóa.
+
+**Ví dụ (CỰC KỲ QUAN TRỌNG):**
+*   **Trong file \`${appendix3FileName}\` có dòng:**
+    *   **Bài học:** "Unit 5: Food and drink - Skills 2"
+    *   **Năng lực số:** "TC 3.1.a: Chỉ ra được cách tạo và chỉnh sửa nội dung có khái niệm cụ thể và mang tính phổ thông bằng những định dạng rõ ràng, phổ biến".
+*   **Kết quả bạn cần tạo ra trong Phụ lục 1:**
+    *   **Bài học:** "Unit 5: Food and drink - Skills 2"
+    *   **Năng lực số hình thành (Đã được hiện thực hóa):** "TC 3.1.a: GV hướng dẫn HS sử dụng ứng dụng Canva để tạo một infographic (sản phẩm dạng phổ biến) trình bày về các món ăn/đồ uống yêu thích (nội dung cụ thể)."
+
+**Định dạng đầu ra:**
+
+**PHỤ LỤC 1: TÍCH HỢP NĂNG LỰC SỐ VÀO KẾ HOẠCH DẠY HỌC MÔN \`${subject}\` - KHỐI \`${selectedGrades}\`**
+*(Phiên bản diễn giải chi tiết cho Tổ chuyên môn)*
+
+| Tiết PP | Chủ đề/Bài học | Năng lực số hình thành (Đã được hiện thực hóa) |
+| :--- | :--- | :--- |
+| *(Dữ liệu do bạn tạo ra)* |
+
+**Lưu ý:**
+Các file tài liệu đính kèm có tên là **\`${khdhFileName}\`** và **\`${appendix3FileName}\`**. Hãy xác nhận đã nhận và phân tích được cả hai file này trước khi bắt đầu.`;
+                    setPrompt1(p1);
+                } else {
+                    setPrompt1('');
+                }
+
+                if (appendix3) {
+                    const p3 = `Tạo **PHỤ LỤC 3: NĂNG LỰC SỐ CẦN HÌNH THÀNH TRONG MÔN HỌC (Dành cho Kế hoạch giáo dục của giáo viên)**
+
+**Bối cảnh:**
+Bạn là chuyên gia giáo dục Việt Nam. Nhiệm vụ của bạn là hỗ trợ tôi, một giáo viên môn **\`${subject}\`**, xây dựng một phụ lục đính kèm Kế hoạch giáo dục cá nhân. Phụ lục này cần **trích dẫn nguyên văn và chính xác tuyệt đối** các chỉ báo năng lực số (NLS) được hình thành trong năm học.
+
+**Tài liệu nguồn (BẮT BUỘC):**
+1.  **\`Thông tư 02/2025/TT-BGDĐT\` (Khung NLS):** Tài liệu gốc để tra cứu và **sao chép nguyên văn** mô tả của từng chỉ báo.
+2.  **\`Công văn 3456_BGDDT-GDPT\`:** Đây là tài liệu định hướng để xác định **MỨC ĐỘ** năng lực phù hợp cho từng khối lớp, được quy định rõ trong Phụ lục đính kèm Công văn 3456. Cụ thể:
+    *   **Lớp 1, 2:** Ưu tiên mức **"Cơ bản 1"** (tương ứng cột L1-L2).
+    *   **Lớp 3, 4, 5:** Ưu tiên mức **"Cơ bản 2"** (tương ứng cột L3-L4-L5).
+    *   **Lớp 6, 7:** Ưu tiên mức **"Trung cấp 1"** (tương ứng cột L6-L7).
+    *   **Lớp 8, 9:** Ưu tiên mức **"Trung cấp 2"** (tương ứng cột L8-L9).
+    *   **Lớp 10, 11, 12:** Ưu tiên mức **"Nâng cao 1"** (tương ứng cột L10-L11-L12).
+3.  **\`${khdhFileName}\` (Kế hoạch dạy học đính kèm):** Tài liệu chính để phân tích nội dung bài học.
+
+**Yêu cầu chi tiết về quy trình (CỰC KỲ QUAN TRỌNG):**
+
+1.  **Phân tích KHDH:** Từ file **\`${khdhFileName}\`**, bạn phải **xét TẤT CẢ các tiết học (PP)** có trong kế hoạch. **Mục tiêu là tích hợp NLS cho mọi tiết học.**
+2.  **Xác định NLS và CHỈ BÁO (QUY TẮC CỐT LÕI):**
+    *   Với mỗi tiết học, hãy phân tích kỹ nội dung và hoạt động dạy học.
+    *   Dựa vào định hướng mức độ cho khối **\`${selectedGrades}\`** (theo Công văn 3456), tìm đến các Năng lực thành phần phù hợp trong Thông tư 02.
+    *   **QUAN TRỌNG NHẤT:** Bạn phải **tích cực tìm kiếm và chọn ra TỪ MỘT ĐẾN BA (1-3) chỉ báo** phù hợp nhất. **KHUYẾN KHÍCH MẠNH MẼ việc chọn 2 hoặc 3 chỉ báo nếu nội dung bài học cho phép.** Đừng chỉ dừng lại ở 1 chỉ báo nếu có thể tích hợp thêm.
+3.  **TRÍCH DẪN NGUYÊN VĂN:**
+    *   Đây là yêu cầu then chốt. Bạn phải **sao chép chính xác từng từ** của chỉ báo đã chọn từ Thông tư 02 vào bảng kết quả. **TUYỆT ĐỐI KHÔNG** diễn giải, tóm tắt hay thay đổi bất kỳ từ ngữ nào.
+4.  **Trình bày kết quả:**
+    *   Ghi kết quả vào bảng theo định dạng yêu cầu. **Mỗi chỉ báo NLS tích hợp trong cùng một tiết học phải được xuống dòng và bắt đầu bằng dấu gạch ngang (-).**
+    *   Phần "Năng lực số hình thành" phải bắt đầu bằng mã viết tắt (CB, TC, NC, CS) + mã năng lực + ký hiệu chỉ báo (a,b,c...), theo sau là phần mô tả được sao chép nguyên văn.
+5.  **Yêu cầu bổ sung (CỰC KỲ QUAN TRỌNG):**
+    *   **BẮT BUỘC tích hợp NLS cho TẤT CẢ các tiết học.**
+    *   Chỉ trong trường hợp **bất khả kháng** không thể tìm thấy NLS phù hợp, bạn có thể để trống. Tuy nhiên, hãy **hạn chế tối đa** việc này.
+
+**Ví dụ về kết quả có nhiều NLS trong 1 tiết:**
+
+| Tiết PP | Chủ đề/Bài học | Năng lực số hình thành |
+| :--- | :--- | :--- |
+| 25 | Bài 10: Giao tiếp và ứng xử có văn hóa | - TC 1.1.a: Giải thích được nhu cầu thông tin.<br>- TC 2.2.b: Trình bày được cách sử dụng các dịch vụ số phổ biến (thư điện tử, mạng xã hội,...) để tương tác với những người khác. |
+
+**Định dạng đầu ra:**
+
+**PHỤ LỤC 3: NĂNG LỰC SỐ CẦN HÌNH THÀNH TRONG MÔN \`${subject}\` - KHỐI \`${selectedGrades}\`**
+*(Phiên bản trích dẫn nguyên văn theo Thông tư)*
+
+| Tiết PP | Chủ đề/Bài học | Năng lực số hình thành |
+| :--- | :--- | :--- |
+| *(Dữ liệu do bạn tạo ra)* |
+
+**Lưu ý:**
+File Kế hoạch dạy học đính kèm có tên là **\`${khdhFileName}\`**. Hãy xác nhận đã nhận và phân tích được file này trước khi bắt đầu.`;
+                    setPrompt3(p3);
+                } else {
+                    setPrompt3('');
+                }
+                setShowResults(true);
+                setTimeout(() => {
+                    resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            };
+
+            const copyToClipboard = (text, id) => {
+                navigator.clipboard.writeText(text).then(() => {
+                    const button = document.getElementById(id);
+                    if(!button) return;
+                    const originalText = button.innerHTML;
+                    button.innerHTML = `Đã chép!`;
+                    button.classList.add('bg-light-green', 'text-black');
+                    setTimeout(() => {
+                        button.innerHTML = originalText;
+                        button.classList.remove('bg-light-green', 'text-black');
+                    }, 2000);
+                }, (err) => {
+                    alert('Không thể sao chép!');
+                });
+            };
+            
+            const copyAll = () => {
+                const allPrompts = [];
+                if(prompt1) allPrompts.push("---\nPROMPT PHỤ LỤC 1 ---\n" + prompt1);
+                if(prompt3) allPrompts.push("---\nPROMPT PHỤ LỤC 3 ---\n" + prompt3);
+                copyToClipboard(allPrompts.join('\n\n'), 'copy-btn-all');
+            }
+
+            const gradeOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+            const BrutalButton = ({ children, onClick, id, className = '' }) => (
+                <button 
+                    id={id}
+                    onClick={onClick}
+                    className={`p-2 bg-white border-2 border-black font-bold shadow-[4px_4px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all ${className}`}>
+                    {children}
+                </button>
+            );
+
+            return (
+                <div className="min-h-screen">
+                    <div className="container mx-auto p-4 max-w-5xl">
+                        <header className="text-center mb-8">
+                            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-black mb-2">
+                                Trợ lý Năng lực số
+                            </h1>
+                            <p className="text-dark-blue mt-1 text-base sm:text-lg">Tạo prompt tích hợp NLS cho kế hoạch dạy học.</p>
+                            <div className="mt-4 flex flex-wrap justify-center items-center gap-2">
+                                <a 
+                                    href="https://kontum01-my.sharepoint.com/:f:/g/personal/quanth_c12sb_st_gdkontum_edu_vn/EuuHrh0ngWZEjhwtFRLyUa0B8pu7N9edZhyJvIy8Skh4SA?e=4fxnRr"
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="inline-block p-2 bg-light-green border-2 border-black font-bold shadow-[2px_2px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all text-xs sm:text-sm"
+                                >
+                                    Tải Tài liệu
+                                </a>
+                                <a 
+                                    href="https://ung-ho-tac-gia.netlify.app/"
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="inline-block p-2 bg-light-yellow border-2 border-black font-bold shadow-[2px_2px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all text-xs sm:text-sm"
+                                >
+                                    Donate
+                                </a>
+                                <a 
+                                    href="#video-guide"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        document.getElementById('video-guide')?.scrollIntoView({ behavior: 'smooth' });
+                                    }}
+                                    className="inline-block p-2 bg-dark-blue text-white border-2 border-black font-bold shadow-[2px_2px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all text-xs sm:text-sm"
+                                >
+                                    Video Hướng dẫn
+                                </a>
+                            </div>
+                        </header>
+
+                        <div className="bg-white border-2 border-black rounded-xl shadow-[4px_4px_0px_#000000] p-4 mb-8">
+                            <h2 className="text-xl sm:text-2xl font-bold mb-4 text-black flex items-center">
+                                <span className="bg-light-yellow text-black border-2 border-black rounded-full h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center mr-2 font-mono text-base sm:text-lg">1</span>
+                                Thông tin
+                            </h2>
+                            
+                            <div className="space-y-4">
+                                <div>
+                                    <label htmlFor="subject" className="block text-sm sm:text-base font-bold text-black mb-1">Tên môn học</label>
+                                    <input 
+                                        type="text" 
+                                        id="subject"
+                                        value={subject}
+                                        onChange={(e) => setSubject(e.target.value)}
+                                        className="w-full p-2 bg-cream border-2 border-black rounded-lg text-sm sm:text-base focus:ring-0 focus:border-black focus:bg-white transition"
+                                        placeholder="VD: giáo dục thể chất"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm sm:text-base font-bold text-black mb-1">Khối lớp</label>
+                                    <div className="grid grid-cols-4 sm:grid-cols-6 gap-1">
+                                        {gradeOptions.map(grade => (
+                                            <label key={grade} className={`flex items-center justify-center p-2 border-2 border-black rounded-lg cursor-pointer transition-all duration-200 font-bold text-xs sm:text-sm ${grades.includes(grade) ? 'bg-black text-white' : 'bg-white hover:bg-light-yellow'}`}>
+                                                <input type="checkbox" checked={grades.includes(grade)} onChange={() => handleGradeChange(grade)} className="sr-only"/>
+                                                <span>{grade}</span>
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>
+                                
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center pt-2">
+                                    <div>
+                                        <label className="block text-sm sm:text-base font-bold text-black mb-1">Chọn Phụ lục</label>
+                                        <div className="flex items-center space-x-4">
+                                            <label className="flex items-center space-x-2 cursor-pointer">
+                                                <input type="checkbox" checked={appendix1} onChange={() => setAppendix1(!appendix1)} className="h-4 w-4 sm:h-5 sm:w-5 text-black border-2 border-black rounded-md focus:ring-0 bg-cream" />
+                                                <span className="text-sm sm:text-base font-medium text-black">Phụ lục 1</span>
+                                            </label>
+                                            <label className="flex items-center space-x-2 cursor-pointer">
+                                                <input type="checkbox" checked={appendix3} onChange={() => setAppendix3(!appendix3)} className="h-4 w-4 sm:h-5 sm:w-5 text-black border-2 border-black rounded-md focus:ring-0 bg-cream" />
+                                                <span className="text-sm sm:text-base font-medium text-black">Phụ lục 3</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="space-y-2">
+                                        {(appendix1 || appendix3) && (
+                                            <div>
+                                                <label htmlFor="khdh-file-upload" className="relative cursor-pointer bg-white p-2 border-2 border-black rounded-lg flex items-center justify-center font-bold shadow-[2px_2px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all text-xs sm:text-sm">
+                                                    <span className={`${khdhFileName ? 'text-light-green' : 'text-black'}`}>{khdhFileName ? `KHDH: ${khdhFileName}` : '1. Chọn file KHDH...'}</span>
+                                                    <input id="khdh-file-upload" type="file" className="sr-only" onChange={(e) => setKhdhFileName(e.target.files[0] ? e.target.files[0].name : '')} />
+                                                </label>
+                                            </div>
+                                        )}
+                                        {appendix1 && (
+                                            <div>
+                                                <label htmlFor="pl3-file-upload" className="relative cursor-pointer bg-white p-2 border-2 border-black rounded-lg flex items-center justify-center font-bold shadow-[2px_2px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all text-xs sm:text-sm">
+                                                    <span className={`${appendix3FileName ? 'text-light-green' : 'text-black'}`}>{appendix3FileName ? `PL3: ${appendix3FileName}` : '2. Chọn file Phụ lục 3...'}</span>
+                                                    <input id="pl3-file-upload" type="file" className="sr-only" onChange={(e) => setAppendix3FileName(e.target.files[0] ? e.target.files[0].name : '')} />
+                                                </label>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="mt-6 border-t-2 border-black pt-4 text-center">
+                                <button 
+                                    onClick={handleGenerate}
+                                    className="w-full px-6 py-2 sm:w-auto sm:px-8 sm:py-3 border-2 border-black text-base sm:text-lg font-bold rounded-lg text-black bg-light-yellow shadow-[4px_4px_0px_#000000] hover:shadow-none active:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-300 disabled:shadow-none disabled:translate-x-0 disabled:translate-y-0"
+                                    disabled={!subject || grades.length === 0 || (!appendix1 && !appendix3) || !khdhFileName || (appendix1 && !appendix3FileName)}
+                                >
+                                    Tạo câu lệnh
+                                </button>
+                            </div>
+                        </div>
+
+                        {showResults && (
+                            <div ref={resultsRef} className="bg-white border-2 border-black rounded-xl shadow-[4px_4px_0px_#000000] p-4 mb-8">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h2 className="text-xl sm:text-2xl font-bold text-black flex items-center">
+                                        <span className="bg-light-green text-black border-2 border-black rounded-full h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center mr-2 font-mono text-base sm:text-lg">2</span>
+                                        Kết quả
+                                    </h2>
+                                    {(prompt1 && prompt3) && (
+                                        <BrutalButton id="copy-btn-all" onClick={copyAll} className="bg-light-yellow text-xs sm:text-sm !py-1 !px-2">Sao chép tất cả</BrutalButton>
+                                    )}
+                                </div>
+
+                                {prompt1 && (
+                                    <div className="mb-4">
+                                        <h3 className="text-base sm:text-lg font-bold text-black mb-2">Prompt cho Phụ lục 1</h3>
+                                        <div className="relative group">
+                                            <pre className="whitespace-pre-wrap text-xs sm:text-sm text-gray-200 bg-dark-blue p-3 rounded-lg max-h-48 overflow-y-auto font-mono border-2 border-black">{prompt1}</pre>
+                                            <BrutalButton id="copy-btn-1" onClick={() => copyToClipboard(prompt1, 'copy-btn-1')} className="absolute top-2 right-2 text-xs !py-1 !px-2 bg-light-yellow opacity-0 group-hover:opacity-100">Sao chép</BrutalButton>
+                                        </div>
+                                    </div>
+                                )}
+                                {prompt3 && (
+                                    <div>
+                                        <h3 className="text-base sm:text-lg font-bold text-black mb-2">Prompt cho Phụ lục 3</h3>
+                                        <div className="relative group">
+                                            <pre className="whitespace-pre-wrap text-xs sm:text-sm text-gray-200 bg-dark-blue p-3 rounded-lg max-h-48 overflow-y-auto font-mono border-2 border-black">{prompt3}</pre>
+                                            <BrutalButton id="copy-btn-3" onClick={() => copyToClipboard(prompt3, 'copy-btn-3')} className="absolute top-2 right-2 text-xs !py-1 !px-2 bg-light-yellow opacity-0 group-hover:opacity-100">Sao chép</BrutalButton>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        <div className="bg-white border-2 border-black rounded-xl shadow-[4px_4px_0px_#000000] p-4 sm:p-6">
+                             <h2 className="text-xl sm:text-2xl font-bold mb-4 text-black flex items-center">
+                                <span className="bg-dark-blue text-white border-2 border-black rounded-full h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center mr-2 font-mono text-base sm:text-lg">3</span>
+                                Hướng dẫn
+                            </h2>
+                            <div className="grid md:grid-cols-2 gap-4 text-black">
+                                <div className="space-y-2 text-sm sm:text-base">
+                                    <h3 className="font-extrabold text-base sm:text-lg mb-1">Các bước thực hiện</h3>
+                                    <p>1. Nhập Tên môn học và chọn Khối lớp.</p>
+                                    <p>2. Chọn Phụ lục 1 và/hoặc Phụ lục 3.</p>
+                                    <p>3. Nhấn để chọn file Kế hoạch dạy học.</p>
+                                    <p>4. Nhấn nút "Tạo câu lệnh" và xem kết quả.</p>
+                                </div>
+                                <div className="space-y-2 text-sm sm:text-base">
+                                    <h3 className="font-extrabold text-base sm:text-lg mb-1">Sử dụng với AI</h3>
+                                    <p>1. Nhấn nút "Sao chép" ở mục kết quả.</p>
+                                    <p>2. Mở AI (ChatGPT, Gemini...), dán prompt vào.</p>
+                                    <p>3. Đính kèm file Kế hoạch dạy học và gửi đi.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="video-guide" className="bg-white border-2 border-black rounded-xl shadow-[4px_4px_0px_#000000] p-4 mt-8">
+                             <h2 className="text-xl sm:text-2xl font-bold mb-4 text-black flex items-center">
+                                <span className="bg-light-yellow text-black border-2 border-black rounded-full h-7 w-7 sm:h-8 sm:w-8 flex items-center justify-center mr-2 font-mono text-base sm:text-lg">4</span>
+                                Video Hướng dẫn
+                            </h2>
+                            <div className="rounded-lg overflow-hidden border-2 border-black">
+                                <iframe 
+                                    className="w-full h-[200px] sm:h-[300px] md:h-[450px]"
+                                    src="https://www.youtube.com/embed/iHMYNYoPcPA" 
+                                    title="YouTube video player" 
+                                    frameBorder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    allowFullScreen>
+                                </iframe>
+                            </div>
+                        </div>
+                        
+                        <footer className="text-center mt-8 text-dark-blue text-xs">
+                            <p>Phát triển bởi Gemini - Google AI. Dự án phi lợi nhuận hỗ trợ giáo viên.</p>
+                        </footer>
+                    </div>
+                </div>
+            );
+        };
+
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<App />);
+    </script>
+</body>
+</html>

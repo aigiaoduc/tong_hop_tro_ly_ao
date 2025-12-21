@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trình tạo Sơ đồ Tư duy Tự động</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Trợ lý tạo Sơ đồ Tư duy Tự động 🧠</h1>
+            <p>Tạo sơ đồ tư duy từ bất kỳ nội dung nào một cách nhanh chóng và trực quan.</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-link active" onclick="openTab(event, 'tab1')">✏️ 1. Sinh Prompt</button>
+            <button class="tab-link" onclick="openTab(event, 'tab2')">📥 2. Nhập Dữ liệu</button>
+            <button class="tab-link" onclick="openTab(event, 'tab3')">🖼️ 3. Xem & Tải Sơ đồ</button>
+        </div>
+
+        <div id="tab1" class="tab-content active">
+            <h2>Sinh prompt thông minh</h2>
+            <p>Nhập chủ đề hoặc nội dung bạn muốn tạo sơ đồ tư duy.</p>
+            <textarea id="userInput" placeholder="Ví dụ: Quy trình 7 bước để giải quyết vấn đề..."></textarea>
+            <button class="btn" id="generatePromptBtn">🔄 Tạo Prompt</button>
+            <hr>
+            <h3>Prompt đã tạo:</h3>
+            <textarea id="generatedPrompt" readonly></textarea>
+            <div class="btn-group">
+                <button class="btn" id="copyPromptBtn">📋 Sao chép Prompt</button>
+                <a href="https://chat.openai.com" target="_blank" class="btn btn-secondary">💬 Mở ChatGPT</a>
+            </div>
+        </div>
+
+        <div id="tab2" class="tab-content">
+            <h2>Nhập dữ liệu sơ đồ</h2>
+            <p>Dán nội dung (định dạng Markdown) nhận được từ ChatGPT vào ô bên dưới.</p>
+            <textarea id="mindmapData" placeholder="Dán dữ liệu của bạn ở đây..."># Sơ đồ tư duy
+## Nhánh chính 1
+### Nhánh con 1.1
+### Nhánh con 1.2
+## Nhánh chính 2
+### Nhánh con 2.1
+#### Nhánh cháu 2.1.1
+## Nhánh chính 3</textarea>
+            <button class="btn" id="createMindmapBtn">🧠 Tạo Sơ đồ</button>
+            <p id="error-message" class="error"></p>
+        </div>
+
+        <div id="tab3" class="tab-content">
+            <h2>Xem và tải sơ đồ</h2>
+            <p>Sơ đồ của bạn sẽ được hiển thị ở đây. Bạn có thể phóng to, thu nhỏ và di chuyển.</p>
+            <div class="mindmap-container">
+                <svg id="mindmap" class="markmap"></svg>
+            </div>
+            <div class="btn-group">
+                <button class="btn" id="downloadPngBtn">📸 Tải PNG</button>
+                <button class="btn" id="downloadPdfBtn">📄 Tải PDF</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
