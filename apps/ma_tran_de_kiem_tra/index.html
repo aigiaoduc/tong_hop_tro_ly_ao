@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng dụng Tạo Ma Trận Đề Kiểm Tra</title>
+    <link rel="stylesheet" href="neobrutalism.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">📊</div>
+                    <div>
+                        <h1>Ứng dụng Tạo Ma Trận Đề Kiểm Tra</h1>
+                        <div class="subtitle">Theo Công văn 7991/BGDĐT-GDTrH - Bộ Giáo dục và Đào tạo</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" data-tab="basic">Thông tin cơ bản</button>
+            <button class="tab-button" data-tab="topics">Chủ đề & Đơn vị</button>
+            <button class="tab-button" data-tab="prompt">Xem Prompt</button>
+            <button class="tab-button" data-tab="guide">Hướng dẫn</button>
+        </div>
+
+        <div id="basicTab" class="tab-content active">
+            <div class="form-container">
+                <h2>Thông tin cơ bản</h2>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="subject">Môn học</label>
+                            <input type="text" id="subject" placeholder="Ví dụ: Ngữ văn, Toán học,..." required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="grade">Lớp</label>
+                            <input type="text" id="grade" placeholder="Ví dụ: 6, 7, 8,..." required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="duration">Thời gian làm bài (phút)</label>
+                            <input type="number" id="duration" min="1" value="60" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="topicsTab" class="tab-content">
+            <div class="form-container">
+                <h2>Các chủ đề và đơn vị kiến thức</h2>
+                <div id="topicsContainer">
+                    <!-- Chủ đề sẽ được thêm vào đây -->
+                </div>
+                <button type="button" id="addTopic" class="btn">+ Thêm chủ đề</button>
+
+                <div class="form-group" style="margin-top: 30px;">
+                    <button type="button" id="generatePrompt" class="btn btn-success">Tạo Prompt cho AI</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="promptTab" class="tab-content">
+            <div class="prompt-container">
+                <h2>Prompt đã tạo</h2>
+                <p>Sao chép prompt dưới đây và gửi cho AI để tạo ma trận đề kiểm tra:</p>
+                <div class="prompt-output" id="promptOutput"></div>
+                <button type="button" id="copyPrompt" class="btn copy-btn btn-warning">Sao chép Prompt</button>
+            </div>
+        </div>
+
+        <div id="guideTab" class="tab-content">
+            <div class="prompt-container">
+                <h2>Hướng dẫn sử dụng</h2>
+                <div class="guide-content">
+                    <h3>Cách tạo ma trận đề kiểm tra:</h3>
+                    <ol>
+                        <li>Điền thông tin cơ bản trong tab "Thông tin cơ bản"</li>
+                        <li>Thêm các chủ đề và đơn vị kiến thức trong tab "Chủ đề & Đơn vị"</li>
+                        <li>Nhấn "Tạo Prompt cho AI" để tạo prompt</li>
+                        <li>Sao chép prompt và gửi cho AI (ChatGPT, Gemini, Claude, v.v.)</li>
+                        <li><strong>Quan trọng:</strong> Khi gửi prompt cho AI, bạn PHẢI đính kèm file Công văn 7991/BGDĐT-GDTrH của Bộ Giáo dục và Đào tạo</li>
+                    </ol>
+
+                    <h3>Câu lệnh mẫu cho AI:</h3>
+                    <div class="command-example">
+                        <p>"Hãy tạo ma trận đề kiểm tra theo đúng yêu cầu trong prompt dưới đây. Tôi đã đính kèm file Công văn 7991/BGDĐT-GDTrH để bạn tham khảo."</p>
+                        <p>[Dán prompt vào đây]</p>
+                    </div>
+
+                    <h3>Lưu ý:</h3>
+                    <ul>
+                        <li>Đảm bảo đính kèm đúng file Công văn 7991/BGDĐT-GDTrH</li>
+                        <li>AI sẽ tạo ma trận dưới dạng bảng Excel giống mẫu</li>
+                        <li>Kiểm tra lại ma trận sau khi AI tạo để đảm bảo chính xác</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Ứng dụng Tạo Ma Trận Đề Kiểm Tra - Theo Công văn 7991/BGDĐT-GDTrH</p>
+            <p>© 2025 - Sản phẩm thuộc thầy Quân</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const topicsContainer = document.getElementById('topicsContainer');
+            const addTopicButton = document.getElementById('addTopic');
+            const generatePromptButton = document.getElementById('generatePrompt');
+            const promptOutput = document.getElementById('promptOutput');
+            const copyPromptButton = document.getElementById('copyPrompt');
+
+            // Tab switching
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            function switchTab(tabName) {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                document.querySelector(`.tab-button[data-tab="${tabName}"]`).classList.add('active');
+                document.getElementById(tabName + 'Tab').classList.add('active');
+            }
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
+
+            let topicCount = 0;
+
+            // Thêm chủ đề mới
+            function addTopic() {
+                topicCount++;
+                const topicId = 'topic_' + topicCount;
+                const topicDiv = document.createElement('div');
+                topicDiv.className = 'topic-container';
+                topicDiv.id = topicId;
+                topicDiv.innerHTML = `
+                    <div class="topic-header">
+                        <div class="topic-title">Chủ đề ${topicCount}</div>
+                        <button type="button" class="btn btn-danger remove-topic" data-topic="${topicId}">Xóa chủ đề</button>
+                    </div>
+                    <div class="form-group">
+                        <label>Tên chủ đề</label>
+                        <input type="text" class="topic-name" placeholder="Nhập tên chủ đề" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tổng điểm của chủ đề</label>
+                        <input type="number" class="topic-score" min="0" step="0.5" placeholder="0.0" required>
+                    </div>
+                    <div class="units-container">
+                        <!-- Đơn vị kiến thức sẽ được thêm vào đây -->
+                    </div>
+                    <button type="button" class="btn add-unit" data-topic="${topicId}">+ Thêm đơn vị kiến thức</button>
+                `;
+                topicsContainer.appendChild(topicDiv);
+
+                // Thêm đơn vị mặc định
+                addUnit(topicId);
+
+                // Gắn sự kiện
+                topicDiv.querySelector('.remove-topic').addEventListener('click', function() {
+                    topicsContainer.removeChild(topicDiv);
+                    topicCount--;
+                    updateTopicTitles();
+                });
+
+                topicDiv.querySelector('.add-unit').addEventListener('click', function() {
+                    addUnit(topicId);
+                });
+            }
+
+            // Thêm đơn vị kiến thức
+            function addUnit(topicId) {
+                const topicDiv = document.getElementById(topicId);
+                const unitsContainer = topicDiv.querySelector('.units-container');
+                const unitCount = unitsContainer.children.length + 1;
+                const unitId = topicId + '_unit_' + unitCount;
+
+                const unitDiv = document.createElement('div');
+                unitDiv.className = 'unit-container';
+                unitDiv.id = unitId;
+                unitDiv.innerHTML = `
+                    <div class="unit-header">
+                        <div class="unit-title">Đơn vị kiến thức ${unitCount}</div>
+                        <button type="button" class="btn btn-danger remove-unit" data-unit="${unitId}">×</button>
+                    </div>
+                    <div class="form-group">
+                        <label>Tên đơn vị kiến thức</label>
+                        <input type="text" class="unit-name" placeholder="Nhập tên đơn vị kiến thức" required>
+                    </div>
+                    <h4>Mức độ đánh giá</h4>
+                    <div class="question-type-group">
+                        <h5>Trắc nghiệm khách quan (TN) - Nhiều lựa chọn</h5>
+                        <div class="input-grid">
+                            <div class="input-group">
+                                <label>Biết (câu)</label>
+                                <input type="number" class="tn-multiple-know-count" min="0" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Biết (điểm)</label>
+                                <input type="number" class="tn-multiple-know-score" min="0" step="0.5" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Hiểu (câu)</label>
+                                <input type="number" class="tn-multiple-understand-count" min="0" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Hiểu (điểm)</label>
+                                <input type="number" class="tn-multiple-understand-score" min="0" step="0.5" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Vận dụng (câu)</label>
+                                <input type="number" class="tn-multiple-apply-count" min="0" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Vận dụng (điểm)</label>
+                                <input type="number" class="tn-multiple-apply-score" min="0" step="0.5" value="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-type-group">
+                        <h5>Trắc nghiệm khách quan (TN) - Đúng - Sai</h5>
+                        <div class="input-grid">
+                            <div class="input-group">
+                                <label>Biết (câu)</label>
+                                <input type="number" class="tn-truefalse-know-count" min="0" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Biết (điểm)</label>
+                                <input type="number" class="tn-truefalse-know-score" min="0" step="0.5" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Hiểu (câu)</label>
+                                <input type="number" class="tn-truefalse-understand-count" min="0" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Hiểu (điểm)</label>
+                                <input type="number" class="tn-truefalse-understand-score" min="0" step="0.5" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Vận dụng (câu)</label>
+                                <input type="number" class="tn-truefalse-apply-count" min="0" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Vận dụng (điểm)</label>
+                                <input type="number" class="tn-truefalse-apply-score" min="0" step="0.5" value="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-type-group">
+                        <h5>Trắc nghiệm khách quan (TN) - Trả lời ngắn</h5>
+                        <div class="input-grid">
+                            <div class="input-group">
+                                <label>Biết (câu)</label>
+                                <input type="number" class="tn-short-know-count" min="0" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Biết (điểm)</label>
+                                <input type="number" class="tn-short-know-score" min="0" step="0.5" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Hiểu (câu)</label>
+                                <input type="number" class="tn-short-understand-count" min="0" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Hiểu (điểm)</label>
+                                <input type="number" class="tn-short-understand-score" min="0" step="0.5" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Vận dụng (câu)</label>
+                                <input type="number" class="tn-short-apply-count" min="0" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Vận dụng (điểm)</label>
+                                <input type="number" class="tn-short-apply-score" min="0" step="0.5" value="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="question-type-group">
+                        <h5>Tự luận (TL)</h5>
+                        <div class="input-grid">
+                            <div class="input-group">
+                                <label>Biết (câu)</label>
+                                <input type="number" class="tl-know-count" min="0" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Biết (điểm)</label>
+                                <input type="number" class="tl-know-score" min="0" step="0.5" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Hiểu (câu)</label>
+                                <input type="number" class="tl-understand-count" min="0" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Hiểu (điểm)</label>
+                                <input type="number" class="tl-understand-score" min="0" step="0.5" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Vận dụng (câu)</label>
+                                <input type="number" class="tl-apply-count" min="0" value="0">
+                            </div>
+                            <div class="input-group">
+                                <label>Vận dụng (điểm)</label>
+                                <input type="number" class="tl-apply-score" min="0" step="0.5" value="0">
+                            </div>
+                        </div>
+                    </div>
+                `;
+                unitsContainer.appendChild(unitDiv);
+
+                // Gắn sự kiện xóa đơn vị
+                unitDiv.querySelector('.remove-unit').addEventListener('click', function() {
+                    unitsContainer.removeChild(unitDiv);
+                    updateUnitTitles(topicId);
+                });
+            }
+
+            // Cập nhật tiêu đề chủ đề
+            function updateTopicTitles() {
+                const topics = topicsContainer.querySelectorAll('.topic-container');
+                topics.forEach((topic, index) => {
+                    topic.querySelector('.topic-title').textContent = `Chủ đề ${index + 1}`;
+                });
+            }
+
+            // Cập nhật tiêu đề đơn vị
+            function updateUnitTitles(topicId) {
+                const topicDiv = document.getElementById(topicId);
+                const units = topicDiv.querySelectorAll('.unit-container');
+                units.forEach((unit, index) => {
+                    unit.querySelector('.unit-title').textContent = `Đơn vị kiến thức ${index + 1}`;
+                });
+            }
+
+            // Tạo prompt
+            function generatePrompt() {
+                const subject = document.getElementById('subject').value;
+                const grade = document.getElementById('grade').value;
+                const duration = document.getElementById('duration').value;
+
+                if (!subject || !grade) {
+                    alert('Vui lòng nhập đầy đủ thông tin môn học và lớp!');
+                    return;
+                }
+
+                // Thu thập dữ liệu từ các chủ đề
+                const topics = [];
+                const topicElements = topicsContainer.querySelectorAll('.topic-container');
+                topicElements.forEach((topicEl, topicIndex) => {
+                    const topicName = topicEl.querySelector('.topic-name').value;
+                    const topicScore = parseFloat(topicEl.querySelector('.topic-score').value) || 0;
+
+                    const units = [];
+                    const unitElements = topicEl.querySelectorAll('.unit-container');
+                    unitElements.forEach((unitEl, unitIndex) => {
+                        const unitName = unitEl.querySelector('.unit-name').value;
+
+                        // Thu thập dữ liệu TN
+                        const tnData = {
+                            multiple: {
+                                know: { count: parseInt(unitEl.querySelector('.tn-multiple-know-count').value) || 0, score: parseFloat(unitEl.querySelector('.tn-multiple-know-score').value) || 0 },
+                                understand: { count: parseInt(unitEl.querySelector('.tn-multiple-understand-count').value) || 0, score: parseFloat(unitEl.querySelector('.tn-multiple-understand-score').value) || 0 },
+                                apply: { count: parseInt(unitEl.querySelector('.tn-multiple-apply-count').value) || 0, score: parseFloat(unitEl.querySelector('.tn-multiple-apply-score').value) || 0 }
+                            },
+                            truefalse: {
+                                know: { count: parseInt(unitEl.querySelector('.tn-truefalse-know-count').value) || 0, score: parseFloat(unitEl.querySelector('.tn-truefalse-know-score').value) || 0 },
+                                understand: { count: parseInt(unitEl.querySelector('.tn-truefalse-understand-count').value) || 0, score: parseFloat(unitEl.querySelector('.tn-truefalse-understand-score').value) || 0 },
+                                apply: { count: parseInt(unitEl.querySelector('.tn-truefalse-apply-count').value) || 0, score: parseFloat(unitEl.querySelector('.tn-truefalse-apply-score').value) || 0 }
+                            },
+                            short: {
+                                know: { count: parseInt(unitEl.querySelector('.tn-short-know-count').value) || 0, score: parseFloat(unitEl.querySelector('.tn-short-know-score').value) || 0 },
+                                understand: { count: parseInt(unitEl.querySelector('.tn-short-understand-count').value) || 0, score: parseFloat(unitEl.querySelector('.tn-short-understand-score').value) || 0 },
+                                apply: { count: parseInt(unitEl.querySelector('.tn-short-apply-count').value) || 0, score: parseFloat(unitEl.querySelector('.tn-short-apply-score').value) || 0 }
+                            }
+                        };
+
+                        // Thu thập dữ liệu TL
+                        const tlData = {
+                            know: { count: parseInt(unitEl.querySelector('.tl-know-count').value) || 0, score: parseFloat(unitEl.querySelector('.tl-know-score').value) || 0 },
+                            understand: { count: parseInt(unitEl.querySelector('.tl-understand-count').value) || 0, score: parseFloat(unitEl.querySelector('.tl-understand-score').value) || 0 },
+                            apply: { count: parseInt(unitEl.querySelector('.tl-apply-count').value) || 0, score: parseFloat(unitEl.querySelector('.tl-apply-score').value) || 0 }
+                        };
+
+                        units.push({
+                            name: unitName,
+                            tn: tnData,
+                            tl: tlData
+                        });
+                    });
+
+                    topics.push({
+                        name: topicName,
+                        score: topicScore,
+                        units: units
+                    });
+                });
+
+                // Tạo prompt
+                const promptText = createPrompt(topics, subject, grade, duration);
+
+                // Hiển thị prompt
+                promptOutput.textContent = promptText;
+
+                // Chuyển sang tab prompt
+                document.querySelector('[data-tab="prompt"]').click();
+            }
+
+            // Tạo prompt
+            function createPrompt(topics, subject, grade, duration) {
+                let prompt = `Hãy tạo ma trận đề kiểm tra theo đúng yêu cầu trong prompt dưới đây. Tôi đã đính kèm file Công văn 7991/BGDĐT-GDTrH để bạn tham khảo. Bạn là giáo viên thiết kế ma trận đề kiểm tra định kỳ môn ${subject} lớp ${grade} theo Công văn 7991/BGDĐT-GDTrH của Bộ Giáo dục và Đào tạo Việt Nam, ban hành ngày 17/12/2024. Ma trận đề kiểm tra phải bám sát chương trình Giáo dục phổ thông 2018, phù hợp với môn học và lớp học được chọn, đảm bảo các yêu cầu về chuyên môn và kỹ thuật, đồng thời giúp đánh giá năng lực và phẩm chất của học sinh.
+
+Nội dung tạo ma trận tuyệt đối chỉ được lấy thông tin từ các file đính kèm Sách giáo khoa và mẫu của ma trận đã được đính kèm của Công văn 7991, bao gồm:
+- Các chủ đề/chương trong sách giáo khoa.
+- Mức độ đánh giá (nhận biết, thông hiểu, vận dụng).
+- Số câu hỏi và điểm số cho từng phần Trắc nghiệm và Tự luận.
+- Tỷ lệ % điểm số cho từng mức độ.
+
+Hãy thiết kế "Ma trận đề kiểm tra định kì" cho học sinh làm bài kiểm tra với thời gian ${duration} phút. Dựa trên các file sách giáo khoa đính kèm và file mẫu: "Ma trận đề kiểm tra định kì". Tuyệt đối đảm bảo đúng các thông số trong ma trận.
+
+---
+Bản ma trận đề kiểm tra gồm 6 cột trong đó:
+1. Cột đầu tiên là "số thứ tự".
+2. Cột thứ 2 là "tên chủ đề hoặc tên chương".
+3. Cột thứ 3 là "nội dung hoặc đơn vị kiến thức".
+4. Cột lớn thứ 4 là cột "Mức độ đánh giá" gồm 2 cột TNKQ và Tự luận.
+Trong cột TNKQ chia làm 3 cột nhỏ tương ứng 3 nội dung: "Nhiều lựa chọn", "Đúng – sai", "Trả lời ngắn".
+Trong cột "Nhiều lựa chọn" chia làm 3 cột nhỏ tương ứng 3 nội dung: "Biết", "Hiểu", "Vận dụng".
+Trong cột "Đúng – sai" chia làm 3 cột nhỏ tương ứng 3 nội dung: "Biết", "Hiểu", "Vận dụng".
+Trong cột "Trả lời ngắn" chia làm 3 cột nhỏ tương ứng 3 nội dung: "Biết", "Hiểu", "Vận dụng".
+Trong cột "Tự luận" chia làm 3 cột nhỏ tương ứng 3 nội dung: "Biết", "Hiểu", "Vận dụng".
+5. Cột thứ 5 là "Tổng" gồm 3 cột nhỏ tương ứng: "Biết", "Hiểu", "Vận dụng".
+6. Cột thứ 6 là "Tỉ lệ %".
+---
+Bản ma trận đề kiểm tra gồm:
+1. Các dòng tương ứng với các chủ đề. Mỗi chủ đề gồm các dòng tương ứng với các đơn vị kiến thức.
+2. Cuối cùng thêm dòng: "Tổng số câu", "Tổng số điểm", "Đúng tỉ lệ %".
+3. Bản ma trận có Cơ cấu điểm theo các phần như sau: Tổng thang điểm của bài kiểm tra là 10 điểm gồm 2 phần chính:
+1️⃣ Phần trắc nghiệm khách quan (TN) chiếm 70% tổng điểm (7/10 điểm), có đủ 3 dạng câu hỏi:
+- Câu hỏi "nhiều lựa chọn": 3 điểm.
+- Câu hỏi "đúng – sai": 2 điểm.
+- Câu hỏi "trả lời ngắn": 2 điểm.
+(Tổng 7 điểm)
+2️⃣ Phần tự luận (TL): Chiếm 30% tổng điểm (3/10 điểm).
+---
+Bản ma trận gồm 4 chủ đề và có cơ cấu điểm theo các chủ đề như sau:
+`;
+
+                topics.forEach((topic, index) => {
+                    prompt += `- Chủ đề ${index + 1}: ${topic.name} có tổng điểm là ${topic.score} điểm.\n`;
+                });
+
+                prompt += `---
+Mức độ nhận thức:
+- 40% câu hỏi ở mức độ Nhận biết.
+- 30% câu hỏi ở mức độ Thông hiểu.
+- 30% câu hỏi ở mức độ Vận dụng.
+---
+YÊU CẦU KẾT QUẢ
+Định dạng kết quả theo bảng tính Excel như mẫu "Ma trận đề kiểm tra định kì" đính kèm. Cấu trúc bảng phải giống y file mẫu. Tuyệt đối không được thay đổi. Đáp ứng đầy đủ yêu cầu của Công văn 7991, giúp giáo viên đánh giá chính xác năng lực và phẩm chất của học sinh.
+
+DỮ LIỆU CỤ THỂ CHO MA TRẬN:
+`;
+
+                topics.forEach((topic, topicIndex) => {
+                    prompt += `\nChủ đề ${topicIndex + 1}: ${topic.name}\n`;
+                    topic.units.forEach((unit, unitIndex) => {
+                        prompt += `- Đơn vị kiến thức: ${unit.name}\n`;
+                        prompt += `  * Trắc nghiệm:\n`;
+                        prompt += `    - Nhiều lựa chọn: Biết ${unit.tn.multiple.know.count} câu (${unit.tn.multiple.know.score} điểm), Hiểu ${unit.tn.multiple.understand.count} câu (${unit.tn.multiple.understand.score} điểm), Vận dụng ${unit.tn.multiple.apply.count} câu (${unit.tn.multiple.apply.score} điểm)\n`;
+                        prompt += `    - Đúng - Sai: Biết ${unit.tn.truefalse.know.count} câu (${unit.tn.truefalse.know.score} điểm), Hiểu ${unit.tn.truefalse.understand.count} câu (${unit.tn.truefalse.understand.score} điểm), Vận dụng ${unit.tn.truefalse.apply.count} câu (${unit.tn.truefalse.apply.score} điểm)\n`;
+                        prompt += `    - Trả lời ngắn: Biết ${unit.tn.short.know.count} câu (${unit.tn.short.know.score} điểm), Hiểu ${unit.tn.short.understand.count} câu (${unit.tn.short.understand.score} điểm), Vận dụng ${unit.tn.short.apply.count} câu (${unit.tn.short.apply.score} điểm)\n`;
+                        prompt += `  * Tự luận:\n`;
+                        prompt += `    - Biết ${unit.tl.know.count} câu (${unit.tl.know.score} điểm), Hiểu ${unit.tl.understand.count} câu (${unit.tl.understand.score} điểm), Vận dụng ${unit.tl.apply.count} câu (${unit.tl.apply.score} điểm)\n`;
+                    });
+                });
+
+                return prompt;
+            }
+
+            // Sao chép prompt
+            function copyPrompt() {
+                const text = promptOutput.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    const btn = copyPromptButton;
+                    const originalText = btn.textContent;
+                    btn.textContent = 'Đã sao chép!';
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                    }, 2000);
+                });
+            }
+
+            // Gắn sự kiện
+            addTopicButton.addEventListener('click', addTopic);
+            generatePromptButton.addEventListener('click', generatePrompt);
+            copyPromptButton.addEventListener('click', copyPrompt);
+
+            // Thêm 4 chủ đề mặc định
+            for (let i = 0; i < 4; i++) {
+                addTopic();
+            }
+        });
+    </script>
+</body>
+</html>
