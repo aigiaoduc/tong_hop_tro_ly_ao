@@ -1,26 +1,33 @@
+# Kho Tài Nguyên Thầy Quân
 
-# Kho Trợ lý AI Thầy Quân
+Dự án quản lý ứng dụng và khóa học, dữ liệu từ Google Sheets.
 
-Nền tảng quản lý và hiển thị các ứng dụng AI chuyên nghiệp.
+## Cài đặt và Chạy Development
 
-## Hướng dẫn chạy dự án
+1.  Cài đặt dependencies:
+    ```bash
+    npm install
+    ```
 
-### 1. Cài đặt thư viện
-```bash
-npm install
-```
+2.  Chạy server dev:
+    ```bash
+    npm run dev
+    ```
 
-### 2. Chạy ở môi trường phát triển (Dev)
-```bash
-npm run dev
-```
+## Build cho Production (Vercel)
 
-### 3. Đóng gói để triển khai (Build)
-```bash
-npm run build
-```
+Dự án này sử dụng Vite để build.
 
-## Triển khai lên Vercel
-1. Đẩy mã nguồn lên GitHub/GitLab.
-2. Kết nối dự án với Vercel.
-3. Vercel sẽ tự động nhận diện cấu hình Vite và thực hiện build.
+1.  Lệnh build:
+    ```bash
+    npm run build
+    ```
+
+2.  Thư mục đầu ra: `dist`
+
+## Cấu trúc thư mục
+
+-   `manifest.json`, `sw.js`: Các file PWA (được copy thủ công vào dist khi build).
+-   `config.ts`: Cấu hình link Google Sheets.
+-   `index.html`: Entry point.
+-   `src/*`: (Hiện tại code nằm ở root để đơn giản hóa, Vite config đã được chỉnh để hỗ trợ điều này).

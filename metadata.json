@@ -1,5 +1,5 @@
 {
-  "name": "Web trợ lý ảo thầy quân - bản deloy vercel",
-  "description": "A high-end, modern dashboard and showcase platform for developers to host and manage their web applications, featuring free and paid tiers with a membership system.",
+  "name": "Teacher App Store",
+  "description": "Một nền tảng chia sẻ ứng dụng và khóa học dành cho giáo viên, quản lý dữ liệu hoàn toàn bằng Google Sheets.",
   "requestFramePermissions": []
 }
