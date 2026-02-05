@@ -16,6 +16,7 @@ const Courses: React.FC = () => {
   const navigate = useNavigate();
   const [purchaseItem, setPurchaseItem] = useState<ProductItem | null>(null);
   const [viewingItem, setViewingItem] = useState<ProductItem | null>(null);
+  const [learningItem, setLearningItem] = useState<ProductItem | null>(null);
   const [registeringId, setRegisteringId] = useState<string | null>(null);
 
   // Pagination State
@@ -145,14 +146,12 @@ const Courses: React.FC = () => {
                     </button>
                     
                     {owned ? (
-                      <a 
-                        href={course.contentLink} 
-                        target="_blank" 
-                        rel="noreferrer"
+                      <button 
+                        onClick={() => setLearningItem(course)}
                         className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition shadow-md text-sm font-medium"
                       >
                         <PlayCircle size={18} /> <span>Vào học</span>
-                      </a>
+                      </button>
                     ) : isFree ? (
                       <button 
                          onClick={() => handleFreeRegister(course)}
@@ -221,6 +220,15 @@ const Courses: React.FC = () => {
           title={`Giới thiệu: ${viewingItem.title}`}
           url={viewingItem.landingPageUrl}
           onClose={() => setViewingItem(null)}
+        />
+      )}
+
+      {/* Embed Modal for Learning Content */}
+      {learningItem && (
+        <EmbedModal 
+          title={`Đang học: ${learningItem.title}`}
+          url={learningItem.contentLink}
+          onClose={() => setLearningItem(null)}
         />
       )}
     </div>
