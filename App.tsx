@@ -1,0 +1,35 @@
+import React from 'react';
+import { HashRouter, Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import Apps from './pages/Apps';
+import Courses from './pages/Courses';
+import Software from './pages/Software';
+import Auth from './pages/Auth';
+import Profile from './pages/Profile';
+import Feedback from './pages/Feedback';
+import Admin from './pages/Admin';
+import { AuthProvider } from './context/AuthContext';
+
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <HashRouter>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/apps" element={<Apps />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/software" element={<Software />} />
+            <Route path="/login" element={<Auth />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/feedback" element={<Feedback />} />
+            <Route path="/admin" element={<Admin />} />
+          </Routes>
+        </Layout>
+      </HashRouter>
+    </AuthProvider>
+  );
+};
+
+export default App;
