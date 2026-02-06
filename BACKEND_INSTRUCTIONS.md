@@ -28,34 +28,28 @@ Dùng để lưu thông tin cá nhân hiển thị trên web và **Phiên bản 
 
 ### Sheet 2: Tên là `Ứng dụng`
 Danh sách các App/Tool bạn đã làm.
-*   **Hàng 1 (Tiêu đề cột):** `ID`, `Tên ứng dụng`, `Mô tả ngắn`, `Mô tả chi tiết`, `Link sử dụng`, `Link ảnh`, `Chế độ mở`, `Trạng thái`
-*   **Giải thích:**
-    *   `Chế độ mở`: Điền `EMBED` (nếu muốn mở cửa sổ nhúng trong web) hoặc `NEW_TAB` (nếu muốn mở tab mới).
-    *   `Trạng thái`: Nếu muốn ẩn ứng dụng này, điền `Ẩn`. Nếu muốn hiện, để trống hoặc điền `Hiện`.
+*   **Hàng 1 (Tiêu đề cột):** `ID`, `Tên ứng dụng`, `Mô tả ngắn`, `Mô tả chi tiết`, `Link sử dụng`, `Link ảnh`, `Chế độ mở`, `Trạng thái`, `Lượt dùng`
+*   **Cập nhật mới:** Thêm cột `Lượt dùng` ở cột I (Cột thứ 9). Bạn có thể nhập số tùy ý (VD: 1000).
 
 ---
 
 ### Sheet 3: Tên là `Khóa học`
 Danh sách khóa học online.
-*   **Hàng 1 (Tiêu đề cột):** `ID`, `Tên khóa học`, `Mô tả`, `Giá bán`, `Link Landing Page`, `Link nội dung`, `Link ảnh`, `Trạng thái`
-*   **Giải thích:**
-    *   `Trạng thái`: Điền `Ẩn` nếu muốn tạm dừng bán khóa học này.
+*   **Hàng 1 (Tiêu đề cột):** `ID`, `Tên khóa học`, `Mô tả`, `Giá bán`, `Link Landing Page`, `Link nội dung`, `Link ảnh`, `Trạng thái`, `Số học viên`
+*   **Cập nhật mới:** Thêm cột `Số học viên` ở cột I (Cột thứ 9).
 
 ---
 
 ### Sheet 4: Tên là `Phần mềm`
 Danh sách phần mềm bán.
-*   **Hàng 1 (Tiêu đề cột):** `ID`, `Tên phần mềm`, `Mô tả`, `Giá bán`, `Link Landing Page`, `Link nội dung`, `Link ảnh`, `Trạng thái`
-*   **Giải thích:**
-    *   `Trạng thái`: Điền `Ẩn` nếu muốn tạm ẩn phần mềm.
+*   **Hàng 1 (Tiêu đề cột):** `ID`, `Tên phần mềm`, `Mô tả`, `Giá bán`, `Link Landing Page`, `Link nội dung`, `Link ảnh`, `Trạng thái`, `Lượt mua`
+*   **Cập nhật mới:** Thêm cột `Lượt mua` ở cột I (Cột thứ 9).
 
 ---
 
 ### Sheet 5: Tên là `Người dùng`
 Lưu tài khoản khách hàng.
 *   **Hàng 1 (Tiêu đề cột):** `Tài khoản`, `Mật khẩu`, `Họ tên`, `Email`, `Hạng thành viên`, `Sản phẩm đã mua`, `Trạng thái`
-*   **Giải thích:**
-    *   `Trạng thái`: Điền `Khóa` nếu muốn chặn người dùng này đăng nhập.
 
 ---
 
@@ -64,12 +58,9 @@ Lưu tài khoản khách hàng.
 
 ---
 
-### Sheet 7: Tên là `Quảng cáo` (MỚI)
+### Sheet 7: Tên là `Quảng cáo`
 Dùng để cài đặt quảng cáo hiển thị ở Trang chủ.
 *   **Hàng 1 (Tiêu đề cột):** `ID`, `Mô tả`, `Link ảnh`, `Link Landing Page`, `Trạng thái`
-*   **Giải thích:**
-    *   `Link Landing Page`: Là link sẽ được mở dạng Nhúng (Embed) khi người dùng bấm vào quảng cáo.
-    *   `Trạng thái`: Điền `Ẩn` nếu không muốn hiện.
 
 ---
 
@@ -118,7 +109,7 @@ function handleRequest(e) {
       case 'register': result = registerUser(postData); break;
       case 'login': result = loginUser(postData); break;
       case 'submitFeedback': result = submitFeedback(postData); break;
-      case 'registerFreeProduct': result = registerFreeProduct(postData); break; // MỚI: Đăng ký miễn phí
+      case 'registerFreeProduct': result = registerFreeProduct(postData); break;
 
       // ADMIN ACTIONS
       case 'adminGetAllData': result = adminGetAllData(postData); break;
@@ -166,7 +157,7 @@ function getConfig() {
 function getApps() {
   const rows = getSheetData('Ứng dụng');
   const data = rows.filter(r => isActive(r[7])).map(r => ({
-    id: r[0], title: r[1], shortDesc: r[2], fullDesc: r[3], link: r[4], imageUrl: r[5], mode: r[6]
+    id: r[0], title: r[1], shortDesc: r[2], fullDesc: r[3], link: r[4], imageUrl: r[5], mode: r[6], usageCount: r[8] || 0
   }));
   return { success: true, data: data };
 }
@@ -174,7 +165,7 @@ function getApps() {
 function getCourses() {
   const rows = getSheetData('Khóa học');
   const data = rows.filter(r => isActive(r[7])).map(r => ({
-    id: r[0], title: r[1], description: r[2], price: Number(r[3]), landingPageUrl: r[4], contentLink: r[5], imageUrl: r[6], type: 'COURSE'
+    id: r[0], title: r[1], description: r[2], price: Number(r[3]), landingPageUrl: r[4], contentLink: r[5], imageUrl: r[6], type: 'COURSE', usageCount: r[8] || 0
   }));
   return { success: true, data: data };
 }
@@ -182,7 +173,7 @@ function getCourses() {
 function getSoftware() {
   const rows = getSheetData('Phần mềm');
   const data = rows.filter(r => isActive(r[7])).map(r => ({
-    id: r[0], title: r[1], description: r[2], price: Number(r[3]), landingPageUrl: r[4], contentLink: r[5], imageUrl: r[6], type: 'SOFTWARE'
+    id: r[0], title: r[1], description: r[2], price: Number(r[3]), landingPageUrl: r[4], contentLink: r[5], imageUrl: r[6], type: 'SOFTWARE', usageCount: r[8] || 0
   }));
   return { success: true, data: data };
 }
@@ -225,7 +216,6 @@ function submitFeedback(data) {
   return { success: true, message: "Đã gửi" };
 }
 
-// Hàm mới: Đăng ký sản phẩm miễn phí
 function registerFreeProduct(data) {
   const username = data.username;
   const productId = data.productId;
@@ -249,12 +239,10 @@ function registerFreeProduct(data) {
   
   if (rowIndex === -1) return { success: false, message: "Không tìm thấy người dùng" };
   
-  // Kiểm tra xem đã sở hữu chưa
   if (currentItems.includes(productId)) {
     return { success: true, message: "Đã sở hữu", data: currentItems };
   }
   
-  // Kiểm tra giá sản phẩm (Bảo mật: Phải là 0đ)
   let isFree = false;
   
   // Check Course
@@ -271,7 +259,6 @@ function registerFreeProduct(data) {
   
   if (!isFree) return { success: false, message: "Sản phẩm này không miễn phí!" };
   
-  // Thêm vào danh sách
   currentItems.push(productId);
   sheet.getRange(rowIndex, 6).setValue(currentItems.join(','));
   
@@ -285,11 +272,10 @@ function adminGetAllData(data) {
   const rows = getSheetData(sheetName);
   let mappedData = [];
 
-  // Manual Mapping based on Sheet Structure defined in Step 1
   if (sheetName === 'Ứng dụng') {
-    mappedData = rows.map(r => ({id: r[0], title: r[1], shortDesc: r[2], fullDesc: r[3], link: r[4], imageUrl: r[5], mode: r[6], status: r[7]}));
+    mappedData = rows.map(r => ({id: r[0], title: r[1], shortDesc: r[2], fullDesc: r[3], link: r[4], imageUrl: r[5], mode: r[6], status: r[7], usageCount: r[8]}));
   } else if (sheetName === 'Khóa học' || sheetName === 'Phần mềm') {
-    mappedData = rows.map(r => ({id: r[0], title: r[1], description: r[2], price: r[3], landingPageUrl: r[4], contentLink: r[5], imageUrl: r[6], status: r[7]}));
+    mappedData = rows.map(r => ({id: r[0], title: r[1], description: r[2], price: r[3], landingPageUrl: r[4], contentLink: r[5], imageUrl: r[6], status: r[7], usageCount: r[8]}));
   } else if (sheetName === 'Quảng cáo') {
     mappedData = rows.map(r => ({id: r[0], title: r[1], imageUrl: r[2], landingPageUrl: r[3], status: r[4]}));
   } else if (sheetName === 'Người dùng') {
@@ -306,7 +292,6 @@ function adminUpdateConfig(data) {
   const sheet = openSheet('Cấu hình');
   const rows = sheet.getDataRange().getValues();
   
-  // Update each key if found
   for (let i = 1; i < rows.length; i++) {
     const key = rows[i][0];
     if (newConfig[key] !== undefined) {
@@ -323,10 +308,9 @@ function adminSaveItem(data) {
   const rows = sheet.getDataRange().getValues();
   
   let rowIndex = -1;
-  const idColIndex = (sheetName === 'Người dùng') ? 0 : 0; // Username or ID is always col 0
+  const idColIndex = (sheetName === 'Người dùng') ? 0 : 0; 
   const idValue = (sheetName === 'Người dùng') ? item.username : item.id;
 
-  // Find existing row
   for (let i = 1; i < rows.length; i++) {
     if (String(rows[i][idColIndex]) === String(idValue)) {
       rowIndex = i + 1;
@@ -334,28 +318,23 @@ function adminSaveItem(data) {
     }
   }
 
-  // Construct Row Data
   let rowData = [];
   if (sheetName === 'Ứng dụng') {
-    rowData = [item.id, item.title, item.shortDesc, item.fullDesc, item.link, item.imageUrl, item.mode, item.status];
+    rowData = [item.id, item.title, item.shortDesc, item.fullDesc, item.link, item.imageUrl, item.mode, item.status, item.usageCount];
   } else if (sheetName === 'Khóa học' || sheetName === 'Phần mềm') {
-    rowData = [item.id, item.title, item.description, item.price, item.landingPageUrl, item.contentLink, item.imageUrl, item.status];
+    rowData = [item.id, item.title, item.description, item.price, item.landingPageUrl, item.contentLink, item.imageUrl, item.status, item.usageCount];
   } else if (sheetName === 'Quảng cáo') {
     rowData = [item.id, item.title, item.imageUrl, item.landingPageUrl, item.status];
   } else if (sheetName === 'Người dùng') {
-     // Be careful not to overwrite password if not provided (though Admin panel sends it)
-     // Find old password if not changing
      let pwd = item.password;
      if (!pwd && rowIndex > -1) pwd = rows[rowIndex-1][1]; 
      rowData = [item.username, pwd, item.fullName, item.email, item.membership, item.purchasedItems, item.status];
   }
 
   if (rowIndex > -1) {
-    // Update
     sheet.getRange(rowIndex, 1, 1, rowData.length).setValues([rowData]);
     return { success: true, message: "Đã cập nhật" };
   } else {
-    // Add New
     sheet.appendRow(rowData);
     return { success: true, message: "Đã thêm mới" };
   }

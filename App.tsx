@@ -18,9 +18,18 @@ const App: React.FC = () => {
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
+            {/* Apps routes */}
             <Route path="/apps" element={<Apps />} />
+            <Route path="/apps/:id" element={<Apps />} />
+            
+            {/* Courses routes */}
             <Route path="/courses" element={<Courses />} />
+            <Route path="/courses/:id" element={<Courses />} />
+            
+            {/* Software routes */}
             <Route path="/software" element={<Software />} />
+            <Route path="/software/:id" element={<Software />} />
+            
             <Route path="/login" element={<Auth />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/feedback" element={<Feedback />} />

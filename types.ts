@@ -30,6 +30,7 @@ export interface AppItem {
   mode: 'EMBED' | 'NEW_TAB';
   imageUrl: string;
   status?: string; // For Admin
+  usageCount?: number; // New: Lượt dùng
 }
 
 export interface ProductItem {
@@ -42,6 +43,7 @@ export interface ProductItem {
   imageUrl: string;
   type: ProductType;
   status?: string; // For Admin
+  usageCount?: number; // New: Lượt mua
 }
 
 export interface User {

@@ -12,7 +12,8 @@ const FIELD_METADATA: Record<string, { label: string; help: string; type?: 'text
   title: { label: 'Tiêu đề / Tên', help: 'Tên hiển thị của sản phẩm, ứng dụng hoặc tiêu đề quảng cáo.', type: 'text' },
   imageUrl: { label: 'Link Hình ảnh', help: 'Đường dẫn URL trực tiếp đến file ảnh (VD: https://imgur.com/...).', type: 'text' },
   status: { label: 'Trạng thái', help: 'Chọn trạng thái hiển thị hoặc hoạt động.', type: 'select' }, 
-  
+  usageCount: { label: 'Số lượt mua/dùng', help: 'Hiển thị số lượng người đã mua hoặc sử dụng. Có thể nhập số ảo để tăng uy tín.', type: 'number' },
+
   // Ứng dụng
   shortDesc: { label: 'Mô tả ngắn', help: 'Dòng giới thiệu ngắn gọn hiển thị ở thẻ bên ngoài.', type: 'textarea' },
   fullDesc: { label: 'Mô tả chi tiết', help: 'Nội dung đầy đủ hiển thị khi bấm nút "Chi tiết".', type: 'textarea' },
@@ -283,9 +284,9 @@ const Admin: React.FC = () => {
   // Xác định thứ tự hiển thị các trường khi Thêm mới
   const getFieldsForTab = (tab: string) => {
     switch(tab) {
-      case 'apps': return ['id', 'title', 'mode', 'link', 'imageUrl', 'shortDesc', 'fullDesc', 'status'];
+      case 'apps': return ['id', 'title', 'mode', 'link', 'imageUrl', 'shortDesc', 'fullDesc', 'usageCount', 'status'];
       case 'courses':
-      case 'software': return ['id', 'title', 'price', 'description', 'landingPageUrl', 'contentLink', 'imageUrl', 'status'];
+      case 'software': return ['id', 'title', 'price', 'description', 'landingPageUrl', 'contentLink', 'imageUrl', 'usageCount', 'status'];
       case 'ads': return ['id', 'title', 'landingPageUrl', 'imageUrl', 'status'];
       case 'users': return ['username', 'password', 'fullName', 'email', 'membership', 'status'];
       default: return [];

@@ -1,5 +1,5 @@
 // QUAN TRỌNG: Thay thế URL bên dưới bằng URL Web App của Google Apps Script sau khi bạn deploy
-export const API_URL = 'https://script.google.com/macros/s/AKfycbziYF0id8dwuNaYZyh7FGNPuwfHEFwaN6ozUoEdoukzfTxIYosrymc67sjn80BRcS99ng/exec';
+export const API_URL = 'https://script.google.com/macros/s/AKfycbxDLG2iDX2J0U4IIu7qvrH85D3HuF85L1Q9P04LQM2jEj4kKheEeBtamB6ZnBjC4WB4JQ/exec';
 
 // Cấu hình ngân hàng mặc định (fallback nếu chưa load được từ Sheet)
 export const DEFAULT_BANK_INFO = {
