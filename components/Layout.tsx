@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, User, Home, Code, BookOpen, Monitor, MessageSquare, Settings } from 'lucide-react';
+import { Menu, X, User, Home, Code, BookOpen, Monitor, MessageSquare } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { Config } from '../types';
 import { api } from '../services/api';
@@ -75,16 +75,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                       <span className="text-sm font-medium">{user.username}</span>
                     </button>
                     <div className="absolute right-0 w-48 mt-2 py-2 bg-white rounded-md shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right border border-gray-100 z-50">
-                      {/* Admin Link */}
-                      {user.username === 'admin' && (
-                        <Link to="/admin" className="block px-4 py-2 text-sm text-indigo-600 font-bold hover:bg-indigo-50 border-b border-gray-100">
-                          <div className="flex items-center">
-                            <Settings size={16} className="mr-2" />
-                            Trang quản trị
-                          </div>
-                        </Link>
-                      )}
-                      
                       <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         Tài khoản của tôi
                       </Link>
@@ -148,16 +138,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                       </div>
                       <span className="text-gray-800 font-medium">{user.fullName}</span>
                     </div>
-
-                    {user.username === 'admin' && (
-                        <Link
-                          to="/admin"
-                          onClick={() => setIsMenuOpen(false)}
-                          className="block px-3 py-2 rounded-md text-base font-bold text-indigo-600 hover:bg-indigo-50"
-                        >
-                          Trang quản trị
-                        </Link>
-                    )}
 
                     <Link
                       to="/profile"

@@ -136,14 +136,14 @@ export const api = {
   submitFeedback: (data: any) => fetchFromScript('submitFeedback', 'POST', data),
   registerFreeProduct: (username: string, productId: string) => fetchFromScript('registerFreeProduct', 'POST', { username, productId }),
 
-  // Admin (Never Cache)
+  // Admin Methods
   adminGetAllData: (sheetName: string) => fetchFromScript('adminGetAllData', 'POST', { sheetName }),
+  adminUpdateConfig: (config: any) => fetchFromScript('adminUpdateConfig', 'POST', config),
   adminSaveItem: (sheetName: string, item: any) => fetchFromScript('adminSaveItem', 'POST', { sheetName, item }),
-  adminUpdateConfig: (config: Config) => fetchFromScript('adminUpdateConfig', 'POST', { config }),
 };
 
 // --- Mock Data Handler ---
 const mockHandler = async (action: string, body: any): Promise<ApiResponse<any>> => {
   await new Promise(resolve => setTimeout(resolve, 800));
-  return { success: false, message: "Mock data not fully implemented for Admin actions." };
+  return { success: false, message: "Mock data not fully implemented." };
 };

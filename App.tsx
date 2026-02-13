@@ -8,7 +8,6 @@ import Software from './pages/Software';
 import Auth from './pages/Auth';
 import Profile from './pages/Profile';
 import Feedback from './pages/Feedback';
-import Admin from './pages/Admin';
 import { AuthProvider } from './context/AuthContext';
 
 const App: React.FC = () => {
@@ -33,7 +32,6 @@ const App: React.FC = () => {
             <Route path="/login" element={<Auth />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/feedback" element={<Feedback />} />
-            <Route path="/admin" element={<Admin />} />
           </Routes>
         </Layout>
       </HashRouter>
