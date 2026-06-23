@@ -107,8 +107,10 @@ function getConfig() {
   const rows = getSheetData('Cấu hình');
   const config = {};
   rows.forEach(row => { if(row[0]) config[row[0]] = row[1]; });
-  // Versioning for cache busting
-  config['DATA_VERSION'] = new Date().getTime().toString(); 
+  // Versioning for cache busting - dùng DATA_VERSION cố định từ Sheet (nếu có)
+  // Nếu chưa có trong sheet, mặc định là '1.0' - KHI ĐỔI DỮ LIỆU QUAN TRỌNG,
+  // hãy thêm dòng "DATA_VERSION" vào sheet Cấu hình với giá trị mới (VD: '1.1', '2.0')
+  if (!config['DATA_VERSION']) config['DATA_VERSION'] = '1.0';
   return { success: true, data: config };
 }
 
@@ -212,7 +214,8 @@ function adminGetAllData(data) {
   } else if (sheetName === 'Quảng cáo') {
     mappedData = rows.map(r => ({id: r[0], title: r[1], imageUrl: r[2], landingPageUrl: r[3], status: r[4]}));
   } else if (sheetName === 'Người dùng') {
-    mappedData = rows.map(r => ({username: r[0], password: r[1], fullName: r[2], email: r[3], membership: r[4], purchasedItems: r[5], status: r[6]}));
+    // Không trả password về client vì lý do bảo mật
+    mappedData = rows.map(r => ({username: r[0], fullName: r[2], email: r[3], membership: r[4], purchasedItems: r[5], status: r[6]}));
   } else if (sheetName === 'Phản hồi') {
     mappedData = rows.map(r => ({time: r[0], name: r[1], email: r[2], message: r[3]}));
   }

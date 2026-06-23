@@ -83,7 +83,8 @@ export const api = {
        const serverVersion = response.data.DATA_VERSION || '1.0';
        const localVersion = localStorage.getItem(CACHE_KEYS.VERSION);
 
-       // Nếu phiên bản server khác local -> Xóa cache cũ
+       // Chỉ xóa cache khi DATA_VERSION thay đổi thực sự
+       // Cách dùng: thêm dòng "DATA_VERSION" vào Sheet Cấu hình, tăng số khi đổi dữ liệu
        if (serverVersion !== localVersion) {
           console.log(`New version detected: ${serverVersion} (Old: ${localVersion}). Clearing cache.`);
           clearDataCache();

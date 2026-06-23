@@ -2,24 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useToast } from '../components/common/ToastContext';
+import SEO from '../components/common/SEO';
 
 const Auth: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [formData, setFormData] = useState({ 
-    username: '', 
-    password: '', 
-    fullName: '', 
-    email: '' 
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+    fullName: '',
+    email: ''
   });
   const [error, setError] = useState('');
   const [notification, setNotification] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
+  const toast = useToast();
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    // Kiểm tra state được truyền từ trang Mua hàng
     if (location.state) {
       if (location.state.mode === 'register') {
         setIsLogin(false);
@@ -33,7 +35,7 @@ const Auth: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    setNotification(''); // Clear notification on submit
+    setNotification('');
     setLoading(true);
 
     try {
@@ -41,7 +43,6 @@ const Auth: React.FC = () => {
         const res = await api.login({ username: formData.username, password: formData.password });
         if (res.success && res.data) {
           login(res.data);
-          // Nếu có redirectTo trong state, có thể quay lại trang đó (nâng cao), hiện tại về Home
           navigate('/');
         } else {
           setError(res.message || 'Đăng nhập thất bại');
@@ -49,7 +50,7 @@ const Auth: React.FC = () => {
       } else {
         const res = await api.register(formData);
         if (res.success) {
-          alert('Đăng ký thành công! Vui lòng đăng nhập.');
+          toast.success('Đăng ký thành công! Vui lòng đăng nhập.');
           setIsLogin(true);
         } else {
           setError(res.message || 'Đăng ký thất bại');
@@ -64,19 +65,19 @@ const Auth: React.FC = () => {
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
-        <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
+      <div className="max-w-md w-full bg-white rounded-2xl shadow-[0_4px_24px_-8px_rgba(0,0,0,0.08)] p-8 border border-stone-100">
+        <h2 className="text-2xl font-bold text-center text-stone-900 mb-7 tracking-tight">
           {isLogin ? 'Đăng nhập' : 'Tạo tài khoản'}
         </h2>
 
         {notification && (
-          <div className="bg-yellow-50 text-yellow-800 p-3 rounded-lg mb-4 text-sm text-center border border-yellow-200">
+          <div className="bg-amber-50 text-amber-700 p-3 rounded-xl mb-5 text-sm text-center border border-amber-200">
             {notification}
           </div>
         )}
 
         {error && (
-          <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm text-center">
+          <div className="bg-red-50 text-red-600 p-3 rounded-xl mb-5 text-sm text-center border border-red-200">
             {error}
           </div>
         )}
@@ -85,21 +86,21 @@ const Auth: React.FC = () => {
           {!isLogin && (
             <>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Họ và tên</label>
+                <label className="block text-sm font-medium text-stone-700 mb-1">Họ và tên</label>
                 <input
                   type="text"
                   required
-                  className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-4 py-2.5 border border-stone-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none transition-all bg-white text-stone-900"
                   value={formData.fullName}
                   onChange={e => setFormData({...formData, fullName: e.target.value})}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Email</label>
+                <label className="block text-sm font-medium text-stone-700 mb-1">Email liên hệ</label>
                 <input
                   type="email"
                   required
-                  className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-4 py-2.5 border border-stone-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none transition-all bg-white text-stone-900"
                   value={formData.email}
                   onChange={e => setFormData({...formData, email: e.target.value})}
                 />
@@ -108,22 +109,23 @@ const Auth: React.FC = () => {
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Tên đăng nhập</label>
+            <label className="block text-sm font-medium text-stone-700 mb-1">Tên đăng nhập</label>
             <input
               type="text"
               required
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full px-4 py-2.5 border border-stone-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none transition-all bg-white text-stone-900"
               value={formData.username}
               onChange={e => setFormData({...formData, username: e.target.value})}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Mật khẩu</label>
+            <label className="block text-sm font-medium text-stone-700 mb-1">Mật khẩu</label>
             <input
               type="password"
               required
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+              minLength={6}
+              className="w-full px-4 py-2.5 border border-stone-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none transition-all bg-white text-stone-900"
               value={formData.password}
               onChange={e => setFormData({...formData, password: e.target.value})}
             />
@@ -132,16 +134,16 @@ const Auth: React.FC = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 px-4 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition ${loading ? 'opacity-70' : ''}`}
+            className={`w-full py-3 px-4 bg-teal-600 text-white rounded-xl font-medium hover:bg-teal-700 transition-all duration-200 active:scale-[0.98] shadow-[0_2px_10px_-2px_rgba(13,148,136,0.4)] ${loading ? 'opacity-70' : ''}`}
           >
             {loading ? 'Đang xử lý...' : (isLogin ? 'Đăng nhập' : 'Đăng ký')}
           </button>
         </form>
 
-        <div className="mt-6 text-center">
+        <div className="mt-5 text-center">
           <button
             onClick={() => { setIsLogin(!isLogin); setError(''); setNotification(''); }}
-            className="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
+            className="text-stone-500 hover:text-teal-600 text-sm font-medium transition-colors duration-200"
           >
             {isLogin ? 'Chưa có tài khoản? Đăng ký ngay' : 'Đã có tài khoản? Đăng nhập'}
           </button>

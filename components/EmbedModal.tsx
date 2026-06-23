@@ -10,7 +10,7 @@ interface EmbedModalProps {
 
 const EmbedModal: React.FC<EmbedModalProps> = ({ title, url, onClose }) => {
   const [showReportModal, setShowReportModal] = useState(false);
-  
+
   // State for Feedback Form
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState<'IDLE' | 'SENDING' | 'SUCCESS' | 'ERROR'>('IDLE');
@@ -26,7 +26,7 @@ const EmbedModal: React.FC<EmbedModalProps> = ({ title, url, onClose }) => {
   const handleSubmitReport = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('SENDING');
-    
+
     try {
       const res = await api.submitFeedback({
         ...formData,
@@ -49,114 +49,114 @@ const EmbedModal: React.FC<EmbedModalProps> = ({ title, url, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden bg-gray-900 bg-opacity-95 flex flex-col">
+    <div className="fixed inset-0 z-50 overflow-hidden bg-stone-900/95 flex flex-col">
       {/* Header Bar */}
-      <div className="flex justify-between items-center px-4 py-3 bg-gray-800 text-white shadow-md border-b border-gray-700 shrink-0">
-         <h3 className="font-bold truncate pr-4 text-sm md:text-base flex-grow">
+      <div className="flex justify-between items-center px-4 py-3 bg-stone-900 text-white border-b border-stone-800 shrink-0">
+         <h3 className="font-medium text-sm md:text-base truncate pr-4 flex-grow">
            {title}
          </h3>
-         
-         <div className="flex items-center space-x-3">
+
+         <div className="flex items-center space-x-2.5">
             {/* Nút Ủng hộ */}
-            <button 
+            <button
               onClick={handleSupport}
-              className="flex items-center space-x-1 px-3 py-1.5 bg-pink-600 hover:bg-pink-700 rounded-full text-xs font-bold transition-colors animate-pulse"
+              className="flex items-center space-x-1 px-3 py-1.5 bg-pink-600 hover:bg-pink-700 rounded-full text-xs font-medium transition-colors"
               title="Ủng hộ tác giả"
             >
-              <Heart size={14} fill="white" />
+              <Heart size={13} fill="white" />
               <span className="hidden md:inline">Ủng hộ Coffee</span>
             </button>
 
-            {/* Nút Báo cáo */}
-            <button 
+            {/* Nút Báo lỗi */}
+            <button
               onClick={handleReportClick}
-              className="flex items-center space-x-1 px-3 py-1.5 bg-gray-700 hover:bg-gray-600 rounded-full text-xs font-medium transition-colors"
+              className="flex items-center space-x-1 px-3 py-1.5 bg-stone-800 hover:bg-stone-700 rounded-full text-xs font-medium transition-colors"
               title="Báo lỗi / Liên hệ"
             >
-              <MessageSquareWarning size={14} />
+              <MessageSquareWarning size={13} />
               <span className="hidden md:inline">Báo lỗi</span>
             </button>
 
             {/* Nút Đóng */}
-            <button 
-              onClick={onClose} 
-              className="p-1 hover:bg-gray-700 rounded-full transition-colors text-gray-400 hover:text-white"
+            <button
+              onClick={onClose}
+              className="p-1 hover:bg-stone-800 rounded-full transition-colors text-stone-400 hover:text-white"
             >
-              <X size={24} />
+              <X size={22} />
             </button>
          </div>
       </div>
 
       {/* Iframe Content */}
-      <div className="flex-grow w-full h-full relative bg-black">
+      <div className="flex-grow w-full h-full relative bg-stone-950">
          {url ? (
-            <iframe 
-               src={url} 
-               className="w-full h-full border-0" 
+            <iframe
+               src={url}
+               className="w-full h-full border-0"
                title={title}
                allowFullScreen
-               sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+               allow="accelerometer; ambient-light-sensor; autoplay; battery; camera; display-capture; document-domain; encrypted-media; fullscreen; geolocation; gyroscope; keyboard-map; magnetometer; microphone; midi; otp-credentials; picture-in-picture; publickey-credentials-get; screen-wake-lock; serial; speaker-selection; storage-access; usb; web-share; xr-spatial-tracking; clipboard-write; clipboard-read;"
             />
          ) : (
-            <div className="flex items-center justify-center h-full text-gray-400 flex-col">
-               <p>Chưa có liên kết nội dung.</p>
+            <div className="flex items-center justify-center h-full text-stone-500 flex-col gap-2">
+               <p className="text-sm">Chưa có liên kết nội dung.</p>
             </div>
          )}
       </div>
 
       {/* Internal Report Modal (Popup) */}
       {showReportModal && (
-        <div className="absolute inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-            <div className="bg-white rounded-lg shadow-2xl w-full max-w-md overflow-hidden animate-in fade-in zoom-in duration-200">
-                <div className="flex justify-between items-center bg-gray-100 px-4 py-3 border-b">
-                    <h4 className="font-bold text-gray-800 flex items-center">
-                        <MessageSquareWarning size={18} className="mr-2 text-red-500" />
+        <div className="absolute inset-0 z-[60] flex items-center justify-center bg-stone-900/70 backdrop-blur-sm p-4">
+            <div className="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden">
+                <div className="flex justify-between items-center bg-stone-50 px-5 py-3 border-b border-stone-100">
+                    <h4 className="font-bold text-stone-800 flex items-center text-sm">
+                        <MessageSquareWarning size={16} className="mr-2 text-red-500" />
                         Báo lỗi / Góp ý
                     </h4>
-                    <button onClick={() => setShowReportModal(false)} className="text-gray-500 hover:text-gray-800">
-                        <X size={20} />
+                    <button onClick={() => setShowReportModal(false)} className="text-stone-400 hover:text-stone-700 transition-colors">
+                        <X size={18} />
                     </button>
                 </div>
-                
+
                 <div className="p-5">
                     {status === 'SUCCESS' ? (
-                        <div className="text-center py-6 text-green-600">
-                            <p className="font-bold text-lg mb-2">Đã gửi thành công!</p>
-                            <p className="text-sm">Cảm ơn bạn đã phản hồi.</p>
+                        <div className="text-center py-6">
+                            <p className="font-bold text-teal-600 text-lg mb-2">Đã gửi thành công!</p>
+                            <p className="text-sm text-stone-500">Cảm ơn bạn đã phản hồi.</p>
                         </div>
                     ) : (
                         <form onSubmit={handleSubmitReport} className="space-y-4">
                             {status === 'ERROR' && (
-                                <div className="text-red-600 text-sm bg-red-50 p-2 rounded">
+                                <div className="text-red-600 text-sm bg-red-50 p-2.5 rounded-lg border border-red-100">
                                     Lỗi kết nối. Vui lòng thử lại.
                                 </div>
                             )}
                             <div>
-                                <label className="block text-xs font-bold text-gray-700 mb-1">Tên của bạn</label>
+                                <label className="block text-xs font-medium text-stone-700 mb-1">Tên của bạn</label>
                                 <input
                                     type="text"
                                     required
-                                    className="w-full px-3 py-2 border rounded-md text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                                    className="w-full px-3 py-2 border border-stone-200 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 outline-none transition-all"
                                     value={formData.name}
                                     onChange={e => setFormData({...formData, name: e.target.value})}
                                 />
                             </div>
                             <div>
-                                <label className="block text-xs font-bold text-gray-700 mb-1">Email (để nhận phản hồi)</label>
+                                <label className="block text-xs font-medium text-stone-700 mb-1">Email (để nhận phản hồi)</label>
                                 <input
                                     type="email"
                                     required
-                                    className="w-full px-3 py-2 border rounded-md text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                                    className="w-full px-3 py-2 border border-stone-200 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 outline-none transition-all"
                                     value={formData.email}
                                     onChange={e => setFormData({...formData, email: e.target.value})}
                                 />
                             </div>
                             <div>
-                                <label className="block text-xs font-bold text-gray-700 mb-1">Chi tiết lỗi / Góp ý</label>
+                                <label className="block text-xs font-medium text-stone-700 mb-1">Chi tiết lỗi / Góp ý</label>
                                 <textarea
                                     required
                                     rows={3}
-                                    className="w-full px-3 py-2 border rounded-md text-sm focus:ring-2 focus:ring-indigo-500 outline-none resize-none"
+                                    className="w-full px-3 py-2 border border-stone-200 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 outline-none transition-all resize-none"
                                     value={formData.message}
                                     onChange={e => setFormData({...formData, message: e.target.value})}
                                     placeholder="Mô tả vấn đề bạn đang gặp phải..."
@@ -165,7 +165,7 @@ const EmbedModal: React.FC<EmbedModalProps> = ({ title, url, onClose }) => {
                             <button
                                 type="submit"
                                 disabled={status === 'SENDING'}
-                                className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium text-sm transition-colors flex items-center justify-center disabled:opacity-70"
+                                className="w-full py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-medium text-sm transition-colors flex items-center justify-center disabled:opacity-70"
                             >
                                 {status === 'SENDING' ? 'Đang gửi...' : <><Send size={14} className="mr-2" /> Gửi báo cáo</>}
                             </button>
