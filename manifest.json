@@ -1,0 +1,21 @@
+{
+  "name": "AI Giáo Dục - Trợ Lý Sư Phạm & Lớp Học Thông Minh",
+  "short_name": "AI Giáo Dục",
+  "description": "Hệ sinh thái công cụ AI và trò chơi tương tác thực chiến cho Giáo viên & Học sinh",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0d9488",
+  "icons": [
+    {
+      "src": "https://res.cloudinary.com/dejnvixvn/image/upload/v1770181393/1_kfr9et.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://res.cloudinary.com/dejnvixvn/image/upload/v1770181393/1_kfr9et.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

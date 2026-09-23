@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Giáo Dục | Trợ Lý Sư Phạm & Lớp Học Tương Tác - Thầy Quân</title>
+  <meta name="description" content="Hệ sinh thái công cụ AI và trò chơi tương tác thực chiến cho Giáo viên & Học sinh. Soạn đề CV 7991, SKKN, chuẩn hóa văn bản, minigame học tập." />
+  <!-- Open Graph / Facebook / Zalo Social Share Preview: Hiển thị Logo AI GIÁO DỤC chính thức -->
+  <meta property="og:title" content="AI GIÁO DỤC | Trợ Lý Sư Phạm & Lớp Học Thông Minh - Thầy Quân" />
+  <meta property="og:description" content="Nền tảng công cụ AI thực chiến và trò chơi tương tác lớp học hàng đầu cho Giáo viên & Học sinh." />
+  <meta property="og:image" content="/logo.jpg" />
+  <meta property="og:image:secure_url" content="/logo.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1280" />
+  <meta property="og:image:height" content="720" />
+  <meta property="og:url" content="https://aigiaoduc.io.vn/" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card Preview -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AI GIÁO DỤC | Nền Tảng Sư Phạm Thông Minh" />
+  <meta name="twitter:description" content="Nền tảng công cụ AI thực chiến và trò chơi tương tác lớp học hàng đầu cho Giáo viên & Học sinh." />
+  <meta name="twitter:image" content="/logo.jpg" />
+  
+  <!-- Favicon & PWA Manifest -->
+  <link rel="icon" type="image/jpeg" href="logo-square.jpg" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0d9488" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            teal: {
+              50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4',
+              400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e',
+              800: '#115e59', 900: '#134e4a', 950: '#042f2e'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- ================= TOP NAVIGATION ================= -->
+  <header class="sticky top-0 z-40 glass border-b border-slate-200/80 dark:border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo (Sử dụng ảnh đại diện avt.jpg của Thầy Quân) -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl overflow-hidden shadow-md border-2 border-teal-500/40 flex items-center justify-center bg-teal-600 group-hover:scale-105 transition-transform">
+          <img src="avt.jpg" alt="Thầy Quân" class="w-full h-full object-cover" />
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-extrabold text-base sm:text-lg tracking-tight gradient-text-teal">AI GIÁO DỤC</span>
+            <span class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-bold rounded bg-teal-100 dark:bg-teal-900/60 text-teal-700 dark:text-teal-300">v3.0</span>
+          </div>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium -mt-0.5">Trợ Lý Sư Phạm • Thầy Quân</p>
+        </div>
+      </a>
+
+      <!-- Quick Nav Links for Desktop -->
+      <nav class="hidden md:flex items-center gap-1 text-xs font-semibold">
+        <a href="#apps-section" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Kho Ứng Dụng</a>
+        <button onclick="document.querySelector('[data-tab=\'videos\']').click(); document.getElementById('apps-section').scrollIntoView({behavior:'smooth'});" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Video Bài Giảng</button>
+        <a href="#about-teacher" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">Về Thầy Quân</a>
+      </nav>
+
+      <!-- Actions & Cloud Sync Status -->
+      <div class="flex items-center gap-2">
+        
+        <!-- Cloud Database Sync Badge (Màu xanh + Hiệu ứng điện tử hiện đại) -->
+        <div id="sync-status-badge" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl text-[11px] font-bold electric-ready-badge cursor-default select-none shadow-md" title="Cơ sở dữ liệu đám mây đã sẵn sàng">
+          <span class="electric-spark flex items-center">
+            <svg class="w-3.5 h-3.5 text-emerald-200" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+          </span>
+          <span class="tracking-wide">Dữ liệu đã sẵn sàng</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-200 animate-ping"></span>
+        </div>
+
+        <!-- Cloud Refresh Button -->
+        <button id="btn-force-sync" class="p-2 rounded-xl text-slate-500 hover:text-teal-600 dark:text-slate-400 dark:hover:text-teal-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all active:scale-95" title="Cập nhật dữ liệu từ đám mây (Cloud Sync)">
+          <i data-lucide="cloud-download" class="w-4 h-4"></i>
+        </button>
+
+        <!-- NÚT DONATE / MỜI CÀ PHÊ (NGOÀI MENU) -->
+        <button id="btn-header-donate" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold brand-btn-coffee transition-all hover:scale-105 active:scale-95 shadow-sm" title="Mời Thầy Quân ly cà phê">
+          <svg class="w-4 h-4 overflow-visible flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="steam-line-1" d="M7.5 6.5C7 5 8.2 3.8 7.8 2" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+            <path class="steam-line-2" d="M10.5 6C10 4.3 11.3 3.2 10.8 1" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+            <path class="steam-line-3" d="M13.5 6.5C13 5 14.2 3.8 13.8 2" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M4 8h13v7a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Z" fill="rgba(255,255,255,0.2)" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M17 9.5h1.5a2.5 2.5 0 0 1 0 5H17" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M2.5 20h16" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+            <path class="cup-heart" d="M10.5 15.2l-.7-.6C7.8 12.7 6.5 11.5 6.5 10.2c0-1.1.9-2 2-2 .8 0 1.5.4 2 1 .5-.6 1.2-1 2-1 1.1 0 2 .9 2 2 0 1.3-1.3 2.5-3.3 4.4l-.7.6z" fill="#ef4444" stroke="#ffffff" stroke-width="0.5"/>
+          </svg>
+          <span class="hidden sm:inline">Mời Cà Phê</span>
+        </button>
+
+        <!-- Zalo Button với Biểu Tượng Chuẩn Thương Hiệu Zalo -->
+        <a href="https://zalo.me/0355213107" target="_blank" class="hidden lg:inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold brand-btn-zalo transition-all hover:scale-105 active:scale-95">
+          <svg class="w-4 h-4 rounded-full" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="24" cy="24" r="24" fill="#0068FF"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M29.5 28.5C31.5 26.5 33 23.5 33 20C33 14.5 28.5 10 23 10C17.5 10 13 14.5 13 20C13 23.5 14.5 26.5 17 28.5C16.5 30 15 33 14 34C16.5 33.5 20 31.5 21.5 30C22 30 22.5 30 23 30C25.5 30 27.5 29.5 29.5 28.5Z" fill="white"/>
+            <path d="M19 18H27V19.5L21.5 24H27V26H19V24.5L24.5 20H19V18Z" fill="#0068FF"/>
+          </svg>
+          <span>Hỗ trợ Zalo</span>
+        </a>
+
+        <!-- Dark/Light Mode Toggle (Fixed with robust SVG injection) -->
+        <button id="theme-toggle-btn" class="w-9 h-9 rounded-xl border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" title="Đổi giao diện Sáng / Tối">
+          <span id="theme-icon-container"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION (MARKETING) ================= -->
+  <section class="relative overflow-hidden pt-10 pb-14 sm:pt-16 sm:pb-20 bg-gradient-to-b from-teal-50/50 via-transparent to-transparent dark:from-teal-950/20">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-teal-400/10 dark:bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -top-40 -right-40 w-96 h-96 bg-indigo-400/10 dark:bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      
+      <!-- Announcement Tag -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-100/70 dark:bg-teal-900/40 border border-teal-300/50 dark:border-teal-700/50 text-teal-800 dark:text-teal-300 text-xs font-semibold mb-6 shadow-sm">
+        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-teal-600"></i>
+        <span>Nền tảng kết nối trực tiếp Google Sheets & Apps Script</span>
+      </div>
+
+      <!-- Main Heading -->
+      <h1 class="hero-heading text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight max-w-4xl mx-auto leading-tight">
+        Trợ Lý AI Đột Phá Cho <br class="hidden sm:inline" />
+        <span class="gradient-text-teal">Công Việc Giáo Viên</span> & 
+        <span class="gradient-text-purple">Học Tập Học Sinh</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="mt-5 text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto leading-relaxed">
+        Hệ sinh thái công cụ AI hỗ trợ giảng dạy và công việc chuyên môn dành cho giáo viên, kết hợp các công cụ giảng dạy như trò chơi học tập và ứng dụng học tập tương tác cho học sinh.
+      </p>
+
+      <!-- TWO TARGET CARDS (PHÂN LUỒNG RÕ RÀNG) -->
+      <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto text-left">
+        
+        <!-- CARD 1: GIÁO VIÊN -->
+        <div 
+          onclick="document.querySelector('[data-tab=\'teacher\']').click(); document.getElementById('apps-section').scrollIntoView({behavior:'smooth'});"
+          class="cursor-pointer group relative p-6 rounded-3xl bg-white dark:bg-slate-900 border-2 border-teal-500/40 hover:border-teal-500 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1 overflow-hidden"
+        >
+          <div class="absolute top-0 right-0 w-32 h-32 bg-teal-500/10 rounded-full blur-2xl group-hover:scale-125 transition-transform"></div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-teal-100 dark:bg-teal-900/60 text-teal-600 dark:text-teal-300 flex items-center justify-center font-bold shadow-sm">
+              <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400">AI Giảng Dạy & Công Việc</span>
+              <h2 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">Dành Cho Giáo Viên</h2>
+            </div>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+            Các công cụ AI hỗ trợ giảng dạy và công việc: soạn ma trận đề kiểm tra chuẩn <strong>CV 7991</strong>, phân tích và tối ưu sáng kiến kinh nghiệm (SKKN), chuẩn hóa thể thức văn bản theo <strong>Nghị định 30</strong>, quay video bài giảng.
+          </p>
+          <div class="flex items-center text-xs font-bold text-teal-600 dark:text-teal-400 gap-1 group-hover:translate-x-1 transition-transform">
+            <span>Khám phá 11 công cụ hỗ trợ giảng dạy & công việc</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </div>
+        </div>
+
+        <!-- CARD 2: DÀNH CHO HỌC SINH -->
+        <div 
+          onclick="document.querySelector('[data-tab=\'classroom\']').click(); document.getElementById('apps-section').scrollIntoView({behavior:'smooth'});"
+          class="cursor-pointer group relative p-6 rounded-3xl bg-white dark:bg-slate-900 border-2 border-pink-500/40 hover:border-pink-500 transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-1 overflow-hidden"
+        >
+          <div class="absolute top-0 right-0 w-32 h-32 bg-pink-500/10 rounded-full blur-2xl group-hover:scale-125 transition-transform"></div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 rounded-2xl bg-pink-100 dark:bg-pink-900/60 text-pink-600 dark:text-pink-300 flex items-center justify-center font-bold shadow-sm">
+              <i data-lucide="gamepad-2" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-pink-600 dark:text-pink-400">Trò Chơi & Ứng Dụng Học Tập</span>
+              <h2 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">Dành Cho Học Sinh</h2>
+            </div>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+            Các công cụ dành cho giảng dạy như trò chơi học tập, ứng dụng học tập: học tiếng Anh cùng <strong>Magic Verbs</strong>, minigame lật mảnh ghép tương tác, vẽ sơ đồ tư duy (mindmap), tạo truyện tranh học đường & mã QR học liệu.
+          </p>
+          <div class="flex items-center text-xs font-bold text-pink-600 dark:text-pink-400 gap-1 group-hover:translate-x-1 transition-transform">
+            <span>Khám phá 10 trò chơi & ứng dụng học tập</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Trust Stats -->
+      <div class="mt-12 flex flex-wrap items-center justify-center gap-6 sm:gap-12 text-slate-500 dark:text-slate-400 text-xs sm:text-sm font-semibold">
+        <div class="flex items-center gap-2">
+          <i data-lucide="users" class="w-4 h-4 text-teal-600"></i>
+          <span id="stat-total-views">45.000+ Lượt sử dụng thực tế</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i data-lucide="layers" class="w-4 h-4 text-teal-600"></i>
+          <span id="stat-total-apps">21+ Công cụ AI & Game thực tế</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <i data-lucide="shield-check" class="w-4 h-4 text-teal-600"></i>
+          <span>100% Trực tiếp trên trình duyệt</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= MAIN APPS & WORKSPACE SECTION ================= -->
+  <main id="apps-section" class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    
+    <!-- Top Filter & Search Bar -->
+    <div class="bg-white dark:bg-slate-900 rounded-3xl p-4 sm:p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm mb-8">
+      
+      <!-- Search Input -->
+      <div class="relative mb-6">
+        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+          <i data-lucide="search" class="w-5 h-5"></i>
+        </div>
+        <input 
+          type="text" 
+          id="search-input" 
+          placeholder="Tìm kiếm công cụ hoặc video: CV 7991, SKKN, Magic Verbs, Sơ đồ tư duy, QR, Prompt..." 
+          class="w-full pl-11 pr-10 py-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
+        />
+        <button id="clear-search-btn" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hidden">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Segmented Tab Navigation -->
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-4">
+        
+        <div class="flex flex-wrap items-center gap-2 text-xs font-semibold">
+          <button data-tab="all" class="tab-button active-tab px-4 py-2 rounded-xl bg-teal-600 text-white shadow-md flex items-center gap-1.5 transition-all">
+            <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
+            <span>Tất Cả</span>
+          </button>
+          <button data-tab="teacher" class="tab-button px-4 py-2 rounded-xl bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-teal-500 flex items-center gap-1.5 transition-all">
+            <i data-lucide="graduation-cap" class="w-3.5 h-3.5 text-teal-600"></i>
+            <span>Dành Cho Giáo Viên</span>
+          </button>
+          <button data-tab="classroom" class="tab-button px-4 py-2 rounded-xl bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-pink-500 flex items-center gap-1.5 transition-all">
+            <i data-lucide="gamepad-2" class="w-3.5 h-3.5 text-pink-600"></i>
+            <span>Dành Cho Học Sinh</span>
+          </button>
+          <button data-tab="favorites" class="tab-button px-4 py-2 rounded-xl bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-red-500 flex items-center gap-1.5 transition-all">
+            <i data-lucide="heart" class="w-3.5 h-3.5 text-red-500"></i>
+            <span>Đã Lưu</span>
+          </button>
+          <!-- TAB VIDEO MỚI -->
+          <button data-tab="videos" class="tab-button px-4 py-2 rounded-xl bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-red-500 flex items-center gap-1.5 transition-all">
+            <i data-lucide="youtube" class="w-3.5 h-3.5 text-red-600"></i>
+            <span>Video Bài Giảng</span>
+          </button>
+        </div>
+
+        <!-- Count Badge -->
+        <span id="apps-count-badge" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+          Đang tải...
+        </span>
+
+      </div>
+
+      <!-- Tag Filter Container -->
+      <div id="tag-container" class="mt-4 flex flex-wrap gap-1.5"></div>
+
+    </div>
+
+    <!-- Apps Grid -->
+    <div id="apps-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+
+    <!-- Progressive Loading & Infinite Scroll Trigger -->
+    <div id="load-more-container" class="mt-10 flex flex-col items-center justify-center text-center">
+      <!-- Loading indicator while auto-fetching -->
+      <div id="load-more-spinner" class="hidden items-center gap-2 py-3 text-sm text-teal-600 dark:text-teal-400 font-medium">
+        <svg class="animate-spin h-5 w-5 text-teal-600 dark:text-teal-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+        </svg>
+        <span>Đang tải thêm ứng dụng...</span>
+      </div>
+
+      <!-- Action Button & Summary Pill -->
+      <div id="load-more-action-wrap" class="flex flex-col items-center gap-3">
+        <button id="btn-load-more" class="btn-load-more inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 text-slate-800 dark:text-slate-100 font-semibold text-sm shadow-sm hover:border-teal-500 hover:text-teal-600 dark:hover:text-teal-400">
+          <i data-lucide="chevron-down" class="w-4 h-4 text-teal-600 dark:text-teal-400"></i>
+          <span id="load-more-btn-text">Xem thêm công cụ</span>
+        </button>
+        <span id="load-more-counter" class="text-xs text-slate-400 dark:text-slate-500 font-medium">
+          Đang hiển thị 8 / 21 công cụ
+        </span>
+      </div>
+
+      <!-- End of List Notice -->
+      <div id="load-more-finished" class="hidden py-4 px-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 items-center gap-2">
+        <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i>
+        <span>Thầy/Cô đã xem trọn bộ công cụ sư phạm. Thử tìm kiếm từ khóa để chọn nhanh hơn!</span>
+      </div>
+
+      <!-- Invisible sentinel element for IntersectionObserver -->
+      <div id="load-more-sentinel" class="w-full h-8 pointer-events-none opacity-0"></div>
+    </div>
+
+    <!-- Video Bài Giảng Section -->
+    <div id="videos-section" class="hidden">
+      <div class="mb-6 flex items-center justify-between">
+        <div>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <i data-lucide="video" class="w-6 h-6 text-red-600"></i>
+            Video Hướng Dẫn & Chia Sẻ Từ Thầy Quân
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Các bài giảng thực hành AI, mẹo tổ chức trò chơi và tối ưu sư phạm</p>
+        </div>
+      </div>
+      <div id="videos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </div>
+
+    <!-- Empty State -->
+    <div id="empty-state" class="hidden text-center py-16 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 my-6">
+      <div class="w-16 h-16 mx-auto rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 mb-4">
+        <i data-lucide="search-x" class="w-8 h-8"></i>
+      </div>
+      <h4 class="text-base font-bold text-slate-700 dark:text-slate-200">Không tìm thấy nội dung phù hợp</h4>
+      <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">Vui lòng thử tìm kiếm bằng từ khóa khác hoặc xóa bộ lọc để xem lại tất cả danh mục.</p>
+    </div>
+
+  </main>
+
+  <!-- ================= ABOUT TEACHER SECTION ================= -->
+  <section id="about-teacher" class="bg-white dark:bg-slate-900/60 border-t border-b border-slate-200/80 dark:border-slate-800/80 py-16 my-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-gradient-to-br from-teal-500/10 via-slate-50 to-indigo-500/10 dark:from-teal-950/40 dark:via-slate-900 dark:to-indigo-950/40 rounded-3xl p-6 sm:p-10 border border-teal-500/20 shadow-sm flex flex-col md:flex-row items-center gap-8">
+        
+        <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-3xl overflow-hidden shadow-lg border-4 border-white dark:border-slate-800 flex-shrink-0">
+          <img 
+            src="avt.jpg" 
+            alt="Thầy Trần Hồng Quân" 
+            class="w-full h-full object-cover"
+            onerror="this.src='https://res.cloudinary.com/dejnvixvn/image/upload/v1755348190/z5706588547072_0de12807137e6c2dfcfdb04c463c9969_vrl1fl.jpg'"
+          />
+        </div>
+
+        <div class="flex-1 text-center md:text-left">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-100 dark:bg-teal-900/60 text-teal-800 dark:text-teal-300 text-xs font-bold mb-3">
+            <i data-lucide="award" class="w-3.5 h-3.5"></i>
+            <span>Người Sáng Lập & Phát Triển Nền Tảng</span>
+          </div>
+          <h3 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">Thầy Trần Hồng Quân</h3>
+          <p class="text-xs sm:text-sm font-semibold text-teal-600 dark:text-teal-400 mt-1">Giáo viên Tin học • Chuyên gia Ứng dụng AI trong Giáo Dục</p>
+          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-4 leading-relaxed">
+            Với mong muốn giúp giáo viên và học sinh Việt Nam tiếp cận công nghệ AI theo cách <strong>"Dễ hiểu – Dễ dùng – Áp dụng được ngay"</strong>, thầy Quân đã xây dựng hệ sinh thái công cụ hỗ trợ sư phạm hoàn toàn thực chiến, không ngừng cập nhật để đồng hành cùng các thầy cô trên khắp cả nước.
+          </p>
+
+          <!-- Social & Contact Buttons (Logo chính thức thực tế, không dùng icon đơn điệu) -->
+          <div class="mt-6 flex flex-wrap items-center justify-center md:justify-start gap-3">
+            
+            <!-- Mời Cà Phê Thầy Quân -->
+            <button onclick="document.getElementById('btn-header-donate').click()" class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-2xl text-xs font-bold brand-btn-coffee transition-all hover:scale-105 active:scale-95 shadow-md">
+              <svg class="w-5 h-5 overflow-visible flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="steam-line-1" d="M7.5 6.5C7 5 8.2 3.8 7.8 2" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+                <path class="steam-line-2" d="M10.5 6C10 4.3 11.3 3.2 10.8 1" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+                <path class="steam-line-3" d="M13.5 6.5C13 5 14.2 3.8 13.8 2" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M4 8h13v7a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Z" fill="rgba(255,255,255,0.2)" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M17 9.5h1.5a2.5 2.5 0 0 1 0 5H17" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M2.5 20h16" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+                <path class="cup-heart" d="M10.5 15.2l-.7-.6C7.8 12.7 6.5 11.5 6.5 10.2c0-1.1.9-2 2-2 .8 0 1.5.4 2 1 .5-.6 1.2-1 2-1 1.1 0 2 .9 2 2 0 1.3-1.3 2.5-3.3 4.4l-.7.6z" fill="#ef4444" stroke="#ffffff" stroke-width="0.5"/>
+              </svg>
+              <span>Mời Cà Phê ☕</span>
+            </button>
+
+            <!-- Zalo Thầy Quân (Logo Zalo chuẩn) -->
+            <a href="https://zalo.me/0355213107" target="_blank" class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-2xl text-xs font-bold brand-btn-zalo transition-all hover:scale-105 active:scale-95 shadow-md">
+              <svg class="w-5 h-5 flex-shrink-0 rounded-full" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="24" cy="24" r="24" fill="#0068FF"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M29.5 28.5C31.5 26.5 33 23.5 33 20C33 14.5 28.5 10 23 10C17.5 10 13 14.5 13 20C13 23.5 14.5 26.5 17 28.5C16.5 30 15 33 14 34C16.5 33.5 20 31.5 21.5 30C22 30 22.5 30 23 30C25.5 30 27.5 29.5 29.5 28.5Z" fill="white"/>
+                <path d="M19 18H27V19.5L21.5 24H27V26H19V24.5L24.5 20H19V18Z" fill="#0068FF"/>
+              </svg>
+              <span>Nhắn Tin Zalo</span>
+            </a>
+
+            <!-- Kênh YouTube (Logo YouTube chuẩn) -->
+            <a href="https://www.youtube.com/@quanh95" target="_blank" class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-2xl text-xs font-bold brand-btn-yt transition-all hover:scale-105 active:scale-95 shadow-md">
+              <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+              <span>YouTube @quanh95</span>
+            </a>
+
+            <!-- Facebook Thầy Quân (Logo Facebook chuẩn) -->
+            <a href="https://www.facebook.com/tran.hong.quan.216221/" target="_blank" class="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-2xl text-xs font-bold brand-btn-fb transition-all hover:scale-105 active:scale-95 shadow-md">
+              <svg class="w-5 h-5 flex-shrink-0 rounded-full" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+              <span>Facebook Thầy Quân</span>
+            </a>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-500 dark:text-slate-400">
+      <div class="flex items-center gap-3">
+        <span class="font-extrabold text-slate-800 dark:text-slate-200 tracking-tight">AI GIÁO DỤC</span>
+        <span>•</span>
+        <span>© 2026 Bản quyền thuộc về Thầy Trần Hồng Quân</span>
+      </div>
+      <div class="flex items-center gap-4 font-medium">
+        <span>Hotline/Zalo: 0355.213.107</span>
+        <span>•</span>
+        <a href="https://aigiaoduc.io.vn/" class="hover:underline text-teal-600">aigiaoduc.io.vn</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= MODAL: IFRAME APP RUNNER (ĐÃ BỎ NÚT MỞ TAB MỚI, THÊM NÚT DONATE) ================= -->
+  <div id="app-modal" class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 hidden">
+    <div id="modal-backdrop" class="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity"></div>
+
+    <div id="modal-dialog" class="relative w-full max-w-6xl h-[92vh] bg-white dark:bg-slate-900 rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-slate-200 dark:border-slate-700 z-10 transition-all duration-200">
+      
+      <!-- Top Control Bar -->
+      <div class="px-4 py-3 bg-slate-100 dark:bg-slate-800/90 border-b border-slate-200 dark:border-slate-700/80 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2 overflow-hidden">
+          <span id="modal-category" class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-teal-100 dark:bg-teal-900/60 text-teal-700 dark:text-teal-300 whitespace-nowrap">
+            Công cụ
+          </span>
+          <h3 id="modal-title" class="font-bold text-sm sm:text-base text-slate-800 dark:text-white truncate">
+            Tên ứng dụng
+          </h3>
+        </div>
+
+        <!-- Control buttons (ĐÃ BỎ NÚT MỞ TAB MỚI) -->
+        <div class="flex items-center gap-1.5 flex-shrink-0">
+          
+          <!-- Nút Mời Cà Phê / Donate trong cửa sổ nhúng -->
+          <button id="btn-iframe-donate" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold brand-btn-coffee shadow-sm transition-all hover:scale-105 active:scale-95" title="Mời Thầy Quân ly cà phê">
+            <svg class="w-3.5 h-3.5 overflow-visible flex-shrink-0" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path class="steam-line-1" d="M7.5 6.5C7 5 8.2 3.8 7.8 2" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+              <path class="steam-line-2" d="M10.5 6C10 4.3 11.3 3.2 10.8 1" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round"/>
+              <path class="steam-line-3" d="M13.5 6.5C13 5 14.2 3.8 13.8 2" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M4 8h13v7a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Z" fill="rgba(255,255,255,0.2)" stroke="#ffffff" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M17 9.5h1.5a2.5 2.5 0 0 1 0 5H17" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M2.5 20h16" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+              <path class="cup-heart" d="M10.5 15.2l-.7-.6C7.8 12.7 6.5 11.5 6.5 10.2c0-1.1.9-2 2-2 .8 0 1.5.4 2 1 .5-.6 1.2-1 2-1 1.1 0 2 .9 2 2 0 1.3-1.3 2.5-3.3 4.4l-.7.6z" fill="#ef4444" stroke="#ffffff" stroke-width="0.5"/>
+            </svg>
+            <span class="hidden sm:inline">Mời cà phê</span>
+          </button>
+
+          <!-- Nút Đánh giá & Nhận xét trong cửa sổ nhúng -->
+          <button id="btn-iframe-review" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-bold bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-900/60 border border-amber-300/40 dark:border-amber-700/40 transition-all hover:scale-105 active:scale-95" title="Xem nhận xét & Đánh giá ứng dụng">
+            <svg class="w-3.5 h-3.5 text-amber-400 fill-amber-400" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            <span class="hidden sm:inline">Đánh giá</span>
+          </button>
+
+          <button id="btn-reload-iframe" class="p-2 rounded-xl text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" title="Tải lại ứng dụng">
+            <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+          </button>
+          
+          <button id="btn-zen-mode" class="p-2 rounded-xl text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" title="Toàn màn hình">
+            <i data-lucide="maximize" class="w-4 h-4"></i>
+          </button>
+          
+          <button id="btn-report-issue" class="p-2 rounded-xl text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/40 transition-colors" title="Báo lỗi / Góp ý">
+            <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+          </button>
+
+          <div class="w-px h-5 bg-slate-300 dark:bg-slate-700 mx-1"></div>
+          
+          <button id="btn-close-modal" class="p-2 rounded-xl text-slate-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors" title="Đóng cửa sổ">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Iframe Container -->
+      <div class="relative flex-1 bg-slate-100 dark:bg-slate-950 overflow-hidden">
+        <div id="iframe-loader" class="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-slate-900 z-10 transition-opacity">
+          <div class="w-10 h-10 border-4 border-teal-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+          <p class="text-xs font-semibold text-slate-600 dark:text-slate-300">Đang khởi động ứng dụng sư phạm...</p>
+          <p class="text-[11px] text-slate-400 mt-1">Dữ liệu bảo mật trực tiếp trên trình duyệt</p>
+        </div>
+
+        <iframe id="modal-iframe" class="app-iframe" allow="clipboard-read; clipboard-write; microphone; camera; display-capture; fullscreen" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"></iframe>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="px-4 py-2.5 bg-slate-50 dark:bg-slate-800/80 border-t border-slate-200 dark:border-slate-700 text-xs text-slate-500 dark:text-slate-400 flex items-center justify-between">
+        <p id="app-description-text" class="truncate max-w-2xl font-medium"></p>
+        <span class="text-[11px] text-slate-400 flex-shrink-0">Nhấn ESC để đóng</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= MODAL: VIDEO PLAYER ================= -->
+  <div id="video-modal" class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 hidden">
+    <div id="video-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity" onclick="document.getElementById('btn-close-video').click()"></div>
+    <div class="relative w-full max-w-4xl bg-black rounded-3xl shadow-2xl overflow-hidden border border-slate-700 z-10">
+      <div class="p-3 bg-slate-900 flex items-center justify-between border-b border-slate-800">
+        <h4 id="video-modal-title" class="text-sm font-bold text-white truncate max-w-xl">Tiêu đề video</h4>
+        <button id="btn-close-video" class="p-2 text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="relative pt-[56.25%] w-full bg-black">
+        <iframe id="video-iframe" class="absolute inset-0 w-full h-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="p-4 bg-slate-900 text-xs text-slate-300">
+        <p id="video-modal-desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: DONATE / MỜI CÀ PHÊ ================= -->
+  <div id="donate-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div class="fixed inset-0 bg-black/70 backdrop-blur-sm" onclick="document.getElementById('btn-close-donate').click()"></div>
+    <div class="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-6 border border-slate-200 dark:border-slate-700 z-10 text-center">
+      
+      <button id="btn-close-donate" class="absolute top-4 right-4 p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-100 dark:bg-amber-950/60 text-amber-600 flex items-center justify-center mb-3 shadow-inner">
+        <svg class="w-8 h-8 overflow-visible" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path class="steam-line-1" d="M7.5 6.5C7 5 8.2 3.8 7.8 2" stroke="#d97706" stroke-width="1.5" stroke-linecap="round"/>
+          <path class="steam-line-2" d="M10.5 6C10 4.3 11.3 3.2 10.8 1" stroke="#f59e0b" stroke-width="1.6" stroke-linecap="round"/>
+          <path class="steam-line-3" d="M13.5 6.5C13 5 14.2 3.8 13.8 2" stroke="#d97706" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M4 8h13v7a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Z" fill="rgba(217,119,6,0.15)" stroke="#d97706" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M17 9.5h1.5a2.5 2.5 0 0 1 0 5H17" stroke="#d97706" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M2.5 20h16" stroke="#d97706" stroke-width="1.8" stroke-linecap="round"/>
+          <path class="cup-heart" d="M10.5 15.2l-.7-.6C7.8 12.7 6.5 11.5 6.5 10.2c0-1.1.9-2 2-2 .8 0 1.5.4 2 1 .5-.6 1.2-1 2-1 1.1 0 2 .9 2 2 0 1.3-1.3 2.5-3.3 4.4l-.7.6z" fill="#ef4444" stroke="#ffffff" stroke-width="0.5"/>
+        </svg>
+      </div>
+
+      <h3 class="text-lg font-black text-slate-900 dark:text-white">Mời Thầy Quân Ly Cà Phê ☕</h3>
+      <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+        Sự ủng hộ của Thầy/Cô là nguồn động lực to lớn giúp duy trì server và phát triển thêm nhiều công cụ miễn phí!
+      </p>
+
+      <div class="my-4">
+        <img id="donate-qr-img" src="" alt="Mã VietQR Donate" class="w-56 h-56 mx-auto rounded-2xl shadow-md border border-slate-200 dark:border-slate-700 p-2 bg-white" />
+        <p class="text-[11px] text-slate-400 mt-2">Quét mã bằng bất kỳ App ngân hàng nào</p>
+      </div>
+
+      <div id="donate-bank-info" class="bg-slate-50 dark:bg-slate-800/60 p-4 rounded-2xl text-xs space-y-1.5 border border-slate-200 dark:border-slate-700 text-left text-slate-700 dark:text-slate-300"></div>
+
+      <p class="text-[11px] text-teal-600 dark:text-teal-400 font-semibold mt-4">
+        ❤️ Chân thành cảm ơn tấm lòng và sự đồng hành của Thầy/Cô!
+      </p>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: FEEDBACK / BÁO LỖI (GỬI VỀ SHEET) ================= -->
+  <div id="feedback-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div class="fixed inset-0 bg-black/70 backdrop-blur-sm" onclick="document.getElementById('btn-close-feedback').click()"></div>
+    <div class="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-6 border border-slate-200 dark:border-slate-700 z-10">
+      
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-600 flex items-center justify-center">
+            <i data-lucide="message-square-plus" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-slate-800 dark:text-white">Góp Ý & Báo Lỗi</h3>
+            <p class="text-[11px] text-slate-500">Ý kiến sẽ được gửi trực tiếp đến hệ thống tiếp nhận của Thầy Quân</p>
+          </div>
+        </div>
+        <button id="btn-close-feedback" class="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="feedback-form" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Họ và tên của Thầy/Cô:</label>
+          <input type="text" id="feedback-name" required placeholder="VD: Thầy Nam, Cô Hương..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium focus:ring-2 focus:ring-teal-500 focus:outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Email hoặc Số điện thoại Zalo:</label>
+          <input type="text" id="feedback-email" placeholder="Để Thầy Quân phản hồi lại nếu cần..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium focus:ring-2 focus:ring-teal-500 focus:outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Nội dung phản hồi / mô tả lỗi:</label>
+          <textarea id="feedback-content" rows="4" required placeholder="Mô tả hiện tượng lỗi hoặc đề xuất cải tiến..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium focus:ring-2 focus:ring-teal-500 focus:outline-none resize-none"></textarea>
+        </div>
+        <div class="flex gap-2 pt-2">
+          <button type="submit" id="btn-submit-feedback" class="flex-1 py-2.5 px-4 rounded-xl text-xs font-bold bg-teal-600 hover:bg-teal-700 text-white transition-colors flex items-center justify-center gap-1.5 shadow-sm">
+            <span>Gửi phản hồi cho Thầy Quân</span>
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ================= MODAL: REVIEW / ĐÁNH GIÁ SƯ PHẠM ================= -->
+  <div id="review-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="fixed inset-0 bg-black/70 backdrop-blur-sm" onclick="closeReviewModal()"></div>
+    <div class="relative w-full max-w-xl max-h-[90vh] bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-700 z-10 flex flex-col">
+      
+      <!-- Top header -->
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 flex-shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-amber-100 dark:bg-amber-950/60 text-amber-600 flex items-center justify-center font-bold">
+            <svg class="w-5 h-5 text-amber-500 fill-amber-500" viewBox="0 0 24 24">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+          <div>
+            <h3 id="review-modal-title" class="text-base font-bold text-slate-800 dark:text-white line-clamp-1">Đánh Giá & Nhận Xét</h3>
+            <p id="review-modal-subtitle" class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Chia sẻ trải nghiệm giảng dạy thực tế cùng Thầy Cô cả nước</p>
+          </div>
+        </div>
+        <button id="btn-close-review" class="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Scrollable content: Existing reviews list + Submit Form -->
+      <div class="overflow-y-auto flex-1 py-4 space-y-6 pr-1">
+        
+        <!-- Tổng quan điểm số -->
+        <div class="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-800/40 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span id="review-modal-score" class="text-3xl font-black text-amber-600 dark:text-amber-400">5.0</span>
+            <div>
+              <div class="flex text-amber-400 gap-0.5" id="review-modal-stars">
+                <!-- 5 stars generated dynamically -->
+              </div>
+              <span id="review-modal-count" class="text-xs text-slate-600 dark:text-slate-400 font-medium">Dựa trên 7 đánh giá</span>
+            </div>
+          </div>
+          <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-200/60 dark:bg-amber-900/60 text-amber-800 dark:text-amber-300">
+            100% Khuyên Dùng
+          </span>
+        </div>
+
+        <!-- Danh sách nhận xét từ đồng nghiệp -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 flex items-center gap-1.5">
+            <i data-lucide="message-circle" class="w-3.5 h-3.5 text-teal-600"></i>
+            <span>Nhận Xét Từ Giáo Viên Đồng Nghiệp</span>
+          </h4>
+          <div id="reviews-list-container" class="space-y-3">
+            <!-- Dynamic Review Cards -->
+          </div>
+        </div>
+
+        <!-- Form gửi đánh giá mới -->
+        <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400 mb-3 flex items-center gap-1.5">
+            <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+            <span>Gửi Đánh Giá Của Thầy / Cô</span>
+          </h4>
+
+          <form id="review-form" class="space-y-3.5 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-700/60">
+            <!-- Rating Star Picker -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Mức độ hài lòng của Thầy/Cô:</label>
+              <div id="star-picker" class="flex items-center gap-2">
+                <button type="button" data-val="1" class="star-btn text-2xl text-amber-400">★</button>
+                <button type="button" data-val="2" class="star-btn text-2xl text-amber-400">★</button>
+                <button type="button" data-val="3" class="star-btn text-2xl text-amber-400">★</button>
+                <button type="button" data-val="4" class="star-btn text-2xl text-amber-400">★</button>
+                <button type="button" data-val="5" class="star-btn text-2xl text-amber-400">★</button>
+                <span id="star-picker-text" class="text-xs font-bold text-amber-600 dark:text-amber-400 ml-2">5 sao - Rất tuyệt vời</span>
+              </div>
+              <input type="hidden" id="review-rating-val" value="5" />
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Họ và tên của Thầy/Cô:</label>
+                <input type="text" id="review-name" required placeholder="VD: Thầy Nam, Cô Hương..." class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-medium focus:ring-2 focus:ring-teal-500 focus:outline-none" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Trường học / Đơn vị công tác:</label>
+                <input type="text" id="review-school" placeholder="VD: THCS Chu Văn An - Hà Nội..." class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-medium focus:ring-2 focus:ring-teal-500 focus:outline-none" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Nội dung nhận xét & kinh nghiệm áp dụng:</label>
+              <textarea id="review-comment" rows="3" required placeholder="Chia sẻ công cụ đã giúp Thầy/Cô tiết kiệm thời gian hoặc hỗ trợ học sinh như thế nào..." class="w-full px-3 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-medium focus:ring-2 focus:ring-teal-500 focus:outline-none resize-none"></textarea>
+            </div>
+
+            <button type="submit" id="btn-submit-review" class="w-full py-2.5 px-4 rounded-xl text-xs font-bold bg-teal-600 hover:bg-teal-700 text-white transition-all shadow-md flex items-center justify-center gap-1.5 active:scale-[0.98]">
+              <i data-lucide="send" class="w-3.5 h-3.5"></i>
+              <span>Gửi Đánh Giá Ngay</span>
+            </button>
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= MODAL: PROMO / QUẢNG CÁO ================= -->
+  <div id="promo-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+    <div id="promo-backdrop" class="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity" onclick="closePromoModal()"></div>
+    <div id="promo-dialog" class="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-700 z-10 transition-all duration-300 transform scale-100 flex flex-col max-h-[92vh]">
+      
+      <!-- Top header bar -->
+      <div class="px-5 py-3.5 bg-gradient-to-r from-rose-600 via-orange-600 to-amber-600 text-white flex items-center justify-between gap-3 flex-shrink-0 shadow-sm">
+        <div class="flex items-center gap-2.5 text-xs font-bold tracking-wide">
+          <span class="p-1.5 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
+            <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 11 18-5v12L3 14v-3z"/>
+              <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>
+            </svg>
+          </span>
+          <span id="promo-header-badge" class="font-extrabold">Thông Báo Nổi Bật</span>
+        </div>
+        
+        <div class="flex items-center gap-2">
+          <!-- Countdown Badge (Chỉ hiện khi đang đếm ngược ban đầu) -->
+          <span id="promo-timer-badge" class="px-2.5 py-1 rounded-full bg-white/20 backdrop-blur-sm text-[11px] font-semibold flex items-center gap-1.5 transition-all text-white">
+            <svg class="w-3 h-3 text-white animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" stroke-opacity="0.3"/>
+              <path d="M12 2a10 10 0 0 1 10 10"/>
+            </svg>
+            <span id="promo-timer-text">5s</span>
+          </span>
+
+          <!-- Close button -->
+          <button id="btn-close-promo" class="p-1.5 rounded-xl text-white/90 hover:text-white hover:bg-white/20 transition-colors" title="Đóng thông báo">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Scrollable content -->
+      <div class="overflow-y-auto p-5 space-y-4 text-left flex-1">
+        <!-- Promo Banner Image -->
+        <div id="promo-img-container" class="rounded-2xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800 max-h-56">
+          <img id="promo-img" src="" alt="Banner quảng cáo" class="w-full h-full object-cover" />
+        </div>
+
+        <!-- Title -->
+        <h3 id="promo-title" class="text-base sm:text-lg font-black text-slate-900 dark:text-white leading-snug"></h3>
+
+        <!-- Content Body -->
+        <p id="promo-content" class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 whitespace-pre-line leading-relaxed"></p>
+      </div>
+
+      <!-- Footer CTA Buttons -->
+      <div id="promo-footer" class="p-4 bg-slate-50 dark:bg-slate-800/80 border-t border-slate-100 dark:border-slate-800 flex items-center gap-3 flex-shrink-0">
+        
+        <!-- NÚT "XEM NGAY" (BẬT CHẾ ĐỘ XEM CHI TIẾT KHÔNG GIỚI HẠN THỜI GIAN) -->
+        <button id="btn-view-now-promo" class="flex-1 py-3 px-4 rounded-xl text-xs font-bold text-center bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white transition-all shadow-md flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98]">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          <span>Xem Ngay Chi Tiết</span>
+        </button>
+
+        <!-- Nút nhận tài liệu đính kèm (chỉ hiện khi xem chi tiết hoặc có link) -->
+        <a id="promo-attachment-btn" href="#" target="_blank" class="hidden flex-1 py-3 px-4 rounded-xl text-xs font-bold text-center bg-teal-600 hover:bg-teal-700 text-white transition-all shadow-md flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98]">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <span>Mở Tài Liệu Đính Kèm</span>
+        </a>
+
+        <!-- Nút Đóng -->
+        <button id="btn-dismiss-promo" class="py-3 px-4 rounded-xl text-xs font-semibold text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+          Đóng lại
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= FLOATING PROMO / THÔNG BÁO BUTTON ================= -->
+  <button id="btn-floating-gift" class="floating-promo-btn fixed bottom-6 left-6 z-40 px-4 py-2.5 rounded-full text-white flex items-center gap-2.5 text-xs font-bold active:scale-95 group border border-white/30 select-none cursor-pointer" title="Bấm để xem thông báo & tin nổi bật">
+    <span class="relative flex h-2.5 w-2.5">
+      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-85"></span>
+      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
+    </span>
+    <svg class="w-4 h-4 text-white group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m3 11 18-5v12L3 14v-3z"/>
+      <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>
+    </svg>
+    <span class="tracking-wide font-extrabold">Thông Báo Nổi Bật</span>
+  </button>
+
+  <!-- ================= TOAST NOTIFICATION ================= -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-4 opacity-0 pointer-events-none transition-all duration-300 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-semibold">
+    <i data-lucide="check-circle" class="w-4 h-4 text-teal-400 dark:text-teal-600"></i>
+    <span id="toast-message">Thông báo</span>
+  </div>
+
+  <!-- Scripts: Cấu hình URL Apps Script -> Dữ liệu khởi tạo -> Logic ứng dụng -->
+  <script src="config.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW reg fail:', err));
+      });
+    }
+  </script>
+</body>
+</html>
