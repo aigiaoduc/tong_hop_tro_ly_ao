@@ -198,10 +198,9 @@
   }
 
   // 3. Cập nhật trạng thái đồng bộ Cloud Database (Màu xanh + Hiệu ứng điện tử hiện đại)
-  function updateSyncBadge(status) {
+  function updateSyncBadge(status, version = '') {
     if (!DOM.syncStatusBadge) return;
     
-    // Xóa bỏ các class hiệu ứng cũ
     DOM.syncStatusBadge.classList.remove('electric-ready-badge', 'bg-slate-100/90', 'dark:bg-slate-800/90', 'border-slate-200/80');
 
     if (status === 'syncing') {
@@ -210,8 +209,15 @@
         <svg class="animate-spin w-3.5 h-3.5 text-teal-600 dark:text-teal-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
         <span>Đang nạp dữ liệu...</span>
       `;
+    } else if (status === 'checking') {
+      DOM.syncStatusBadge.className = 'hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/80 text-[11px] font-semibold border border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300 shadow-sm';
+      DOM.syncStatusBadge.innerHTML = `
+        <svg class="animate-spin w-3.5 h-3.5 text-blue-600 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+        <span>Kiểm tra phiên bản...</span>
+      `;
     } else {
       // TRẠNG THÁI SẴN SÀNG: MÀU XANH LỤC + HIỆU ỨNG ĐIỆN TỬ HIỆN ĐẠI (ELECTRIC GLOW)
+      const verText = version ? `v${version}` : '';
       DOM.syncStatusBadge.className = 'hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl text-[11px] font-bold electric-ready-badge cursor-default select-none shadow-md';
       DOM.syncStatusBadge.innerHTML = `
         <span class="electric-spark flex items-center">
@@ -219,46 +225,96 @@
             <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
           </svg>
         </span>
-        <span class="tracking-wide">Dữ liệu đã sẵn sàng</span>
+        <span class="tracking-wide">Dữ liệu sẵn sàng ${verText}</span>
         <span class="w-1.5 h-1.5 rounded-full bg-emerald-200 animate-ping"></span>
       `;
     }
   }
 
-  // 4. Lấy dữ liệu Cloud Database API (Hỗ trợ 3 tầng: Vercel Edge Caching -> Direct GAS -> Local Cache)
+  // 4. Đồng bộ dữ liệu theo cơ chế kiểm tra DATA_VERSION thông minh
   async function fetchLiveGoogleSheetData(force = false) {
-    updateSyncBadge('syncing');
+    const cacheKey = 'aigiaoduc_live_cache_v7';
+    const versionKey = 'aigiaoduc_data_version';
+    const cachedVersion = localStorage.getItem(versionKey);
 
-    const cacheKey = 'aigiaoduc_live_cache_v6';
-    const cacheTimeKey = 'aigiaoduc_cache_time_v6';
-    const cachedTime = localStorage.getItem(cacheTimeKey);
-    const now = Date.now();
-    const expireMs = (cfg.CACHE_EXPIRE_MINUTES || 15) * 60 * 1000;
-
-    // Đọc cache cục bộ nếu chưa hết hạn và không bấm bắt buộc làm mới
-    if (!force && cachedTime && (now - Number(cachedTime) < expireMs)) {
-      const cached = localStorage.getItem(cacheKey);
-      if (cached) {
-        try {
-          const parsed = JSON.parse(cached);
-          if (parsed && parsed.apps && parsed.apps.length > 0) {
-            state.data = parsed;
-            state.isLiveConnected = true;
-            updateSyncBadge('live');
-            renderAllViews();
-            return;
-          }
-        } catch (e) {
-          console.warn('Lỗi đọc cache:', e);
+    // 4.1. Đọc dữ liệu từ Cache LocalStorage để hiển thị ngay lập tức (0ms load time)
+    const cachedStr = localStorage.getItem(cacheKey);
+    let hasLocalData = false;
+    if (cachedStr) {
+      try {
+        const parsed = JSON.parse(cachedStr);
+        if (parsed && parsed.apps && parsed.apps.length > 0) {
+          state.data = parsed;
+          state.isLiveConnected = true;
+          hasLocalData = true;
+          renderAllViews();
+          updateSyncBadge('live', cachedVersion || '');
         }
+      } catch (e) {
+        console.warn('Lỗi đọc cache cũ:', e);
       }
     }
 
+    // 4.2. Kiểm tra phiên bản DATA_VERSION từ Google Sheet
+    if (!force) {
+      updateSyncBadge('checking');
+    } else {
+      updateSyncBadge('syncing');
+    }
+
+    let serverVersion = null;
+    let needFullFetch = force || !hasLocalData || !cachedVersion;
+
+    if (!needFullFetch) {
+      try {
+        const checkEndpoints = [
+          `/api/data?action=getVersion&_t=${Date.now()}`,
+          `/api/data?action=getConfig&_t=${Date.now()}`,
+          cfg.APPS_SCRIPT_URL ? `${cfg.APPS_SCRIPT_URL}?action=getVersion&_t=${Date.now()}` : null,
+          cfg.APPS_SCRIPT_URL ? `${cfg.APPS_SCRIPT_URL}?action=getConfig&_t=${Date.now()}` : null
+        ].filter(Boolean);
+
+        for (const ep of checkEndpoints) {
+          try {
+            const res = await fetch(ep, { headers: { 'Accept': 'application/json' } });
+            if (res.ok) {
+              const resJson = await res.json();
+              if (resJson && resJson.success) {
+                if (resJson.version !== undefined && resJson.version !== '') {
+                  serverVersion = String(resJson.version).trim();
+                } else if (resJson.data && resJson.data.DATA_VERSION !== undefined && resJson.data.DATA_VERSION !== '') {
+                  serverVersion = String(resJson.data.DATA_VERSION).trim();
+                }
+                if (serverVersion !== null) break;
+              }
+            }
+          } catch (err) {
+            // Thử endpoint tiếp theo
+          }
+        }
+
+        // So sánh phiên bản:
+        if (serverVersion && serverVersion === cachedVersion) {
+          // Phiên bản trùng khớp: Giữ nguyên dữ liệu cũ, không tải lại danh sách -> Tiết kiệm 100% băng thông!
+          console.log(`[DATA_VERSION] Trùng phiên bản (${serverVersion}). Sử dụng dữ liệu lưu sẵn siêu tốc!`);
+          updateSyncBadge('live', serverVersion);
+          return;
+        } else if (serverVersion) {
+          console.log(`[DATA_VERSION] Phát hiện phiên bản mới: Server=${serverVersion} khác Cache=${cachedVersion}. Đang nạp dữ liệu mới...`);
+          needFullFetch = true;
+        }
+      } catch (err) {
+        console.warn('Lỗi khi kiểm tra DATA_VERSION:', err);
+      }
+    }
+
+    // 4.3. Tải toàn bộ dữ liệu mới nhất (Khi thay đổi DATA_VERSION hoặc bấm Bắt buộc làm mới)
+    updateSyncBadge('syncing');
     let fetchedData = null;
 
-    // TẦNG 1: Vercel Edge Caching (/api/data) - Phản hồi < 50ms từ CDN
+    // Tầng 1: Vercel Edge Caching (/api/data)
     try {
-      const edgeUrl = `/api/data?action=getAll${force ? '&refresh=true' : ''}`;
+      const edgeUrl = `/api/data?action=getAll&refresh=true&_t=${Date.now()}`;
       const edgeRes = await fetch(edgeUrl, { headers: { 'Accept': 'application/json' } });
       if (edgeRes.ok) {
         const edgeJson = await edgeRes.json();
@@ -266,11 +322,9 @@
           fetchedData = edgeJson.data;
         }
       }
-    } catch (e) {
-      // Bỏ qua nếu chạy offline hoặc môi trường không hỗ trợ Vercel serverless
-    }
+    } catch (e) {}
 
-    // TẦNG 2: Direct Google Apps Script API nếu chưa qua Edge Cache
+    // Tầng 2: Direct Google Apps Script API
     if (!fetchedData && cfg.APPS_SCRIPT_URL) {
       try {
         const directUrl = `${cfg.APPS_SCRIPT_URL}?action=getAll&_t=${Date.now()}`;
@@ -294,14 +348,26 @@
       };
 
       state.isLiveConnected = true;
+
+      // Cập nhật DATA_VERSION mới vào localStorage
+      const newVersion = (state.data.config && state.data.config.DATA_VERSION)
+        ? String(state.data.config.DATA_VERSION).trim()
+        : (serverVersion || String(Date.now()));
+
       localStorage.setItem(cacheKey, JSON.stringify(state.data));
-      localStorage.setItem(cacheTimeKey, String(Date.now()));
-      updateSyncBadge('live');
+      localStorage.setItem(versionKey, newVersion);
+
+      updateSyncBadge('live', newVersion);
       renderAllViews();
-      if (force) showToast('Đã cập nhật dữ liệu siêu tốc từ Edge CDN! ⚡');
+
+      if (force) {
+        showToast('Đã làm mới dữ liệu từ Google Sheet! ⚡');
+      } else if (cachedVersion && cachedVersion !== newVersion) {
+        showToast(`Đã tự động cập nhật phiên bản mới (v${newVersion})! ✨`);
+      }
     } else {
-      updateSyncBadge('cached');
-      if (force) showToast('Đã chuyển sang chế độ dữ liệu đệm mượt mà.');
+      updateSyncBadge(hasLocalData ? 'live' : 'cached', cachedVersion || '');
+      if (force) showToast('Đang hiển thị dữ liệu lưu đệm mượt mà.');
     }
   }
 
@@ -433,14 +499,29 @@
     });
   }
 
+  // Helper: Xác định app thuộc phân hệ Công việc Giáo viên (linh hoạt theo từ khóa Tiếng Việt hoặc Tiếng Anh)
+  function isTeacherCategory(category, categoryName = '') {
+    const combined = (String(category || '') + ' ' + String(categoryName || '')).toLowerCase().trim();
+    if (combined.includes('giáo viên') || combined.includes('teacher') || combined.includes('công việc')) return true;
+    if (combined.includes('học sinh') || combined.includes('lớp') || combined.includes('trò chơi') || combined.includes('classroom')) return false;
+    return true; // mặc định
+  }
+
+  // Helper: Xác định app thuộc phân hệ Lớp học & Trò chơi / Dành cho Học sinh
+  function isClassroomCategory(category, categoryName = '') {
+    const combined = (String(category || '') + ' ' + String(categoryName || '')).toLowerCase().trim();
+    if (combined.includes('học sinh') || combined.includes('lớp') || combined.includes('trò chơi') || combined.includes('classroom')) return true;
+    return false;
+  }
+
   // Helper: Lọc danh sách ứng dụng theo điều kiện hiện tại
   function getFilteredApps() {
     const apps = state.data.apps || [];
     return apps.filter(app => {
       if (app.status === 'Ẩn') return false;
 
-      if (state.currentTab === 'teacher' && app.category !== 'teacher') return false;
-      if (state.currentTab === 'classroom' && app.category !== 'classroom') return false;
+      if (state.currentTab === 'teacher' && !isTeacherCategory(app.category, app.category_name)) return false;
+      if (state.currentTab === 'classroom' && !isClassroomCategory(app.category, app.category_name)) return false;
       if (state.currentTab === 'favorites' && !state.favorites.includes(app.id)) return false;
 
       if (state.searchQuery) {
@@ -462,7 +543,7 @@
   // Helper: Tạo mã HTML cho 1 thẻ ứng dụng kèm animation mờ hiện dần
   function generateAppCardHtml(app, indexInBatch = 0) {
     const isFav = state.favorites.includes(app.id);
-    const isTeacher = app.category === 'teacher';
+    const isTeacher = isTeacherCategory(app.category, app.category_name);
     
     const categoryBadge = isTeacher
       ? `<span class="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-md bg-teal-50 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800/40"><i data-lucide="graduation-cap" class="w-3 h-3"></i> Dành Cho Giáo Viên</span>`
@@ -892,8 +973,11 @@
     trackAppView(appId);
 
     state.activeApp = app;
+    const isTeacher = isTeacherCategory(app.category, app.category_name);
+    const catDisplayName = isTeacher ? 'Dành Cho Giáo Viên' : 'Dành Cho Học Sinh';
+
     DOM.modalTitle.textContent = app.name;
-    DOM.modalCategory.textContent = app.category_name;
+    DOM.modalCategory.textContent = catDisplayName;
     DOM.appDescriptionText.textContent = app.desc || app.short_desc;
 
     DOM.iframeLoader.classList.remove('hidden');
@@ -937,8 +1021,11 @@
     const app = (state.data.apps || []).find(a => a.id === appId);
     if (!app) return;
 
+    const isTeacher = isTeacherCategory(app.category, app.category_name);
+    const catDisplayName = isTeacher ? 'Công việc Giáo viên' : 'Dành cho Học sinh';
+
     if (DOM.reviewModalTitle) DOM.reviewModalTitle.textContent = `Đánh Giá: ${app.name}`;
-    if (DOM.reviewModalSubtitle) DOM.reviewModalSubtitle.textContent = `Phân hệ: ${app.category_name} • ${app.short_desc || ''}`;
+    if (DOM.reviewModalSubtitle) DOM.reviewModalSubtitle.textContent = `Phân hệ: ${catDisplayName} • ${app.short_desc || ''}`;
 
     const reviews = (state.data.reviews || []).filter(r => r.appId === appId && r.status !== 'Ẩn');
     const count = reviews.length;

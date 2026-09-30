@@ -9,6 +9,15 @@ function doGet(e) {
     var action = params.action || 'getAll';
     var ss = SpreadsheetApp.getActiveSpreadsheet();
 
+    if (action === 'getVersion') {
+      var cfg = getSheetConfig(ss);
+      return responseJSON({
+        success: true,
+        version: String(cfg.DATA_VERSION || '').trim(),
+        time: new Date().getTime()
+      });
+    }
+
     if (action === 'getAll') {
       var reviews = getSheetReviews(ss);
       var apps = getSheetApps(ss, reviews);
@@ -199,12 +208,27 @@ function getSheetApps(ss, existingReviews) {
     var status = String(r[7] || 'Hiện').trim();
     var views = Number(r[8]) || 0;
 
+    var rawCat = r[9] ? String(r[9]).trim() : '';
+    var catVal = rawCat.toLowerCase();
     var category = 'teacher';
     var category_name = 'Công việc Giáo viên';
-    var catVal = r[9] ? String(r[9]).trim().toLowerCase() : '';
-    if (catVal.includes('lớp') || catVal.includes('học') || catVal.includes('trò chơi') || classroomIds.includes(id)) {
-      category = 'classroom';
-      category_name = 'Lớp học & Trò chơi';
+
+    if (catVal) {
+      if (catVal.includes('giáo viên') || catVal.includes('teacher') || catVal.includes('công việc')) {
+        category = 'teacher';
+        category_name = 'Công việc Giáo viên';
+      } else if (catVal.includes('học sinh') || catVal.includes('lớp') || catVal.includes('trò chơi') || catVal.includes('classroom')) {
+        category = 'classroom';
+        category_name = 'Lớp học & Trò chơi';
+      } else {
+        category = catVal;
+        category_name = rawCat;
+      }
+    } else {
+      if (classroomIds.includes(id)) {
+        category = 'classroom';
+        category_name = 'Lớp học & Trò chơi';
+      }
     }
 
     var tags = [];

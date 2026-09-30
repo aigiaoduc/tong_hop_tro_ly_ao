@@ -14,7 +14,7 @@
 window.APP_CONFIG = {
   // 🔗 LINK GOOGLE APPS SCRIPT WEB APP (DÁN VÀO ĐÂY)
   // Lưu ý: Đảm bảo đuôi link kết thúc bằng /exec
-  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbylzkCMq3k1uIufM3lNtTd96v-BU8WGPf-tlQFIFkS1aM_4-u5tLJpJMt0I46CoXXqmaA/exec",
+  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwrlUkkzdKBx40gCC9fxVZNeMyCtrX9KCEJCBVHGNZbECFb3CopN04l2H0pacMK9LOw9A/exec",
 
   // ⏱️ THỜI GIAN LƯU ĐỆM CACHE (Tính bằng phút)
   // Giúp website tải tức thì < 0.2s cho khách truy cập

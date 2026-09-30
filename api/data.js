@@ -40,8 +40,9 @@ module.exports = async (req, res) => {
 
   if (req.method === 'GET') {
     const isRefresh = req.query.refresh === 'true' || req.query.nocache === '1';
+    const action = req.query.action || 'getAll';
 
-    if (isRefresh) {
+    if (isRefresh || action === 'getVersion' || action === 'getConfig') {
       res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
     } else {
       res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=86400, public');
