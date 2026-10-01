@@ -481,6 +481,15 @@
             <span class="hidden sm:inline">Đánh giá</span>
           </button>
 
+          <!-- Nút Chia sẻ ứng dụng trong cửa sổ nhúng -->
+          <button id="btn-iframe-share" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-bold bg-teal-50 dark:bg-teal-950/40 text-teal-700 dark:text-teal-300 hover:bg-teal-100 dark:hover:bg-teal-900/60 border border-teal-300/40 dark:border-teal-700/40 transition-all hover:scale-105 active:scale-95" title="Chia sẻ liên kết ứng dụng">
+            <svg class="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+            <span class="hidden sm:inline">Chia sẻ</span>
+          </button>
+
           <button id="btn-reload-iframe" class="p-2 rounded-xl text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" title="Tải lại ứng dụng">
             <i data-lucide="rotate-cw" class="w-4 h-4"></i>
           </button>
@@ -572,6 +581,103 @@
       <p class="text-[11px] text-teal-600 dark:text-teal-400 font-semibold mt-4">
         ❤️ Chân thành cảm ơn tấm lòng và sự đồng hành của Thầy/Cô!
       </p>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: CHIA SẺ LIÊN KẾT ỨNG DỤNG ================= -->
+  <div id="share-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div class="fixed inset-0 bg-black/75 backdrop-blur-sm" onclick="document.getElementById('btn-close-share').click()"></div>
+    <div class="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-6 border border-slate-200 dark:border-slate-700 z-10">
+      
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-teal-100 dark:bg-teal-950/60 text-teal-600 flex items-center justify-center shadow-inner">
+            <svg class="w-5 h-5 text-teal-600 dark:text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-slate-800 dark:text-white">Chia Sẻ Ứng Dụng</h3>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400">Liên kết kèm ảnh xem trước khi gửi Zalo / Messenger</p>
+          </div>
+        </div>
+        <button id="btn-close-share" class="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Khung xem trước thẻ chia sẻ (App Preview Card) -->
+      <div class="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700 mb-4 flex items-center gap-3.5">
+        <img id="share-modal-img" src="" alt="App Preview" class="w-16 h-16 rounded-xl object-cover border border-slate-200 dark:border-slate-600 shadow-sm flex-shrink-0" />
+        <div class="overflow-hidden flex-1">
+          <span id="share-modal-category" class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-teal-100 dark:bg-teal-900/60 text-teal-700 dark:text-teal-300 inline-block mb-1">
+            Ứng dụng
+          </span>
+          <h4 id="share-modal-title" class="text-xs sm:text-sm font-bold text-slate-800 dark:text-white truncate">
+            Tên ứng dụng
+          </h4>
+          <p id="share-modal-desc" class="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5"></p>
+        </div>
+      </div>
+
+      <!-- Ô sao chép link -->
+      <div class="mb-4">
+        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5 flex items-center justify-between">
+          <span>Đường dẫn trực tiếp:</span>
+          <span class="text-[10px] text-teal-600 dark:text-teal-400 font-medium">✨ Tự gắn ảnh khi dán tin nhắn</span>
+        </label>
+        <div class="flex items-center gap-2">
+          <div class="relative flex-1">
+            <input 
+              type="text" 
+              id="share-link-input" 
+              readonly 
+              class="w-full px-3 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs text-slate-700 dark:text-slate-300 font-mono select-all focus:outline-none"
+            />
+          </div>
+          <button 
+            id="btn-copy-share-link" 
+            class="px-4 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 active:scale-95 text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm whitespace-nowrap"
+          >
+            <i data-lucide="copy" class="w-4 h-4"></i>
+            <span id="btn-copy-text">Sao chép</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Các nút gửi nhanh qua mạng xã hội (Zalo, Facebook, v.v.) -->
+      <div>
+        <p class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-2">Gửi nhanh cho đồng nghiệp:</p>
+        <div class="grid grid-cols-2 gap-2">
+          <a 
+            id="share-via-zalo" 
+            href="#" 
+            target="_blank" 
+            class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-bold brand-btn-zalo transition-all hover:scale-102 active:scale-98 shadow-sm"
+          >
+            <svg class="w-4 h-4 rounded-full" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="24" r="24" fill="#0068FF"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M29.5 28.5C31.5 26.5 33 23.5 33 20C33 14.5 28.5 10 23 10C17.5 10 13 14.5 13 20C13 23.5 14.5 26.5 17 28.5C16.5 30 15 33 14 34C16.5 33.5 20 31.5 21.5 30C22 30 22.5 30 23 30C25.5 30 27.5 29.5 29.5 28.5Z" fill="white"/>
+              <path d="M19 18H27V19.5L21.5 24H27V26H19V24.5L24.5 20H19V18Z" fill="#0068FF"/>
+            </svg>
+            <span>Gửi qua Zalo</span>
+          </a>
+
+          <a 
+            id="share-via-facebook" 
+            href="#" 
+            target="_blank" 
+            class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl text-xs font-bold brand-btn-fb transition-all hover:scale-102 active:scale-98 shadow-sm"
+          >
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+            <span>Facebook</span>
+          </a>
+        </div>
+      </div>
+
     </div>
   </div>
 

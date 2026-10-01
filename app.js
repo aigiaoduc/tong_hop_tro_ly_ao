@@ -155,6 +155,20 @@
     donateBankInfo: document.getElementById('donate-bank-info'),
     btnCloseDonate: document.getElementById('btn-close-donate'),
 
+    // Modal Share
+    shareModal: document.getElementById('share-modal'),
+    shareModalImg: document.getElementById('share-modal-img'),
+    shareModalCategory: document.getElementById('share-modal-category'),
+    shareModalTitle: document.getElementById('share-modal-title'),
+    shareModalDesc: document.getElementById('share-modal-desc'),
+    shareLinkInput: document.getElementById('share-link-input'),
+    btnCopyShareLink: document.getElementById('btn-copy-share-link'),
+    btnCopyText: document.getElementById('btn-copy-text'),
+    shareViaZalo: document.getElementById('share-via-zalo'),
+    shareViaFacebook: document.getElementById('share-via-facebook'),
+    btnCloseShare: document.getElementById('btn-close-share'),
+    btnIframeShare: document.getElementById('btn-iframe-share'),
+
     // Modal Promo / Ads
     promoModal: document.getElementById('promo-modal'),
     promoDialog: document.getElementById('promo-dialog'),
@@ -704,6 +718,13 @@
               Sử dụng ngay
             </button>
             <button 
+              class="btn-share-card p-2 rounded-xl border border-teal-200 dark:border-teal-800/60 text-teal-600 dark:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-950/40 transition-colors"
+              data-id="${app.id}"
+              title="Chia sẻ liên kết ứng dụng"
+            >
+              <i data-lucide="share-2" class="w-4 h-4"></i>
+            </button>
+            <button 
               class="btn-detail p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors"
               data-id="${app.id}"
               title="Thông tin chi tiết"
@@ -727,6 +748,16 @@
         e.stopPropagation();
         const id = btn.getAttribute('data-id');
         openReviewModal(id);
+      });
+    });
+
+    targetContainer.querySelectorAll('.btn-share-card').forEach(btn => {
+      if (btn.dataset.bound) return;
+      btn.dataset.bound = 'true';
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = btn.getAttribute('data-id');
+        openShareModal(id);
       });
     });
 
@@ -1030,11 +1061,96 @@
 
   function closeDonateModal() {
     DOM.donateModal.classList.add('hidden');
-    document.body.classList.remove('overflow-hidden');
+    if (!state.activeApp) {
+      document.body.classList.remove('overflow-hidden');
+    }
+  }
+
+  // 12b. Modal Chia Sẻ Ứng Dụng (Liên kết riêng kèm ảnh xem trước Open Graph)
+  function getAppShareUrl(appId) {
+    const origin = window.location.origin;
+    // Link /share?app=UD... tối ưu sinh thẻ Open Graph ảnh xem trước khi gửi Zalo / Facebook / Messenger
+    return `${origin}/share?app=${encodeURIComponent(appId)}`;
+  }
+
+  function openShareModal(appId) {
+    const app = (state.data.apps || []).find(a => a.id === appId);
+    if (!app) return;
+
+    const shareUrl = getAppShareUrl(app.id);
+    const isTeacher = isTeacherCategory(app.category, app.category_name);
+
+    if (DOM.shareModalImg) {
+      DOM.shareModalImg.src = app.img || 'https://res.cloudinary.com/dejnvixvn/image/upload/v1770181393/1_kfr9et.png';
+      DOM.shareModalImg.onerror = function() { this.src = 'logo.jpg'; };
+    }
+    if (DOM.shareModalCategory) {
+      DOM.shareModalCategory.textContent = isTeacher ? 'Dành Cho Giáo Viên' : 'Dành Cho Học Sinh';
+      DOM.shareModalCategory.className = isTeacher 
+        ? 'text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-teal-100 dark:bg-teal-900/60 text-teal-700 dark:text-teal-300 inline-block mb-1'
+        : 'text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-pink-100 dark:bg-pink-900/60 text-pink-700 dark:text-pink-300 inline-block mb-1';
+    }
+    if (DOM.shareModalTitle) DOM.shareModalTitle.textContent = app.name;
+    if (DOM.shareModalDesc) DOM.shareModalDesc.textContent = app.short_desc || app.desc || '';
+
+    if (DOM.shareLinkInput) {
+      DOM.shareLinkInput.value = shareUrl;
+    }
+
+    if (DOM.shareViaZalo) {
+      DOM.shareViaZalo.href = `https://zalo.me/share?url=${encodeURIComponent(shareUrl)}`;
+    }
+    if (DOM.shareViaFacebook) {
+      DOM.shareViaFacebook.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+    }
+
+    // Reset giao diện nút sao chép
+    if (DOM.btnCopyText) DOM.btnCopyText.textContent = 'Sao chép';
+    if (DOM.btnCopyShareLink) {
+      DOM.btnCopyShareLink.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
+      DOM.btnCopyShareLink.classList.add('bg-teal-600', 'hover:bg-teal-700');
+    }
+
+    if (DOM.shareModal) {
+      DOM.shareModal.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    }
+    refreshLucideIcons();
+  }
+
+  function closeShareModal() {
+    if (DOM.shareModal) DOM.shareModal.classList.add('hidden');
+    if (!state.activeApp) {
+      document.body.classList.remove('overflow-hidden');
+    }
+  }
+
+  async function copyShareLink() {
+    if (!DOM.shareLinkInput) return;
+    const url = DOM.shareLinkInput.value;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(url);
+      } else {
+        DOM.shareLinkInput.select();
+        document.execCommand('copy');
+      }
+
+      if (DOM.btnCopyText) DOM.btnCopyText.textContent = 'Đã chép! ✓';
+      if (DOM.btnCopyShareLink) {
+        DOM.btnCopyShareLink.classList.remove('bg-teal-600', 'hover:bg-teal-700');
+        DOM.btnCopyShareLink.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
+      }
+      showToast('Đã sao chép liên kết chia sẻ ứng dụng! 🔗');
+    } catch (err) {
+      DOM.shareLinkInput.select();
+      document.execCommand('copy');
+      showToast('Đã sao chép liên kết chia sẻ ứng dụng! 🔗');
+    }
   }
 
   // 13. Khởi Chạy Ứng Dụng
-  function launchApp(appId) {
+  function launchApp(appId, updateHistory = true) {
     const app = (state.data.apps || []).find(a => a.id === appId);
     if (!app) return;
 
@@ -1057,14 +1173,28 @@
     DOM.appModal.classList.remove('hidden');
     document.body.classList.add('overflow-hidden');
     refreshLucideIcons();
+
+    // Cập nhật URL trình duyệt để lưu lại trạng thái deep link
+    if (updateHistory && window.history && window.history.pushState) {
+      const url = new URL(window.location);
+      url.searchParams.set('app', app.id);
+      window.history.pushState({ appId: app.id }, '', url.toString());
+    }
   }
 
-  function closeModal() {
+  function closeModal(updateHistory = true) {
     DOM.appModal.classList.add('hidden');
     DOM.modalIframe.src = 'about:blank';
     document.body.classList.remove('overflow-hidden');
     state.isZenMode = false;
     state.activeApp = null;
+
+    if (updateHistory && window.history && window.history.pushState) {
+      const url = new URL(window.location);
+      url.searchParams.delete('app');
+      url.searchParams.delete('id');
+      window.history.pushState(null, '', url.pathname + (url.search ? url.search : ''));
+    }
   }
 
   function toggleZenMode() {
@@ -1169,7 +1299,9 @@
 
   function closeReviewModal() {
     if (DOM.reviewModal) DOM.reviewModal.classList.add('hidden');
-    document.body.classList.remove('overflow-hidden');
+    if (!state.activeApp) {
+      document.body.classList.remove('overflow-hidden');
+    }
   }
 
   function setStarPickerValue(val) {
@@ -1313,7 +1445,9 @@
 
   function closeFeedbackModal() {
     DOM.feedbackModal.classList.add('hidden');
-    document.body.classList.remove('overflow-hidden');
+    if (!state.activeApp) {
+      document.body.classList.remove('overflow-hidden');
+    }
   }
 
   // ================= 14. LOGIC QUẢNG CÁO & THÔNG BÁO THÔNG MINH =================
@@ -1595,19 +1729,75 @@
     if (DOM.reviewForm) DOM.reviewForm.addEventListener('submit', handleReviewSubmit);
     setupStarPicker();
 
-    // Escape key
+    // Share modal events
+    if (DOM.btnIframeShare) {
+      DOM.btnIframeShare.addEventListener('click', () => {
+        if (state.activeApp) openShareModal(state.activeApp.id);
+      });
+    }
+    if (DOM.btnCloseShare) DOM.btnCloseShare.addEventListener('click', closeShareModal);
+    if (DOM.btnCopyShareLink) DOM.btnCopyShareLink.addEventListener('click', copyShareLink);
+
+    // Escape key (Đóng popup con trước, nếu không có popup con mới đóng ứng dụng)
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        if (!DOM.appModal.classList.contains('hidden')) closeModal();
-        if (!DOM.videoModal.classList.contains('hidden')) closeVideoModal();
-        if (!DOM.donateModal.classList.contains('hidden')) closeDonateModal();
-        if (!DOM.feedbackModal.classList.contains('hidden')) closeFeedbackModal();
-        if (!DOM.promoModal.classList.contains('hidden')) closePromoModal(true);
-        if (DOM.reviewModal && !DOM.reviewModal.classList.contains('hidden')) closeReviewModal();
+        if (DOM.shareModal && !DOM.shareModal.classList.contains('hidden')) {
+          closeShareModal();
+          return;
+        }
+        if (DOM.reviewModal && !DOM.reviewModal.classList.contains('hidden')) {
+          closeReviewModal();
+          return;
+        }
+        if (DOM.feedbackModal && !DOM.feedbackModal.classList.contains('hidden')) {
+          closeFeedbackModal();
+          return;
+        }
+        if (DOM.donateModal && !DOM.donateModal.classList.contains('hidden')) {
+          closeDonateModal();
+          return;
+        }
+        if (DOM.videoModal && !DOM.videoModal.classList.contains('hidden')) {
+          closeVideoModal();
+          return;
+        }
+        if (DOM.promoModal && !DOM.promoModal.classList.contains('hidden')) {
+          closePromoModal(true);
+          return;
+        }
+        if (DOM.appModal && !DOM.appModal.classList.contains('hidden')) {
+          closeModal();
+        }
       }
     });
 
     setupPromoInteraction();
+  }
+
+  // Tự động mở app nếu người dùng truy cập từ liên kết chia sẻ (?app=UD...)
+  function checkUrlDirectAppLaunch() {
+    const params = new URLSearchParams(window.location.search);
+    const directAppId = params.get('app') || params.get('id');
+    if (directAppId && !state.activeApp) {
+      const foundApp = (state.data.apps || []).find(a => String(a.id).trim().toLowerCase() === directAppId.trim().toLowerCase());
+      if (foundApp) {
+        setTimeout(() => {
+          launchApp(foundApp.id, false);
+        }, 350);
+      }
+    }
+  }
+
+  function setupDeepLinking() {
+    window.addEventListener('popstate', () => {
+      const params = new URLSearchParams(window.location.search);
+      const appId = params.get('app') || params.get('id');
+      if (appId) {
+        launchApp(appId, false);
+      } else if (state.activeApp) {
+        closeModal(false);
+      }
+    });
   }
 
   function init() {
@@ -1616,14 +1806,20 @@
     setupTabs();
     setupSearch();
     setupEvents();
+    setupDeepLinking();
     setupInfiniteScroll();
     refreshLucideIcons();
 
     // Mở popup quảng cáo tự động
     initPromoModal();
 
+    // Mở ứng dụng ngay nếu có tham số ?app=UD... trong link
+    checkUrlDirectAppLaunch();
+
     setTimeout(() => {
-      fetchLiveGoogleSheetData(false);
+      fetchLiveGoogleSheetData(false).then(() => {
+        checkUrlDirectAppLaunch();
+      });
     }, 600);
   }
 

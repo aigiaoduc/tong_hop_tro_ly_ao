@@ -203,6 +203,20 @@
   z-index: 99999 !important;
 }
 
+/* Đảm bảo các hộp thoại tương tác (Mời cà phê, Báo lỗi, Đánh giá, Chia sẻ, Video, Promo) luôn nổi lên TRÊN ứng dụng đang mở */
+#donate-modal,
+#feedback-modal,
+#review-modal,
+#share-modal,
+#video-modal,
+#promo-modal {
+  z-index: 20000 !important;
+}
+
+#toast {
+  z-index: 20050 !important;
+}
+
 /* Subtle badge pulse */
 @keyframes pulse-subtle {
   0%, 100% { opacity: 1; transform: scale(1); }

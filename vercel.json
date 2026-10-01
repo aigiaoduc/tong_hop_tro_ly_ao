@@ -34,6 +34,14 @@
       "dest": "/api/$1"
     },
     {
+      "src": "/share",
+      "dest": "/api/share"
+    },
+    {
+      "src": "/app/(.*)",
+      "dest": "/api/share?app=$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }
