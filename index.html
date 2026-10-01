@@ -50,7 +50,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=4.1" />
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
 
@@ -271,7 +271,9 @@
           </button>
           <!-- TAB VIDEO MỚI -->
           <button data-tab="videos" class="tab-button px-4 py-2 rounded-xl bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-red-500 flex items-center gap-1.5 transition-all">
-            <i data-lucide="youtube" class="w-3.5 h-3.5 text-red-600"></i>
+            <svg class="w-3.5 h-3.5 text-red-600 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
             <span>Video Bài Giảng</span>
           </button>
         </div>
@@ -440,7 +442,7 @@
   </footer>
 
   <!-- ================= MODAL: IFRAME APP RUNNER (TO TOÀN MÀN HÌNH MẶC ĐỊNH) ================= -->
-  <div id="app-modal" class="fixed inset-0 z-50 flex flex-col hidden w-screen h-screen bg-white dark:bg-slate-900 overflow-hidden">
+  <div id="app-modal" class="fixed inset-0 z-[990] flex flex-col hidden w-screen h-screen bg-white dark:bg-slate-900 overflow-hidden" style="z-index: 990 !important;">
     <div id="modal-backdrop" class="hidden"></div>
 
     <div id="modal-dialog" class="relative w-full h-full flex flex-col overflow-hidden bg-white dark:bg-slate-900 z-10 rounded-none border-0">
@@ -527,7 +529,7 @@
   </div>
 
   <!-- ================= MODAL: VIDEO PLAYER ================= -->
-  <div id="video-modal" class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 hidden">
+  <div id="video-modal" class="fixed inset-0 z-[20000] flex items-center justify-center p-2 sm:p-4 hidden" style="z-index: 20000 !important;">
     <div id="video-backdrop" class="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity" onclick="document.getElementById('btn-close-video').click()"></div>
     <div class="relative w-full max-w-4xl bg-black rounded-3xl shadow-2xl overflow-hidden border border-slate-700 z-10">
       <div class="p-3 bg-slate-900 flex items-center justify-between border-b border-slate-800">
@@ -546,7 +548,7 @@
   </div>
 
   <!-- ================= MODAL: DONATE / MỜI CÀ PHÊ ================= -->
-  <div id="donate-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+  <div id="donate-modal" class="fixed inset-0 z-[20000] flex items-center justify-center p-4 hidden" style="z-index: 20000 !important;">
     <div class="fixed inset-0 bg-black/70 backdrop-blur-sm" onclick="document.getElementById('btn-close-donate').click()"></div>
     <div class="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-6 border border-slate-200 dark:border-slate-700 z-10 text-center">
       
@@ -585,7 +587,7 @@
   </div>
 
   <!-- ================= MODAL: CHIA SẺ LIÊN KẾT ỨNG DỤNG ================= -->
-  <div id="share-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+  <div id="share-modal" class="fixed inset-0 z-[20000] flex items-center justify-center p-4 hidden" style="z-index: 20000 !important;">
     <div class="fixed inset-0 bg-black/75 backdrop-blur-sm" onclick="document.getElementById('btn-close-share').click()"></div>
     <div class="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-6 border border-slate-200 dark:border-slate-700 z-10">
       
@@ -682,7 +684,7 @@
   </div>
 
   <!-- ================= MODAL: FEEDBACK / BÁO LỖI (GỬI VỀ SHEET) ================= -->
-  <div id="feedback-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+  <div id="feedback-modal" class="fixed inset-0 z-[20000] flex items-center justify-center p-4 hidden" style="z-index: 20000 !important;">
     <div class="fixed inset-0 bg-black/70 backdrop-blur-sm" onclick="document.getElementById('btn-close-feedback').click()"></div>
     <div class="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-6 border border-slate-200 dark:border-slate-700 z-10">
       
@@ -725,7 +727,7 @@
   </div>
 
   <!-- ================= MODAL: REVIEW / ĐÁNH GIÁ SƯ PHẠM ================= -->
-  <div id="review-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+  <div id="review-modal" class="fixed inset-0 z-[20000] flex items-center justify-center p-3 sm:p-4 hidden" style="z-index: 20000 !important;">
     <div class="fixed inset-0 bg-black/70 backdrop-blur-sm" onclick="closeReviewModal()"></div>
     <div class="relative w-full max-w-xl max-h-[90vh] bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-700 z-10 flex flex-col">
       
@@ -828,7 +830,7 @@
   </div>
 
   <!-- ================= MODAL: PROMO / QUẢNG CÁO ================= -->
-  <div id="promo-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+  <div id="promo-modal" class="fixed inset-0 z-[20000] flex items-center justify-center p-3 sm:p-4 hidden" style="z-index: 20000 !important;">
     <div id="promo-backdrop" class="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity" onclick="closePromoModal()"></div>
     <div id="promo-dialog" class="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-700 z-10 transition-all duration-300 transform scale-100 flex flex-col max-h-[92vh]">
       
@@ -923,7 +925,7 @@
   </button>
 
   <!-- ================= TOAST NOTIFICATION ================= -->
-  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-4 opacity-0 pointer-events-none transition-all duration-300 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-semibold">
+  <div id="toast" class="fixed bottom-6 right-6 z-[20050] transform translate-y-4 opacity-0 pointer-events-none transition-all duration-300 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2.5 text-xs font-semibold" style="z-index: 20050 !important;">
     <i data-lucide="check-circle" class="w-4 h-4 text-teal-400 dark:text-teal-600"></i>
     <span id="toast-message">Thông báo</span>
   </div>

@@ -3,11 +3,10 @@
  * Hỗ trợ offline và cài đặt ứng dụng trên điện thoại/máy tính
  */
 
-const CACHE_NAME = 'aigiaoduc-pwa-v4.0';
+const CACHE_NAME = 'aigiaoduc-pwa-v4.1';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/styles.css',
   '/manifest.json'
 ];
 
@@ -46,8 +45,13 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Đối với config.js, data.js, app.js: Network First (ưu tiên mạng để lấy cập nhật mới nhất)
-  if (url.pathname.endsWith('config.js') || url.pathname.endsWith('data.js') || url.pathname.endsWith('app.js')) {
+  // Đối với styles.css, config.js, data.js, app.js: Network First (ưu tiên mạng để lấy cập nhật mới nhất)
+  if (
+    url.pathname.endsWith('styles.css') ||
+    url.pathname.endsWith('config.js') ||
+    url.pathname.endsWith('data.js') ||
+    url.pathname.endsWith('app.js')
+  ) {
     event.respondWith(
       fetch(event.request)
         .then((response) => {

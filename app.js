@@ -1074,7 +1074,7 @@
   }
 
   function openShareModal(appId) {
-    const app = (state.data.apps || []).find(a => a.id === appId);
+    const app = (state.data.apps || []).find(a => String(a.id) === String(appId));
     if (!app) return;
 
     const shareUrl = getAppShareUrl(app.id);
@@ -1218,7 +1218,7 @@
   // 14. Hệ Thống Đánh Giá & Bình Luận (Reviews & Ratings)
   function openReviewModal(appId) {
     state.currentReviewAppId = appId;
-    const app = (state.data.apps || []).find(a => a.id === appId);
+    const app = (state.data.apps || []).find(a => String(a.id) === String(appId));
     if (!app) return;
 
     const isTeacher = isTeacherCategory(app.category, app.category_name);
@@ -1565,7 +1565,11 @@
 
   function refreshLucideIcons() {
     if (window.lucide && typeof window.lucide.createIcons === 'function') {
-      window.lucide.createIcons();
+      try {
+        window.lucide.createIcons();
+      } catch (err) {
+        console.warn('Lucide icon warning:', err);
+      }
     }
   }
 
