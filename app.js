@@ -995,20 +995,22 @@
     DOM.appModal.classList.add('hidden');
     DOM.modalIframe.src = 'about:blank';
     document.body.classList.remove('overflow-hidden');
-    if (state.isZenMode) toggleZenMode();
+    state.isZenMode = false;
     state.activeApp = null;
   }
 
   function toggleZenMode() {
     state.isZenMode = !state.isZenMode;
-    if (state.isZenMode) {
-      DOM.modalDialog.classList.add('zen-mode');
-      DOM.btnZenMode.innerHTML = `<i data-lucide="minimize" class="w-4 h-4"></i>`;
-    } else {
-      DOM.modalDialog.classList.remove('zen-mode');
-      DOM.btnZenMode.innerHTML = `<i data-lucide="maximize" class="w-4 h-4"></i>`;
+    if (DOM.btnZenMode) {
+      if (state.isZenMode) {
+        DOM.modalDialog.classList.add('zen-mode');
+        DOM.btnZenMode.innerHTML = `<i data-lucide="minimize" class="w-4 h-4"></i>`;
+      } else {
+        DOM.modalDialog.classList.remove('zen-mode');
+        DOM.btnZenMode.innerHTML = `<i data-lucide="maximize" class="w-4 h-4"></i>`;
+      }
+      refreshLucideIcons();
     }
-    refreshLucideIcons();
   }
 
   function showAppDetail(appId) {
