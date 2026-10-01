@@ -13,7 +13,7 @@ window.INITIAL_DATA = {
     "bankAccountName": "TRẦN HỒNG QUÂN",
     "qrImageUrl": "https://res.cloudinary.com/dejnvixvn/image/upload/v1767049464/M%C3%A3_QR_Ng%C3%A2n_H%C3%A0ng_Vietcombank_qq37t1.jpg",
     "youtubeUrl": "https://www.youtube.com/@quanh95",
-    "DATA_VERSION": "90692"
+    "DATA_VERSION": "90694"
   },
   "apps": [
     {
@@ -25,7 +25,7 @@ window.INITIAL_DATA = {
       "img": "https://static.vecteezy.com/system/resources/thumbnails/008/245/451/small/artificial-intelligence-technology-infographic-template-free-vector.jpg",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 3847,
+      "views": 3867,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -33,7 +33,7 @@ window.INITIAL_DATA = {
         "Học liệu",
         "Thiết kế"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 0,
       "badge": "Hot"
     },
@@ -46,15 +46,15 @@ window.INITIAL_DATA = {
       "img": "https://itchronicles.com/wp-content/uploads/2021/04/Optimized-Illustration-from-Adobe-Stock-for-ITC-Post-on-AI-in-Game-Development-scaled.jpeg",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 4215,
-      "category": "classroom",
-      "category_name": "Lớp học & Trò chơi",
+      "views": 4219,
+      "category": "teacher",
+      "category_name": "Công việc Giáo viên",
       "tags": [
         "Game",
         "Tương tác",
         "Prompt"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 1,
       "badge": "Hot"
     },
@@ -67,15 +67,15 @@ window.INITIAL_DATA = {
       "img": "https://cdn-media.sforum.vn/storage/app/media/ai-tao-mindmap-1.jpg",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 1389,
-      "category": "classroom",
-      "category_name": "Lớp học & Trò chơi",
+      "views": 1392,
+      "category": "teacher",
+      "category_name": "Công việc Giáo viên",
       "tags": [
         "Sơ đồ tư duy",
         "Mindmap",
         "Học tập"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 1,
       "badge": "Phổ biến"
     },
@@ -88,7 +88,7 @@ window.INITIAL_DATA = {
       "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREOFKWvqZPqjv_fLujfhA82R9cUM6kI2skEA&s",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 15428,
+      "views": 15437,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -96,7 +96,7 @@ window.INITIAL_DATA = {
         "Chuyển đổi số",
         "Khung chuẩn"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 1,
       "badge": "Hot"
     },
@@ -109,7 +109,7 @@ window.INITIAL_DATA = {
       "img": "https://cdnv2.tgdd.vn/mwg-static/common/News/1575133/tao-de-thi-trac-nghiem-online%20%281%29.jpg",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 2037,
+      "views": 2047,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -117,7 +117,7 @@ window.INITIAL_DATA = {
         "Kiểm tra",
         "Prompt"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 1,
       "badge": "Hot"
     },
@@ -130,15 +130,15 @@ window.INITIAL_DATA = {
       "img": "https://imgv3.fotor.com/images/share/Various-QR-code-types-to-choose-from-on-Fotors-QR-code-generator.jpg",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 5816,
-      "category": "classroom",
-      "category_name": "Lớp học & Trò chơi",
+      "views": 5819,
+      "category": "teacher",
+      "category_name": "Công việc Giáo viên",
       "tags": [
         "Mã QR",
         "Chia sẻ",
         "Lớp học"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 0,
       "badge": "Hot"
     },
@@ -151,15 +151,15 @@ window.INITIAL_DATA = {
       "img": "https://www.yeldocollege.org/Uploads/Blogs/is-ai-a-threat-or-a-tool-for-2d-animators-exploring-the-future-of-your-craft/chatgpt-image-jun-21-2025-04-22-28-pm.webp",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 4672,
-      "category": "classroom",
-      "category_name": "Lớp học & Trò chơi",
+      "views": 4674,
+      "category": "teacher",
+      "category_name": "Công việc Giáo viên",
       "tags": [
         "Truyện tranh",
         "Đồ họa",
         "Sáng tạo"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 0,
       "badge": "Hot"
     },
@@ -173,14 +173,14 @@ window.INITIAL_DATA = {
       "mode": "EMBED",
       "status": "Ẩn",
       "views": 7285,
-      "category": "classroom",
-      "category_name": "Lớp học & Trò chơi",
+      "category": "teacher",
+      "category_name": "Công việc Giáo viên",
       "tags": [
         "Game",
         "Ứng dụng",
         "Giảng dạy"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 0,
       "badge": "Hot"
     },
@@ -201,7 +201,7 @@ window.INITIAL_DATA = {
         "Hoạt náo",
         "May mắn"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 0,
       "badge": "Mới"
     },
@@ -214,7 +214,7 @@ window.INITIAL_DATA = {
       "img": "https://res.cloudinary.com/dejnvixvn/image/upload/v1772290329/Screenshot_2026-02-28_190842_ftyhid.png",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 387,
+      "views": 391,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -222,7 +222,7 @@ window.INITIAL_DATA = {
         "Sáng kiến",
         "Cố vấn AI"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 0,
       "badge": "Mới"
     },
@@ -243,7 +243,7 @@ window.INITIAL_DATA = {
         "Tư vấn",
         "Thầy Quân"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 0,
       "badge": "Mới"
     },
@@ -264,7 +264,7 @@ window.INITIAL_DATA = {
         "CV 7991",
         "AI Soạn đề"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 0,
       "badge": "Mới"
     },
@@ -278,14 +278,14 @@ window.INITIAL_DATA = {
       "mode": "EMBED",
       "status": "Hiện",
       "views": 406,
-      "category": "classroom",
-      "category_name": "Lớp học & Trò chơi",
+      "category": "teacher",
+      "category_name": "Công việc Giáo viên",
       "tags": [
         "Biểu đồ",
         "Dữ liệu",
         "Trực quan"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 0,
       "badge": "Mới"
     },
@@ -298,7 +298,7 @@ window.INITIAL_DATA = {
       "img": "https://res.cloudinary.com/dejnvixvn/image/upload/v1776787344/Screenshot_2026-04-21_225728_xlec9r.png",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 314,
+      "views": 316,
       "category": "classroom",
       "category_name": "Lớp học & Trò chơi",
       "tags": [
@@ -306,7 +306,7 @@ window.INITIAL_DATA = {
         "Học sinh",
         "Từ vựng"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 1,
       "badge": "Mới"
     },
@@ -319,7 +319,7 @@ window.INITIAL_DATA = {
       "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHeXy5Fa0_L4bGSB2BRKpkYAJ8d48HyvV36Q&s",
       "mode": "NEW_TAB",
       "status": "Hiện",
-      "views": 231,
+      "views": 235,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -327,7 +327,7 @@ window.INITIAL_DATA = {
         "Word",
         "Tiện ích"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 1,
       "badge": "Mới"
     },
@@ -340,15 +340,15 @@ window.INITIAL_DATA = {
       "img": "https://imgv3.fotor.com/images/side/crop-photos-without-stretching-with-Fotor.png",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 198,
-      "category": "classroom",
-      "category_name": "Lớp học & Trò chơi",
+      "views": 199,
+      "category": "teacher",
+      "category_name": "Công việc Giáo viên",
       "tags": [
         "Sticker",
         "Học liệu",
         "Phần thưởng"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 0,
       "badge": "Mới"
     },
@@ -361,7 +361,7 @@ window.INITIAL_DATA = {
       "img": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/e9/48/bc/e948bc5f-95ef-71b3-5e1f-3463bd291fe9/AppIcon-0-0-1x_U007ephone-0-1-0-85-220.png/1200x630wa.png",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 401,
+      "views": 410,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -369,7 +369,7 @@ window.INITIAL_DATA = {
         "Video bài giảng",
         "Tiện ích"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 0,
       "badge": "Mới"
     },
@@ -382,7 +382,7 @@ window.INITIAL_DATA = {
       "img": "https://cdn.luatvietnam.vn/uploaded/Images/Original/2023/05/19/van-ban-di-van-ban-den-1_1905144229.jpg",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 756,
+      "views": 764,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -390,7 +390,7 @@ window.INITIAL_DATA = {
         "Văn bản",
         "NĐ 30"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 0,
       "badge": "Phổ biến"
     },
@@ -403,15 +403,15 @@ window.INITIAL_DATA = {
       "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjSB9Dqqa-lyzSDAUD4kj8leA7H1aMWJvsOrIVzBvftY4X7F3aR6ZLWHpJ&s=10",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 122,
-      "category": "classroom",
-      "category_name": "Lớp học & Trò chơi",
+      "views": 123,
+      "category": "teacher",
+      "category_name": "Công việc Giáo viên",
       "tags": [
         "Rút gọn link",
         "Tiện ích",
         "Lớp học"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 0,
       "badge": "Mới"
     },
@@ -424,7 +424,7 @@ window.INITIAL_DATA = {
       "img": "https://res.cloudinary.com/dejnvixvn/image/upload/v1788665809/e72f668a-e7c8-443d-bc2e-c2c3ca4d9c4a.png",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 153,
+      "views": 185,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -432,7 +432,7 @@ window.INITIAL_DATA = {
         "Prompt",
         "Cộng đồng"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 1,
       "badge": "Mới"
     },
@@ -445,7 +445,7 @@ window.INITIAL_DATA = {
       "img": "https://22675444.fs1.hubspotusercontent-na1.net/hubfs/22675444/prompt-optimization-techniques.png",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 384,
+      "views": 389,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -453,7 +453,7 @@ window.INITIAL_DATA = {
         "Prompt",
         "Hiệu suất"
       ],
-      "rating": 5.0,
+      "rating": 5,
       "reviewCount": 0,
       "badge": "Mới"
     }
@@ -477,7 +477,7 @@ window.INITIAL_DATA = {
       "youtubeId": "dQw4w9WgXcQ",
       "thumbnail": "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
       "status": "Hiện",
-      "views": 980
+      "views": 982
     },
     {
       "id": "VD03",
@@ -487,7 +487,7 @@ window.INITIAL_DATA = {
       "youtubeId": "dQw4w9WgXcQ",
       "thumbnail": "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
       "status": "Hiện",
-      "views": 2310
+      "views": 10001
     }
   ],
   "ads": [

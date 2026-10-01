@@ -15,9 +15,58 @@
     FALLBACK_DATA_ENABLED: true
   };
 
+  const CACHE_STORAGE_KEY = 'aigiaoduc_live_cache_v8';
+  const CACHE_VERSION_KEY = 'aigiaoduc_data_version_v8';
+  const CACHE_SCRIPT_URL_KEY = 'aigiaoduc_script_url_v8';
+
+  // Dọn dẹp triệt để cache của các phiên bản cũ nhằm tránh dữ liệu phân loại cũ bị kẹt
+  (function cleanupOldCaches() {
+    const oldKeys = [
+      'aigiaoduc_live_cache',
+      'aigiaoduc_live_cache_v2',
+      'aigiaoduc_live_cache_v5',
+      'aigiaoduc_live_cache_v6',
+      'aigiaoduc_live_cache_v7',
+      'aigiaoduc_data_version'
+    ];
+    oldKeys.forEach(k => {
+      try { localStorage.removeItem(k); } catch(e){}
+    });
+
+    // Nếu Thầy Quân đổi đường dẫn APPS_SCRIPT_URL mới trong config.js
+    // Tự động xóa sạch cache để tải mới 100% từ URL mới
+    const lastScriptUrl = localStorage.getItem(CACHE_SCRIPT_URL_KEY);
+    if (cfg.APPS_SCRIPT_URL && lastScriptUrl !== cfg.APPS_SCRIPT_URL) {
+      try {
+        localStorage.removeItem(CACHE_STORAGE_KEY);
+        localStorage.removeItem(CACHE_VERSION_KEY);
+        localStorage.setItem(CACHE_SCRIPT_URL_KEY, cfg.APPS_SCRIPT_URL);
+      } catch(e){}
+    }
+  })();
+
+  function getInitialAppState() {
+    let initialData = window.INITIAL_DATA || {};
+    try {
+      const cachedStr = localStorage.getItem(CACHE_STORAGE_KEY);
+      const cachedVer = localStorage.getItem(CACHE_VERSION_KEY);
+      if (cachedStr) {
+        const parsed = JSON.parse(cachedStr);
+        if (parsed && parsed.apps && parsed.apps.length > 0) {
+          const localVer = initialData.config && initialData.config.DATA_VERSION;
+          if (localVer && cachedVer && String(localVer).trim() !== String(cachedVer).trim()) {
+            return initialData;
+          }
+          return parsed;
+        }
+      }
+    } catch(e){}
+    return initialData;
+  }
+
   // State
   let state = {
-    data: window.INITIAL_DATA || {},
+    data: getInitialAppState(),
     isLiveConnected: false,
     currentTab: 'all', // 'all' | 'teacher' | 'classroom' | 'favorites' | 'videos'
     searchQuery: '',
@@ -204,13 +253,15 @@
     DOM.syncStatusBadge.classList.remove('electric-ready-badge', 'bg-slate-100/90', 'dark:bg-slate-800/90', 'border-slate-200/80');
 
     if (status === 'syncing') {
-      DOM.syncStatusBadge.className = 'hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 text-[11px] font-semibold border border-teal-300 dark:border-teal-700 text-teal-700 dark:text-teal-300 shadow-sm';
+      DOM.syncStatusBadge.className = 'hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 text-[11px] font-semibold border border-teal-300 dark:border-teal-700 text-teal-700 dark:text-teal-300 shadow-sm cursor-wait';
+      DOM.syncStatusBadge.title = 'Đang đồng bộ dữ liệu mới nhất từ Google Sheet...';
       DOM.syncStatusBadge.innerHTML = `
         <svg class="animate-spin w-3.5 h-3.5 text-teal-600 dark:text-teal-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
         <span>Đang nạp dữ liệu...</span>
       `;
     } else if (status === 'checking') {
-      DOM.syncStatusBadge.className = 'hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/80 text-[11px] font-semibold border border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300 shadow-sm';
+      DOM.syncStatusBadge.className = 'hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/80 text-[11px] font-semibold border border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300 shadow-sm cursor-wait';
+      DOM.syncStatusBadge.title = 'Đang kiểm tra phiên bản dữ liệu...';
       DOM.syncStatusBadge.innerHTML = `
         <svg class="animate-spin w-3.5 h-3.5 text-blue-600 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
         <span>Kiểm tra phiên bản...</span>
@@ -218,7 +269,8 @@
     } else {
       // TRẠNG THÁI SẴN SÀNG: MÀU XANH LỤC + HIỆU ỨNG ĐIỆN TỬ HIỆN ĐẠI (ELECTRIC GLOW)
       const verText = version ? `v${version}` : '';
-      DOM.syncStatusBadge.className = 'hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl text-[11px] font-bold electric-ready-badge cursor-default select-none shadow-md';
+      DOM.syncStatusBadge.className = 'hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl text-[11px] font-bold electric-ready-badge cursor-pointer select-none shadow-md hover:scale-105 active:scale-95 transition-transform';
+      DOM.syncStatusBadge.title = 'Dữ liệu từ Google Sheet đang sẵn sàng (Bấm vào đây để làm mới ngay)';
       DOM.syncStatusBadge.innerHTML = `
         <span class="electric-spark flex items-center">
           <svg class="w-3.5 h-3.5 text-emerald-200" viewBox="0 0 24 24" fill="currentColor">
@@ -233,14 +285,19 @@
 
   // 4. Đồng bộ dữ liệu theo cơ chế kiểm tra DATA_VERSION thông minh
   async function fetchLiveGoogleSheetData(force = false) {
-    const cacheKey = 'aigiaoduc_live_cache_v7';
-    const versionKey = 'aigiaoduc_data_version';
-    const cachedVersion = localStorage.getItem(versionKey);
+    if (force) {
+      try {
+        localStorage.removeItem(CACHE_STORAGE_KEY);
+        localStorage.removeItem(CACHE_VERSION_KEY);
+      } catch(e){}
+    }
 
-    // 4.1. Đọc dữ liệu từ Cache LocalStorage để hiển thị ngay lập tức (0ms load time)
-    const cachedStr = localStorage.getItem(cacheKey);
-    let hasLocalData = false;
-    if (cachedStr) {
+    const cachedVersion = localStorage.getItem(CACHE_VERSION_KEY);
+    const cachedStr = localStorage.getItem(CACHE_STORAGE_KEY);
+    let hasLocalData = !!(cachedStr && state.data && state.data.apps && state.data.apps.length > 0);
+
+    // 4.1. Đọc dữ liệu từ Cache LocalStorage nếu có để phản hồi tức thì
+    if (cachedStr && !hasLocalData) {
       try {
         const parsed = JSON.parse(cachedStr);
         if (parsed && parsed.apps && parsed.apps.length > 0) {
@@ -255,11 +312,12 @@
       }
     }
 
-    // 4.2. Kiểm tra phiên bản DATA_VERSION từ Google Sheet
+    // 4.2. Cập nhật huy hiệu trạng thái & xoay icon nút làm mới
     if (!force) {
       updateSyncBadge('checking');
     } else {
       updateSyncBadge('syncing');
+      if (DOM.btnForceSync) DOM.btnForceSync.classList.add('animate-spin');
     }
 
     let serverVersion = null;
@@ -268,10 +326,10 @@
     if (!needFullFetch) {
       try {
         const checkEndpoints = [
-          `/api/data?action=getVersion&_t=${Date.now()}`,
-          `/api/data?action=getConfig&_t=${Date.now()}`,
           cfg.APPS_SCRIPT_URL ? `${cfg.APPS_SCRIPT_URL}?action=getVersion&_t=${Date.now()}` : null,
-          cfg.APPS_SCRIPT_URL ? `${cfg.APPS_SCRIPT_URL}?action=getConfig&_t=${Date.now()}` : null
+          `/api/data?action=getVersion&_t=${Date.now()}`,
+          cfg.APPS_SCRIPT_URL ? `${cfg.APPS_SCRIPT_URL}?action=getConfig&_t=${Date.now()}` : null,
+          `/api/data?action=getConfig&_t=${Date.now()}`
         ].filter(Boolean);
 
         for (const ep of checkEndpoints) {
@@ -298,6 +356,7 @@
           // Phiên bản trùng khớp: Giữ nguyên dữ liệu cũ, không tải lại danh sách -> Tiết kiệm 100% băng thông!
           console.log(`[DATA_VERSION] Trùng phiên bản (${serverVersion}). Sử dụng dữ liệu lưu sẵn siêu tốc!`);
           updateSyncBadge('live', serverVersion);
+          if (DOM.btnForceSync) DOM.btnForceSync.classList.remove('animate-spin');
           return;
         } else if (serverVersion) {
           console.log(`[DATA_VERSION] Phát hiện phiên bản mới: Server=${serverVersion} khác Cache=${cachedVersion}. Đang nạp dữ liệu mới...`);
@@ -312,31 +371,37 @@
     updateSyncBadge('syncing');
     let fetchedData = null;
 
-    // Tầng 1: Vercel Edge Caching (/api/data)
-    try {
-      const edgeUrl = `/api/data?action=getAll&refresh=true&_t=${Date.now()}`;
-      const edgeRes = await fetch(edgeUrl, { headers: { 'Accept': 'application/json' } });
-      if (edgeRes.ok) {
-        const edgeJson = await edgeRes.json();
-        if (edgeJson && edgeJson.success && edgeJson.data) {
-          fetchedData = edgeJson.data;
-        }
-      }
-    } catch (e) {}
-
-    // Tầng 2: Direct Google Apps Script API
-    if (!fetchedData && cfg.APPS_SCRIPT_URL) {
+    // Tầng 1: Direct Google Apps Script API (Ưu tiên trực tiếp dữ liệu thời gian thực từ Google Sheet)
+    if (cfg.APPS_SCRIPT_URL) {
       try {
         const directUrl = `${cfg.APPS_SCRIPT_URL}?action=getAll&_t=${Date.now()}`;
         const res = await fetch(directUrl);
-        const json = await res.json();
-        if (json && json.success && json.data) {
-          fetchedData = json.data;
+        if (res.ok) {
+          const json = await res.json();
+          if (json && json.success && json.data) {
+            fetchedData = json.data;
+          }
         }
       } catch (err) {
-        console.warn('Không thể kết nối máy chủ Google Apps Script:', err);
+        console.warn('Không thể kết nối trực tiếp máy chủ Google Apps Script:', err);
       }
     }
+
+    // Tầng 2: Vercel Edge Caching (/api/data) nếu direct fetch không có kết quả
+    if (!fetchedData) {
+      try {
+        const edgeUrl = `/api/data?action=getAll&refresh=true&_t=${Date.now()}`;
+        const edgeRes = await fetch(edgeUrl, { headers: { 'Accept': 'application/json' } });
+        if (edgeRes.ok) {
+          const edgeJson = await edgeRes.json();
+          if (edgeJson && edgeJson.success && edgeJson.data) {
+            fetchedData = edgeJson.data;
+          }
+        }
+      } catch (e) {}
+    }
+
+    if (DOM.btnForceSync) DOM.btnForceSync.classList.remove('animate-spin');
 
     if (fetchedData) {
       state.data = {
@@ -354,8 +419,11 @@
         ? String(state.data.config.DATA_VERSION).trim()
         : (serverVersion || String(Date.now()));
 
-      localStorage.setItem(cacheKey, JSON.stringify(state.data));
-      localStorage.setItem(versionKey, newVersion);
+      try {
+        localStorage.setItem(CACHE_STORAGE_KEY, JSON.stringify(state.data));
+        localStorage.setItem(CACHE_VERSION_KEY, newVersion);
+        if (cfg.APPS_SCRIPT_URL) localStorage.setItem(CACHE_SCRIPT_URL_KEY, cfg.APPS_SCRIPT_URL);
+      } catch(e){}
 
       updateSyncBadge('live', newVersion);
       renderAllViews();
@@ -1489,9 +1557,14 @@
     // Video modal
     if (DOM.btnCloseVideo) DOM.btnCloseVideo.addEventListener('click', closeVideoModal);
 
-    // Force sync
+    // Force sync (bấm nút đám mây hoặc bấm trực tiếp vào huy hiệu Dữ liệu sẵn sàng)
     if (DOM.btnForceSync) {
       DOM.btnForceSync.addEventListener('click', () => {
+        fetchLiveGoogleSheetData(true);
+      });
+    }
+    if (DOM.syncStatusBadge) {
+      DOM.syncStatusBadge.addEventListener('click', () => {
         fetchLiveGoogleSheetData(true);
       });
     }

@@ -3,14 +3,11 @@
  * Hỗ trợ offline và cài đặt ứng dụng trên điện thoại/máy tính
  */
 
-const CACHE_NAME = 'aigiaoduc-pwa-v3.0';
+const CACHE_NAME = 'aigiaoduc-pwa-v4.0';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/styles.css',
-  '/config.js',
-  '/data.js',
-  '/app.js',
   '/manifest.json'
 ];
 
@@ -37,27 +34,47 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
-  // Bỏ qua các request POST hoặc request gọi Google Apps Script (để tránh lỗi CORS trong SW)
-  if (event.request.method !== 'GET' || url.origin.includes('script.google.com') || url.origin.includes('googleusercontent.com')) {
+  // Bỏ qua các request POST, request Google Apps Script, hoặc request API để luôn lấy dữ liệu tươi mới
+  if (
+    event.request.method !== 'GET' ||
+    url.origin.includes('script.google.com') ||
+    url.origin.includes('googleusercontent.com') ||
+    url.pathname.startsWith('/api/') ||
+    url.searchParams.has('_t') ||
+    url.searchParams.has('refresh')
+  ) {
     return;
   }
 
+  // Đối với config.js, data.js, app.js: Network First (ưu tiên mạng để lấy cập nhật mới nhất)
+  if (url.pathname.endsWith('config.js') || url.pathname.endsWith('data.js') || url.pathname.endsWith('app.js')) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // Các tài nguyên tĩnh khác: Cache First với fallback Network
   event.respondWith(
     caches.match(event.request).then((cached) => {
-      // Trả về cache nếu có, đồng thời fetch nền cập nhật
-      const fetchPromise = fetch(event.request)
-        .then((networkResponse) => {
-          if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
-            const responseToCache = networkResponse.clone();
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, responseToCache);
-            });
+      if (cached) return cached;
+      return fetch(event.request)
+        .then((response) => {
+          if (response && response.status === 200 && response.type === 'basic') {
+            const clone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
           }
-          return networkResponse;
+          return response;
         })
         .catch(() => cached);
-
-      return cached || fetchPromise;
     })
   );
 });
