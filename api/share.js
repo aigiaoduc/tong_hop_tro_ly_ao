@@ -1,7 +1,31 @@
 const fs = require('fs');
 const path = require('path');
 
-function getAppsData() {
+let memoryCache = {
+  data: null,
+  timestamp: 0
+};
+
+function getAppsScriptUrl() {
+  if (process.env.APPS_SCRIPT_URL && process.env.APPS_SCRIPT_URL.trim()) {
+    return process.env.APPS_SCRIPT_URL.trim();
+  }
+  try {
+    const configPath = path.join(__dirname, '..', 'config.js');
+    if (fs.existsSync(configPath)) {
+      const content = fs.readFileSync(configPath, 'utf8');
+      const match = content.match(/APPS_SCRIPT_URL\s*:\s*['"]([^'"]+)['"]/);
+      if (match && match[1]) {
+        return match[1].trim();
+      }
+    }
+  } catch (err) {
+    console.error('Error reading config.js in share.js:', err);
+  }
+  return '';
+}
+
+function getLocalAppsData() {
   try {
     const dataPath = path.join(__dirname, '..', 'data.json');
     if (fs.existsSync(dataPath)) {
@@ -14,16 +38,66 @@ function getAppsData() {
   return { apps: [] };
 }
 
+async function getAppsData() {
+  const now = Date.now();
+  // Trả về cache bộ nhớ tạm nếu còn mới (< 3 phút)
+  if (memoryCache.data && (now - memoryCache.timestamp < 180000)) {
+    return memoryCache.data;
+  }
+
+  const localData = getLocalAppsData();
+  const scriptUrl = getAppsScriptUrl();
+
+  if (!scriptUrl) {
+    return localData;
+  }
+
+  // Tải trực tiếp dữ liệu mới nhất từ Google Apps Script
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 2500); // 2.5s timeout để người dùng không phải chờ lâu
+    const res = await fetch(`${scriptUrl}?action=getAll`, {
+      headers: { 'Accept': 'application/json' },
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    if (res.ok) {
+      const json = await res.json();
+      if (json && json.success && json.data) {
+        memoryCache.data = json.data;
+        memoryCache.timestamp = now;
+        return json.data;
+      }
+    }
+  } catch (e) {
+    // Nếu mạng chậm hoặc timeout thì tiếp tục dùng dữ liệu cục bộ
+  }
+
+  if (memoryCache.data) return memoryCache.data;
+  return localData;
+}
+
 module.exports = async (req, res) => {
-  const appId = String(req.query.app || req.query.id || '').trim();
+  const rawAppId = String(req.query.app || req.query.id || '').trim();
   const host = req.headers['x-forwarded-host'] || req.headers.host || 'aigiaoduc.io.vn';
   const proto = req.headers['x-forwarded-proto'] || 'https';
   const baseUrl = `${proto}://${host}`;
 
-  const data = getAppsData();
-  const app = (data.apps || []).find(a => String(a.id).trim().toLowerCase() === appId.toLowerCase());
+  const data = await getAppsData();
+  let app = (data.apps || []).find(a => String(a.id).trim().toLowerCase() === rawAppId.toLowerCase());
 
-  const appName = app ? app.name : 'AI Giáo Dục - Trợ Lý Sư Phạm & Lớp Học Thông Minh';
+  // Nếu vẫn chưa tìm thấy, đối chiếu thêm với file data.json cục bộ
+  if (!app) {
+    const localData = getLocalAppsData();
+    app = (localData.apps || []).find(a => String(a.id).trim().toLowerCase() === rawAppId.toLowerCase());
+  }
+
+  // ĐẢM BẢO TUYỆT ĐỐI: Dù là app cũ hay app mới bổ sung trên Sheet (như UD22), link đích luôn chứa mã app
+  const targetAppId = (app && app.id) ? app.id : rawAppId;
+  const targetAppUrl = targetAppId ? `${baseUrl}/?app=${encodeURIComponent(targetAppId)}` : baseUrl;
+  const canonicalUrl = `${baseUrl}/share?app=${encodeURIComponent(targetAppId || rawAppId)}`;
+
+  const appName = app ? app.name : (targetAppId ? `Công Cụ Sư Phạm ${targetAppId}` : 'AI Giáo Dục - Trợ Lý Sư Phạm & Lớp Học Thông Minh');
   const appDesc = app 
     ? (app.desc || app.short_desc || 'Công cụ AI hỗ trợ giảng dạy và công việc giáo viên')
     : 'Hệ thống trợ lý AI và công cụ chuyển đổi số sư phạm dành cho giáo viên và học sinh.';
@@ -33,9 +107,6 @@ module.exports = async (req, res) => {
   if (appImg.startsWith('/')) {
     appImg = `${baseUrl}${appImg}`;
   }
-
-  const targetAppUrl = app ? `${baseUrl}/?app=${encodeURIComponent(app.id)}` : baseUrl;
-  const canonicalUrl = `${baseUrl}/share?app=${encodeURIComponent(appId || (app ? app.id : ''))}`;
 
   const safeTitle = appName.replace(/"/g, '&quot;');
   const safeDesc = appDesc.replace(/"/g, '&quot;');
@@ -66,7 +137,7 @@ module.exports = async (req, res) => {
   <meta name="twitter:description" content="${safeDesc}">
   <meta name="twitter:image" content="${appImg}">
 
-  <!-- Tự động chuyển hướng người dùng vào ứng dụng trên web -->
+  <!-- Tự động chuyển hướng ngay người dùng vào đúng ứng dụng -->
   <meta http-equiv="refresh" content="0;url=${targetAppUrl}">
   <script>
     window.location.replace("${targetAppUrl}");
@@ -145,6 +216,6 @@ module.exports = async (req, res) => {
 </html>`;
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400');
+  res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=120, stale-while-revalidate=300');
   return res.status(200).send(html);
 };

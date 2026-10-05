@@ -18,6 +18,7 @@
   const CACHE_STORAGE_KEY = 'aigiaoduc_live_cache_v8';
   const CACHE_VERSION_KEY = 'aigiaoduc_data_version_v8';
   const CACHE_SCRIPT_URL_KEY = 'aigiaoduc_script_url_v8';
+  const CACHE_TIMESTAMP_KEY = 'aigiaoduc_cache_time_v8';
 
   // Dọn dẹp triệt để cache của các phiên bản cũ nhằm tránh dữ liệu phân loại cũ bị kẹt
   (function cleanupOldCaches() {
@@ -40,6 +41,7 @@
       try {
         localStorage.removeItem(CACHE_STORAGE_KEY);
         localStorage.removeItem(CACHE_VERSION_KEY);
+        localStorage.removeItem(CACHE_TIMESTAMP_KEY);
         localStorage.setItem(CACHE_SCRIPT_URL_KEY, cfg.APPS_SCRIPT_URL);
       } catch(e){}
     }
@@ -49,14 +51,9 @@
     let initialData = window.INITIAL_DATA || {};
     try {
       const cachedStr = localStorage.getItem(CACHE_STORAGE_KEY);
-      const cachedVer = localStorage.getItem(CACHE_VERSION_KEY);
       if (cachedStr) {
         const parsed = JSON.parse(cachedStr);
         if (parsed && parsed.apps && parsed.apps.length > 0) {
-          const localVer = initialData.config && initialData.config.DATA_VERSION;
-          if (localVer && cachedVer && String(localVer).trim() !== String(cachedVer).trim()) {
-            return initialData;
-          }
           return parsed;
         }
       }
@@ -99,7 +96,7 @@
     // Theme & Sync
     themeToggleBtn: document.getElementById('theme-toggle-btn'),
     themeIconContainer: document.getElementById('theme-icon-container'),
-    syncStatusBadge: document.getElementById('sync-status-badge'),
+    syncDot: document.getElementById('sync-dot'),
     btnForceSync: document.getElementById('btn-force-sync'),
     
     // Header & Donate
@@ -260,54 +257,40 @@
     }, duration);
   }
 
-  // 3. Cập nhật trạng thái đồng bộ Cloud Database (Màu xanh + Hiệu ứng điện tử hiện đại)
-  function updateSyncBadge(status, version = '') {
-    if (!DOM.syncStatusBadge) return;
-    
-    DOM.syncStatusBadge.classList.remove('electric-ready-badge', 'bg-slate-100/90', 'dark:bg-slate-800/90', 'border-slate-200/80');
+  // 3. Cập nhật trạng thái đồng bộ Cloud Database (Chỉ hiển thị hình đám mây tinh tế + chấm trạng thái)
+  function updateSyncBadge(status) {
+    if (!DOM.btnForceSync) return;
+    const syncDot = DOM.syncDot || document.getElementById('sync-dot');
 
     if (status === 'syncing') {
-      DOM.syncStatusBadge.className = 'hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-teal-50 dark:bg-teal-950/80 text-[11px] font-semibold border border-teal-300 dark:border-teal-700 text-teal-700 dark:text-teal-300 shadow-sm cursor-wait';
-      DOM.syncStatusBadge.title = 'Đang đồng bộ dữ liệu mới nhất từ Google Sheet...';
-      DOM.syncStatusBadge.innerHTML = `
-        <svg class="animate-spin w-3.5 h-3.5 text-teal-600 dark:text-teal-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-        <span>Đang nạp dữ liệu...</span>
-      `;
+      DOM.btnForceSync.classList.add('animate-spin', 'text-teal-600');
+      if (syncDot) syncDot.className = 'absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-amber-500 animate-ping ring-2 ring-white dark:ring-slate-900';
+      DOM.btnForceSync.title = 'Đang đồng bộ dữ liệu từ Google Sheet...';
     } else if (status === 'checking') {
-      DOM.syncStatusBadge.className = 'hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/80 text-[11px] font-semibold border border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300 shadow-sm cursor-wait';
-      DOM.syncStatusBadge.title = 'Đang kiểm tra phiên bản dữ liệu...';
-      DOM.syncStatusBadge.innerHTML = `
-        <svg class="animate-spin w-3.5 h-3.5 text-blue-600 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-        <span>Kiểm tra phiên bản...</span>
-      `;
+      DOM.btnForceSync.classList.remove('animate-spin');
+      if (syncDot) syncDot.className = 'absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-blue-500 ring-2 ring-white dark:ring-slate-900';
+      DOM.btnForceSync.title = 'Đang kiểm tra cập nhật mới...';
     } else {
-      // TRẠNG THÁI SẴN SÀNG: MÀU XANH LỤC + HIỆU ỨNG ĐIỆN TỬ HIỆN ĐẠI (ELECTRIC GLOW)
-      const verText = version ? `v${version}` : '';
-      DOM.syncStatusBadge.className = 'hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl text-[11px] font-bold electric-ready-badge cursor-pointer select-none shadow-md hover:scale-105 active:scale-95 transition-transform';
-      DOM.syncStatusBadge.title = 'Dữ liệu từ Google Sheet đang sẵn sàng (Bấm vào đây để làm mới ngay)';
-      DOM.syncStatusBadge.innerHTML = `
-        <span class="electric-spark flex items-center">
-          <svg class="w-3.5 h-3.5 text-emerald-200" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-          </svg>
-        </span>
-        <span class="tracking-wide">Dữ liệu sẵn sàng ${verText}</span>
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-200 animate-ping"></span>
-      `;
+      DOM.btnForceSync.classList.remove('animate-spin');
+      if (syncDot) syncDot.className = 'absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-slate-900';
+      DOM.btnForceSync.title = 'Dữ liệu đám mây đã sẵn sàng (Bấm để làm mới)';
     }
   }
 
-  // 4. Đồng bộ dữ liệu theo cơ chế kiểm tra DATA_VERSION thông minh
+  // 4. Đồng bộ dữ liệu theo cơ chế kiểm tra DATA_VERSION & số lượng app thông minh
   async function fetchLiveGoogleSheetData(force = false) {
     if (force) {
       try {
         localStorage.removeItem(CACHE_STORAGE_KEY);
         localStorage.removeItem(CACHE_VERSION_KEY);
+        localStorage.removeItem(CACHE_TIMESTAMP_KEY);
       } catch(e){}
     }
 
     const cachedVersion = localStorage.getItem(CACHE_VERSION_KEY);
     const cachedStr = localStorage.getItem(CACHE_STORAGE_KEY);
+    const cachedTime = Number(localStorage.getItem(CACHE_TIMESTAMP_KEY)) || 0;
+    const isCacheExpired = (Date.now() - cachedTime) > ((cfg.CACHE_EXPIRE_MINUTES || 15) * 60 * 1000);
     let hasLocalData = !!(cachedStr && state.data && state.data.apps && state.data.apps.length > 0);
 
     // 4.1. Đọc dữ liệu từ Cache LocalStorage nếu có để phản hồi tức thì
@@ -319,23 +302,22 @@
           state.isLiveConnected = true;
           hasLocalData = true;
           renderAllViews();
-          updateSyncBadge('live', cachedVersion || '');
+          updateSyncBadge('live');
         }
       } catch (e) {
         console.warn('Lỗi đọc cache cũ:', e);
       }
     }
 
-    // 4.2. Cập nhật huy hiệu trạng thái & xoay icon nút làm mới
+    // 4.2. Cập nhật trạng thái biểu tượng đám mây
     if (!force) {
       updateSyncBadge('checking');
     } else {
       updateSyncBadge('syncing');
-      if (DOM.btnForceSync) DOM.btnForceSync.classList.add('animate-spin');
     }
 
     let serverVersion = null;
-    let needFullFetch = force || !hasLocalData || !cachedVersion;
+    let needFullFetch = force || !hasLocalData || !cachedVersion || isCacheExpired;
 
     if (!needFullFetch) {
       try {
@@ -357,6 +339,12 @@
                 } else if (resJson.data && resJson.data.DATA_VERSION !== undefined && resJson.data.DATA_VERSION !== '') {
                   serverVersion = String(resJson.data.DATA_VERSION).trim();
                 }
+
+                // Nếu máy chủ báo số app khác với bộ nhớ đệm
+                if (resJson.appCount !== undefined && state.data.apps && state.data.apps.length !== resJson.appCount) {
+                  needFullFetch = true;
+                }
+
                 if (serverVersion !== null) break;
               }
             }
@@ -366,14 +354,12 @@
         }
 
         // So sánh phiên bản:
-        if (serverVersion && serverVersion === cachedVersion) {
-          // Phiên bản trùng khớp: Giữ nguyên dữ liệu cũ, không tải lại danh sách -> Tiết kiệm 100% băng thông!
+        if (serverVersion && serverVersion === cachedVersion && !needFullFetch) {
           console.log(`[DATA_VERSION] Trùng phiên bản (${serverVersion}). Sử dụng dữ liệu lưu sẵn siêu tốc!`);
-          updateSyncBadge('live', serverVersion);
-          if (DOM.btnForceSync) DOM.btnForceSync.classList.remove('animate-spin');
+          updateSyncBadge('live');
           return;
         } else if (serverVersion) {
-          console.log(`[DATA_VERSION] Phát hiện phiên bản mới: Server=${serverVersion} khác Cache=${cachedVersion}. Đang nạp dữ liệu mới...`);
+          console.log(`[DATA_VERSION] Phát hiện dữ liệu mới: Server=${serverVersion} khác Cache=${cachedVersion}. Đang nạp dữ liệu mới...`);
           needFullFetch = true;
         }
       } catch (err) {
@@ -381,7 +367,7 @@
       }
     }
 
-    // 4.3. Tải toàn bộ dữ liệu mới nhất (Khi thay đổi DATA_VERSION hoặc bấm Bắt buộc làm mới)
+    // 4.3. Tải toàn bộ dữ liệu mới nhất (Khi thay đổi phiên bản / hết hạn cache / bấm làm mới)
     updateSyncBadge('syncing');
     let fetchedData = null;
 
@@ -394,6 +380,7 @@
           const json = await res.json();
           if (json && json.success && json.data) {
             fetchedData = json.data;
+            if (json.version) serverVersion = String(json.version).trim();
           }
         }
       } catch (err) {
@@ -410,12 +397,11 @@
           const edgeJson = await edgeRes.json();
           if (edgeJson && edgeJson.success && edgeJson.data) {
             fetchedData = edgeJson.data;
+            if (edgeJson.version) serverVersion = String(edgeJson.version).trim();
           }
         }
       } catch (e) {}
     }
-
-    if (DOM.btnForceSync) DOM.btnForceSync.classList.remove('animate-spin');
 
     if (fetchedData) {
       state.data = {
@@ -429,26 +415,25 @@
       state.isLiveConnected = true;
 
       // Cập nhật DATA_VERSION mới vào localStorage
-      const newVersion = (state.data.config && state.data.config.DATA_VERSION)
-        ? String(state.data.config.DATA_VERSION).trim()
-        : (serverVersion || String(Date.now()));
+      const newVersion = serverVersion || (state.data.config && (state.data.config.COMPOSITE_VERSION || state.data.config.DATA_VERSION)) || String(Date.now());
 
       try {
         localStorage.setItem(CACHE_STORAGE_KEY, JSON.stringify(state.data));
-        localStorage.setItem(CACHE_VERSION_KEY, newVersion);
+        localStorage.setItem(CACHE_VERSION_KEY, String(newVersion).trim());
+        localStorage.setItem(CACHE_TIMESTAMP_KEY, String(Date.now()));
         if (cfg.APPS_SCRIPT_URL) localStorage.setItem(CACHE_SCRIPT_URL_KEY, cfg.APPS_SCRIPT_URL);
       } catch(e){}
 
-      updateSyncBadge('live', newVersion);
+      updateSyncBadge('live');
       renderAllViews();
 
       if (force) {
         showToast('Đã làm mới dữ liệu từ Google Sheet! ⚡');
       } else if (cachedVersion && cachedVersion !== newVersion) {
-        showToast(`Đã tự động cập nhật phiên bản mới (v${newVersion})! ✨`);
+        showToast('Đã tự động cập nhật dữ liệu mới nhất! ✨');
       }
     } else {
-      updateSyncBadge(hasLocalData ? 'live' : 'cached', cachedVersion || '');
+      updateSyncBadge('live');
       if (force) showToast('Đang hiển thị dữ liệu lưu đệm mượt mà.');
     }
   }
@@ -1779,16 +1764,35 @@
   }
 
   // Tự động mở app nếu người dùng truy cập từ liên kết chia sẻ (?app=UD...)
-  function checkUrlDirectAppLaunch() {
+  async function checkUrlDirectAppLaunch() {
     const params = new URLSearchParams(window.location.search);
     const directAppId = params.get('app') || params.get('id');
-    if (directAppId && !state.activeApp) {
-      const foundApp = (state.data.apps || []).find(a => String(a.id).trim().toLowerCase() === directAppId.trim().toLowerCase());
-      if (foundApp) {
+    if (!directAppId || state.activeApp) return;
+
+    const cleanId = directAppId.trim().toLowerCase();
+    const foundApp = (state.data.apps || []).find(a => String(a.id).trim().toLowerCase() === cleanId);
+    if (foundApp) {
+      setTimeout(() => {
+        launchApp(foundApp.id, false);
+      }, 350);
+      return;
+    }
+
+    // Nếu không tìm thấy app trong danh mục lưu sẵn (app mới thêm như UD22):
+    // Tự động tải dữ liệu trực tiếp từ Google Sheet để mở ngay công cụ!
+    showToast('Đang mở công cụ chia sẻ từ đám mây...');
+    try {
+      await fetchLiveGoogleSheetData(true);
+      const freshlyFound = (state.data.apps || []).find(a => String(a.id).trim().toLowerCase() === cleanId);
+      if (freshlyFound) {
         setTimeout(() => {
-          launchApp(foundApp.id, false);
-        }, 350);
+          launchApp(freshlyFound.id, false);
+        }, 200);
+      } else {
+        showToast('Không tìm thấy công cụ theo liên kết.');
       }
+    } catch(err) {
+      console.warn('Lỗi khi nạp công cụ trực tiếp:', err);
     }
   }
 

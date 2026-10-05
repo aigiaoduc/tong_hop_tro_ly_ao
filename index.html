@@ -50,7 +50,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="styles.css?v=4.1" />
+  <link rel="stylesheet" href="styles.css?v=5.0" />
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
 
@@ -82,20 +82,10 @@
       <!-- Actions & Cloud Sync Status -->
       <div class="flex items-center gap-2">
         
-        <!-- Cloud Database Sync Badge (Màu xanh + Hiệu ứng điện tử hiện đại) -->
-        <div id="sync-status-badge" class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl text-[11px] font-bold electric-ready-badge cursor-default select-none shadow-md" title="Cơ sở dữ liệu đám mây đã sẵn sàng">
-          <span class="electric-spark flex items-center">
-            <svg class="w-3.5 h-3.5 text-emerald-200" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-            </svg>
-          </span>
-          <span class="tracking-wide">Dữ liệu đã sẵn sàng</span>
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-200 animate-ping"></span>
-        </div>
-
-        <!-- Cloud Refresh Button -->
-        <button id="btn-force-sync" class="p-2 rounded-xl text-slate-500 hover:text-teal-600 dark:text-slate-400 dark:hover:text-teal-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all active:scale-95" title="Cập nhật dữ liệu từ đám mây (Cloud Sync)">
+        <!-- Cloud Refresh Button (Chỉ để hình đám mây tinh tế, không kèm chữ hay số phiên bản) -->
+        <button id="btn-force-sync" class="relative p-2 rounded-xl text-slate-500 hover:text-teal-600 dark:text-slate-400 dark:hover:text-teal-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all active:scale-95" title="Cập nhật dữ liệu từ Google Sheet (Cloud Sync)">
           <i data-lucide="cloud-download" class="w-4 h-4"></i>
+          <span id="sync-dot" class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-slate-900"></span>
         </button>
 
         <!-- NÚT DONATE / MỜI CÀ PHÊ (NGOÀI MENU) -->
@@ -931,9 +921,9 @@
   </div>
 
   <!-- Scripts: Cấu hình URL Apps Script -> Dữ liệu khởi tạo -> Logic ứng dụng -->
-  <script src="config.js"></script>
-  <script src="data.js"></script>
-  <script src="app.js"></script>
+  <script src="config.js?v=5.0"></script>
+  <script src="data.js?v=5.0"></script>
+  <script src="app.js?v=5.0"></script>
   <script>
     if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
       window.addEventListener('load', () => {

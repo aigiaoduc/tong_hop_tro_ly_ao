@@ -11,9 +11,15 @@ function doGet(e) {
 
     if (action === 'getVersion') {
       var cfg = getSheetConfig(ss);
+      var sheetApps = ss.getSheetByName('Ứng dụng');
+      var appCount = sheetApps ? Math.max(0, sheetApps.getLastRow() - 1) : 0;
+      var rawVer = String(cfg.DATA_VERSION || '').trim();
+      var compositeVer = rawVer ? (rawVer + '.' + appCount) : String(appCount);
       return responseJSON({
         success: true,
-        version: String(cfg.DATA_VERSION || '').trim(),
+        version: compositeVer,
+        rawVersion: rawVer,
+        appCount: appCount,
         time: new Date().getTime()
       });
     }
@@ -21,10 +27,16 @@ function doGet(e) {
     if (action === 'getAll') {
       var reviews = getSheetReviews(ss);
       var apps = getSheetApps(ss, reviews);
+      var cfg = getSheetConfig(ss);
+      var rawVer = String(cfg.DATA_VERSION || '').trim();
+      var compositeVer = rawVer ? (rawVer + '.' + apps.length) : String(apps.length);
+      cfg.COMPOSITE_VERSION = compositeVer;
+      cfg.APP_COUNT = apps.length;
       return responseJSON({
         success: true,
+        version: compositeVer,
         data: {
-          config: getSheetConfig(ss),
+          config: cfg,
           apps: apps,
           videos: getSheetVideos(ss),
           ads: getSheetAds(ss),

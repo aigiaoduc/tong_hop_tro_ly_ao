@@ -3,7 +3,7 @@
  * Hỗ trợ offline và cài đặt ứng dụng trên điện thoại/máy tính
  */
 
-const CACHE_NAME = 'aigiaoduc-pwa-v4.1';
+const CACHE_NAME = 'aigiaoduc-pwa-v5.0';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
