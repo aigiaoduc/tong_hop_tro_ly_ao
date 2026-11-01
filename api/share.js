@@ -118,6 +118,11 @@ module.exports = async (req, res) => {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${safeTitle} - AI Giáo Dục</title>
 
+  <!-- Google AdSense Verification & Script -->
+  <meta name="google-adsense-account" content="ca-pub-1754036911359335">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1754036911359335"
+       crossorigin="anonymous"></script>
+
   <!-- Open Graph / Facebook / Zalo / Messenger -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="${canonicalUrl}">

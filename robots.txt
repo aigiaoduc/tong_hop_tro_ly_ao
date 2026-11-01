@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Google AdSense Crawlers
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: Google-Display-Ads-Bot
+Allow: /
+
+# Googlebot
+User-agent: Googlebot
+Allow: /
+User-agent: Googlebot-Image
+Allow: /
+
+Sitemap: https://aigiaoduc.io.vn/sitemap.xml

@@ -3,7 +3,7 @@
  * Hỗ trợ offline và cài đặt ứng dụng trên điện thoại/máy tính
  */
 
-const CACHE_NAME = 'aigiaoduc-pwa-v5.0';
+const CACHE_NAME = 'aigiaoduc-pwa-v5.1';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -33,12 +33,17 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
-  // Bỏ qua các request POST, request Google Apps Script, hoặc request API để luôn lấy dữ liệu tươi mới
+  // Bỏ qua các request POST, request Google Apps Script, Google AdSense, hoặc request API để luôn lấy dữ liệu tươi mới
   if (
     event.request.method !== 'GET' ||
     url.origin.includes('script.google.com') ||
     url.origin.includes('googleusercontent.com') ||
+    url.origin.includes('googlesyndication.com') ||
+    url.origin.includes('doubleclick.net') ||
+    url.origin.includes('google.com') ||
     url.pathname.startsWith('/api/') ||
+    url.pathname.includes('ads.txt') ||
+    url.pathname.includes('robots.txt') ||
     url.searchParams.has('_t') ||
     url.searchParams.has('refresh')
   ) {

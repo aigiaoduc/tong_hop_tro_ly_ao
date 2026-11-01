@@ -27,6 +27,11 @@
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#0d9488" />
 
+  <!-- Google AdSense Verification & Script -->
+  <meta name="google-adsense-account" content="ca-pub-1754036911359335" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1754036911359335"
+       crossorigin="anonymous"></script>
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -50,7 +55,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="styles.css?v=5.0" />
+  <link rel="stylesheet" href="styles.css?v=5.1" />
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-200">
 
@@ -216,6 +221,26 @@
 
     </div>
   </section>
+
+  <!-- ================= ADSENSE: BANNER TRANG CHỦ (RESPONSIVE) ================= -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-4">
+    <div class="p-3 bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm text-center">
+      <div class="flex items-center justify-between mb-1.5 px-2">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Quảng Cáo / Tài Trợ</span>
+        <span class="text-[9px] text-slate-400">Google AdSense</span>
+      </div>
+      <div class="overflow-hidden min-h-[90px] flex items-center justify-center bg-slate-50 dark:bg-slate-800/40 rounded-xl">
+        <ins class="adsbygoogle"
+             style="display:block;min-height:90px;width:100%;"
+             data-ad-client="ca-pub-1754036911359335"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+    </div>
+  </div>
 
   <!-- ================= MAIN APPS & WORKSPACE SECTION ================= -->
   <main id="apps-section" class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
@@ -415,6 +440,26 @@
     </div>
   </section>
 
+  <!-- ================= ADSENSE: BANNER DƯỚI TRANG (RESPONSIVE) ================= -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-6">
+    <div class="p-3 bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm text-center">
+      <div class="flex items-center justify-between mb-1.5 px-2">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Quảng Cáo / Tài Trợ</span>
+        <span class="text-[9px] text-slate-400">Google AdSense</span>
+      </div>
+      <div class="overflow-hidden min-h-[90px] flex items-center justify-center bg-slate-50 dark:bg-slate-800/40 rounded-xl">
+        <ins class="adsbygoogle"
+             style="display:block;min-height:90px;width:100%;"
+             data-ad-client="ca-pub-1754036911359335"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+    </div>
+  </div>
+
   <!-- ================= FOOTER ================= -->
   <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-500 dark:text-slate-400">
@@ -423,8 +468,12 @@
         <span>•</span>
         <span>© 2026 Bản quyền thuộc về Thầy Trần Hồng Quân</span>
       </div>
-      <div class="flex items-center gap-4 font-medium">
+      <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 font-medium">
         <span>Hotline/Zalo: 0355.213.107</span>
+        <span>•</span>
+        <button id="btn-open-privacy" class="hover:underline text-teal-600 dark:text-teal-400 cursor-pointer">Chính sách bảo mật</button>
+        <span>•</span>
+        <button id="btn-open-terms" class="hover:underline text-slate-500 hover:text-teal-600 dark:hover:text-teal-400 cursor-pointer">Điều khoản</button>
         <span>•</span>
         <a href="https://aigiaoduc.io.vn/" class="hover:underline text-teal-600">aigiaoduc.io.vn</a>
       </div>
@@ -507,6 +556,27 @@
         </div>
 
         <iframe id="modal-iframe" class="app-iframe w-full h-full border-0 block" allow="clipboard-read; clipboard-write; microphone; camera; display-capture; fullscreen" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"></iframe>
+      </div>
+
+      <!-- ================= ADSENSE: BANNER TRONG CỬA SỔ NHÚNG ỨNG DỤNG ================= -->
+      <div id="app-modal-ad-banner" class="w-full bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center flex-shrink-0 transition-all duration-300 z-20">
+        <div class="w-full px-4 py-1 flex items-center justify-between text-[10px] text-slate-400 border-b border-slate-100 dark:border-slate-800/60 select-none">
+          <div class="flex items-center gap-1.5 font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+            <span class="w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse"></span>
+            <span>Tài trợ & Quảng cáo Google</span>
+          </div>
+          <button id="btn-toggle-modal-ad" class="text-[10px] font-semibold text-slate-500 hover:text-teal-600 dark:hover:text-teal-400 transition-colors flex items-center gap-1 cursor-pointer" title="Thu gọn / Mở rộng banner quảng cáo">
+            <span id="toggle-modal-ad-text">Thu gọn</span>
+            <i data-lucide="chevron-down" id="toggle-modal-ad-icon" class="w-3.5 h-3.5 transform transition-transform"></i>
+          </button>
+        </div>
+        <div id="modal-ad-content" class="w-full px-2 py-1 flex items-center justify-center min-h-[50px] max-h-[90px] overflow-hidden transition-all duration-300">
+          <ins class="adsbygoogle"
+               style="display:block;min-height:50px;max-height:90px;width:100%;text-align:center;"
+               data-ad-client="ca-pub-1754036911359335"
+               data-ad-format="horizontal"
+               data-full-width-responsive="true"></ins>
+        </div>
       </div>
 
       <!-- Bottom Bar (Thanh đáy mỏng nhẹ) -->
@@ -668,6 +738,84 @@
             <span>Facebook</span>
           </a>
         </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= MODAL: CHÍNH SÁCH BẢO MẬT & ĐIỀU KHOẢN (GOOGLE ADSENSE COMPLIANT) ================= -->
+  <div id="privacy-modal" class="fixed inset-0 z-[20000] flex items-center justify-center p-3 sm:p-4 hidden" style="z-index: 20000 !important;">
+    <div class="fixed inset-0 bg-black/75 backdrop-blur-sm" onclick="closePrivacyModal()"></div>
+    <div class="relative w-full max-w-2xl max-h-[90vh] bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-5 sm:p-7 border border-slate-200 dark:border-slate-700 z-10 flex flex-col">
+      
+      <!-- Top Header -->
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 flex-shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-teal-100 dark:bg-teal-950/60 text-teal-600 flex items-center justify-center font-bold">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-slate-800 dark:text-white">Chính Sách Bảo Mật & Điều Khoản</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Quy định bảo mật dữ liệu sư phạm & tuân thủ chính sách Google</p>
+          </div>
+        </div>
+        <button id="btn-close-privacy" class="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Scrollable Policy Content -->
+      <div class="overflow-y-auto flex-1 py-4 space-y-4 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed pr-1">
+        
+        <div class="p-3.5 rounded-2xl bg-teal-50/70 dark:bg-teal-950/30 border border-teal-200/60 dark:border-teal-800/40">
+          <p class="font-bold text-teal-800 dark:text-teal-300">
+            Chào mừng Thầy/Cô và các bạn Học sinh đến với nền tảng AI Giáo Dục (aigiaoduc.io.vn) do Thầy Trần Hồng Quân sáng lập và quản trị. Chúng tôi cam kết bảo vệ tuyệt đối quyền riêng tư và minh bạch dữ liệu.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-800 dark:text-white text-sm mb-1">1. Quyền Riêng Tư & Dữ Liệu Giáo Dục</h4>
+          <p>
+            Các công cụ AI trên nền tảng (soạn ma trận CV 7991, phân tích sáng kiến kinh nghiệm, chuẩn hóa văn bản, trò chơi tương tác) hoạt động trực tiếp trên trình duyệt của người dùng. Chúng tôi <strong>không lưu trữ, không sao chép và không chia sẻ</strong> bất kỳ nội dung đề thi, dữ liệu cá nhân hay sáng kiến sư phạm của Thầy/Cô lên bất kỳ máy chủ bên thứ ba nào.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-800 dark:text-white text-sm mb-1">2. Chính Sách Quảng Cáo Google AdSense & Cookie</h4>
+          <p class="mb-2">
+            Nền tảng sử dụng dịch vụ quảng cáo của <strong>Google AdSense</strong> để duy trì hệ thống máy chủ và phát triển thêm các công cụ sư phạm miễn phí cho cộng đồng:
+          </p>
+          <ul class="list-disc pl-5 space-y-1 text-xs">
+            <li>Các nhà cung cấp bên thứ ba, bao gồm Google, sử dụng cookie để phân phát quảng cáo dựa trên các lượt truy cập trước đó của người dùng vào trang web này hoặc các trang web khác.</li>
+            <li>Việc Google sử dụng cookie quảng cáo (DART cookie) cho phép Google và các đối tác phân phát quảng cáo phù hợp nhất dựa trên mối quan tâm giáo dục và công nghệ của bạn.</li>
+            <li>Người dùng có thể chọn không tham gia quảng cáo được cá nhân hóa bằng cách truy cập <a href="https://www.google.com/settings/ads" target="_blank" class="text-teal-600 underline font-semibold">Cài đặt quảng cáo của Google (Google Ads Settings)</a> hoặc trang <a href="https://www.aboutads.info" target="_blank" class="text-teal-600 underline font-semibold">aboutads.info</a>.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-800 dark:text-white text-sm mb-1">3. Điều Khoản Sử Dụng Công Cụ</h4>
+          <p>
+            Tất cả các công cụ và trò chơi học tập trên <em>AI Giáo Dục</em> được cung cấp với mục đích hỗ trợ nâng cao hiệu quả giảng dạy và học tập. Giáo viên và học sinh được tự do sử dụng phục vụ công tác chuyên môn mà không phải trả bất kỳ khoản phí bắt buộc nào.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-800 dark:text-white text-sm mb-1">4. Thông Tin Liên Hệ & Hỗ Trợ Kỹ Thuật</h4>
+          <p>
+            Mọi thắc mắc về chính sách bảo mật, góp ý cải tiến công cụ hoặc hợp tác chuyên môn, xin vui lòng liên hệ:
+            <br>• Tác giả: <strong>Thầy Trần Hồng Quân</strong>
+            <br>• Hotline / Zalo: <strong>0355.213.107</strong>
+            <br>• Website: <a href="https://aigiaoduc.io.vn/" class="text-teal-600 font-semibold underline">aigiaoduc.io.vn</a>
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Footer CTA -->
+      <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-end flex-shrink-0">
+        <button onclick="closePrivacyModal()" class="px-5 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold transition-all shadow-sm">
+          Đã hiểu & Đóng lại
+        </button>
       </div>
 
     </div>
@@ -921,9 +1069,9 @@
   </div>
 
   <!-- Scripts: Cấu hình URL Apps Script -> Dữ liệu khởi tạo -> Logic ứng dụng -->
-  <script src="config.js?v=5.0"></script>
-  <script src="data.js?v=5.0"></script>
-  <script src="app.js?v=5.0"></script>
+  <script src="config.js?v=5.1"></script>
+  <script src="data.js?v=5.1"></script>
+  <script src="app.js?v=5.1"></script>
   <script>
     if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
       window.addEventListener('load', () => {
