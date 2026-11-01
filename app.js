@@ -139,13 +139,6 @@
     btnIframeReview: document.getElementById('btn-iframe-review'),
     appDescriptionText: document.getElementById('app-description-text'),
 
-    // AdSense in App Modal
-    appModalAdBanner: document.getElementById('app-modal-ad-banner'),
-    btnToggleModalAd: document.getElementById('btn-toggle-modal-ad'),
-    modalAdContent: document.getElementById('modal-ad-content'),
-    toggleModalAdText: document.getElementById('toggle-modal-ad-text'),
-    toggleModalAdIcon: document.getElementById('toggle-modal-ad-icon'),
-
     // Modal Privacy Policy & Terms
     privacyModal: document.getElementById('privacy-modal'),
     btnOpenPrivacy: document.getElementById('btn-open-privacy'),
@@ -1148,20 +1141,6 @@
   }
 
   // 13. Khởi Chạy Ứng Dụng
-  function initModalAd() {
-    if (!DOM.appModalAdBanner) return;
-    setTimeout(() => {
-      try {
-        const adIns = DOM.appModalAdBanner.querySelector('ins.adsbygoogle');
-        if (adIns && !adIns.getAttribute('data-adsbygoogle-status')) {
-          (window.adsbygoogle = window.adsbygoogle || []).push({});
-        }
-      } catch (err) {
-        // Tránh console error nếu ad blocker bật
-      }
-    }, 250);
-  }
-
   function launchApp(appId, updateHistory = true) {
     const app = (state.data.apps || []).find(a => a.id === appId);
     if (!app) return;
@@ -1185,9 +1164,6 @@
     DOM.appModal.classList.remove('hidden');
     document.body.classList.add('overflow-hidden');
     refreshLucideIcons();
-
-    // Kích hoạt hiển thị quảng cáo AdSense trong cửa sổ nhúng
-    initModalAd();
 
     // Cập nhật URL trình duyệt để lưu lại trạng thái deep link
     if (updateHistory && window.history && window.history.pushState) {
@@ -1775,22 +1751,6 @@
     }
     if (DOM.btnCloseShare) DOM.btnCloseShare.addEventListener('click', closeShareModal);
     if (DOM.btnCopyShareLink) DOM.btnCopyShareLink.addEventListener('click', copyShareLink);
-
-    // App Runner Ad Banner Toggle (Cửa sổ nhúng)
-    if (DOM.btnToggleModalAd && DOM.modalAdContent) {
-      DOM.btnToggleModalAd.addEventListener('click', () => {
-        const isCollapsed = DOM.modalAdContent.classList.contains('hidden');
-        if (isCollapsed) {
-          DOM.modalAdContent.classList.remove('hidden');
-          if (DOM.toggleModalAdText) DOM.toggleModalAdText.textContent = 'Thu gọn';
-          if (DOM.toggleModalAdIcon) DOM.toggleModalAdIcon.classList.remove('rotate-180');
-        } else {
-          DOM.modalAdContent.classList.add('hidden');
-          if (DOM.toggleModalAdText) DOM.toggleModalAdText.textContent = 'Hiện QC';
-          if (DOM.toggleModalAdIcon) DOM.toggleModalAdIcon.classList.add('rotate-180');
-        }
-      });
-    }
 
     // Privacy & Terms Modal Events
     if (DOM.btnOpenPrivacy) DOM.btnOpenPrivacy.addEventListener('click', openPrivacyModal);
