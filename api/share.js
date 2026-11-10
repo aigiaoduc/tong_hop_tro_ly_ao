@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
+// Bộ nhớ cache tạm thời trong môi trường serverless (15 phút)
 let memoryCache = {
-  data: null,
+  apps: null,
   timestamp: 0
 };
 
@@ -25,37 +26,73 @@ function getAppsScriptUrl() {
   return '';
 }
 
-function getLocalAppsData() {
+function getLocalApps() {
   try {
     const dataPath = path.join(__dirname, '..', 'data.json');
     if (fs.existsSync(dataPath)) {
       const content = fs.readFileSync(dataPath, 'utf8');
-      return JSON.parse(content);
+      const parsed = JSON.parse(content);
+      return Array.isArray(parsed.apps) ? parsed.apps : [];
     }
   } catch (err) {
     console.error('Error reading data.json:', err);
   }
-  return { apps: [] };
+  return [];
 }
 
-async function getAppsData() {
-  const now = Date.now();
-  // Trả về cache bộ nhớ tạm nếu còn mới (< 3 phút)
-  if (memoryCache.data && (now - memoryCache.timestamp < 180000)) {
-    return memoryCache.data;
+function findAppById(appList, id) {
+  if (!id || !Array.isArray(appList)) return null;
+  const target = String(id).trim().toLowerCase();
+  return appList.find(a => a && a.id && String(a.id).trim().toLowerCase() === target) || null;
+}
+
+// Lấy thông tin ứng dụng: memoryCache -> data.json -> Google Apps Script
+async function resolveApp(rawAppId) {
+  if (!rawAppId) return null;
+
+  // 1. Kiểm tra trong bộ nhớ đệm memoryCache
+  if (memoryCache.apps && memoryCache.apps.length > 0) {
+    const cached = findAppById(memoryCache.apps, rawAppId);
+    if (cached) return cached;
   }
 
-  const localData = getLocalAppsData();
+  // 2. Kiểm tra trong file data.json cục bộ (phản hồi tức thì < 1ms)
+  const localList = getLocalApps();
+  const localApp = findAppById(localList, rawAppId);
+  if (localApp) {
+    if (!memoryCache.apps) memoryCache.apps = localList;
+    return localApp;
+  }
+
+  // 3. Nếu là app mới vừa thêm trên Google Sheet (chưa có trong data.json)
   const scriptUrl = getAppsScriptUrl();
+  if (!scriptUrl) return null;
 
-  if (!scriptUrl) {
-    return localData;
-  }
-
-  // Tải trực tiếp dữ liệu mới nhất từ Google Apps Script
+  // Cách 3a: Tra cứu nhanh 1 ứng dụng duy nhất (tiết kiệm thời gian)
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 2500); // 2.5s timeout để người dùng không phải chờ lâu
+    const timeout = setTimeout(() => controller.abort(), 7000);
+    const res = await fetch(`${scriptUrl}?action=getApp&app=${encodeURIComponent(rawAppId)}`, {
+      headers: { 'Accept': 'application/json' },
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    if (res.ok) {
+      const json = await res.json();
+      if (json && json.success && json.data && json.data.id) {
+        if (!memoryCache.apps) memoryCache.apps = localList.slice();
+        memoryCache.apps.push(json.data);
+        return json.data;
+      }
+    }
+  } catch (e) {
+    // getApp không phản hồi hoặc phiên bản cũ chưa có action này
+  }
+
+  // Cách 3b: Tải toàn bộ danh sách mới nhất từ Apps Script (timeout 11s)
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 11000);
     const res = await fetch(`${scriptUrl}?action=getAll`, {
       headers: { 'Accept': 'application/json' },
       signal: controller.signal
@@ -63,18 +100,26 @@ async function getAppsData() {
     clearTimeout(timeout);
     if (res.ok) {
       const json = await res.json();
-      if (json && json.success && json.data) {
-        memoryCache.data = json.data;
-        memoryCache.timestamp = now;
-        return json.data;
+      if (json && json.success && json.data && Array.isArray(json.data.apps)) {
+        memoryCache.apps = json.data.apps;
+        memoryCache.timestamp = Date.now();
+        return findAppById(json.data.apps, rawAppId);
       }
     }
   } catch (e) {
-    // Nếu mạng chậm hoặc timeout thì tiếp tục dùng dữ liệu cục bộ
+    console.error('Fetch live Apps Script timeout/error:', e.message);
   }
 
-  if (memoryCache.data) return memoryCache.data;
-  return localData;
+  return null;
+}
+
+function sanitizeText(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/[\r\n]+/g, ' ')
+    .replace(/[*_#`~[\]]/g, '')
+    .replace(/"/g, '&quot;')
+    .trim();
 }
 
 module.exports = async (req, res) => {
@@ -83,33 +128,24 @@ module.exports = async (req, res) => {
   const proto = req.headers['x-forwarded-proto'] || 'https';
   const baseUrl = `${proto}://${host}`;
 
-  const data = await getAppsData();
-  let app = (data.apps || []).find(a => String(a.id).trim().toLowerCase() === rawAppId.toLowerCase());
+  const app = await resolveApp(rawAppId);
 
-  // Nếu vẫn chưa tìm thấy, đối chiếu thêm với file data.json cục bộ
-  if (!app) {
-    const localData = getLocalAppsData();
-    app = (localData.apps || []).find(a => String(a.id).trim().toLowerCase() === rawAppId.toLowerCase());
-  }
-
-  // ĐẢM BẢO TUYỆT ĐỐI: Dù là app cũ hay app mới bổ sung trên Sheet (như UD22), link đích luôn chứa mã app
   const targetAppId = (app && app.id) ? app.id : rawAppId;
   const targetAppUrl = targetAppId ? `${baseUrl}/?app=${encodeURIComponent(targetAppId)}` : baseUrl;
   const canonicalUrl = `${baseUrl}/share?app=${encodeURIComponent(targetAppId || rawAppId)}`;
 
-  const appName = app ? app.name : (targetAppId ? `Công Cụ Sư Phạm ${targetAppId}` : 'AI Giáo Dục - Trợ Lý Sư Phạm & Lớp Học Thông Minh');
-  const appDesc = app 
-    ? (app.desc || app.short_desc || 'Công cụ AI hỗ trợ giảng dạy và công việc giáo viên')
+  const appName = app ? app.name : 'AI Giáo Dục - Trợ Lý Sư Phạm & Lớp Học Thông Minh';
+  const rawDesc = app 
+    ? (app.short_desc || app.desc || 'Hệ thống trợ lý AI và công cụ chuyển đổi số sư phạm dành cho giáo viên và học sinh.')
     : 'Hệ thống trợ lý AI và công cụ chuyển đổi số sư phạm dành cho giáo viên và học sinh.';
   
-  // Link ảnh của ứng dụng (lấy từ cột ảnh của Sheet)
-  let appImg = (app && app.img) ? app.img.trim() : `${baseUrl}/og-image.jpg`;
+  let appImg = (app && app.img && app.img.trim()) ? app.img.trim() : `${baseUrl}/og-image.jpg`;
   if (appImg.startsWith('/')) {
     appImg = `${baseUrl}${appImg}`;
   }
 
-  const safeTitle = appName.replace(/"/g, '&quot;');
-  const safeDesc = appDesc.replace(/"/g, '&quot;');
+  const safeTitle = sanitizeText(appName);
+  const safeDesc = sanitizeText(rawDesc);
 
   const html = `<!DOCTYPE html>
 <html lang="vi">
@@ -118,7 +154,7 @@ module.exports = async (req, res) => {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${safeTitle} - AI Giáo Dục</title>
 
-  <!-- Google AdSense Verification & Script -->
+  <!-- Google AdSense Verification & Auto Ads -->
   <meta name="google-adsense-account" content="ca-pub-1754036911359335">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1754036911359335"
        crossorigin="anonymous"></script>
@@ -134,6 +170,9 @@ module.exports = async (req, res) => {
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="${safeTitle}">
   <meta property="og:site_name" content="AI Giáo Dục - Thầy Trần Hồng Quân">
+
+  <!-- Link ảnh hỗ trợ Zalo Crawler và ứng dụng nhắn tin -->
+  <link rel="image_src" href="${appImg}">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -190,6 +229,10 @@ module.exports = async (req, res) => {
       color: #64748b;
       line-height: 1.5;
       margin: 0 0 20px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
     .btn {
       display: inline-flex;

@@ -12,7 +12,9 @@
     "bankAccountName": "TRẦN HỒNG QUÂN",
     "qrImageUrl": "https://res.cloudinary.com/dejnvixvn/image/upload/v1767049464/M%C3%A3_QR_Ng%C3%A2n_H%C3%A0ng_Vietcombank_qq37t1.jpg",
     "youtubeUrl": "https://www.youtube.com/@quanh95",
-    "DATA_VERSION": "3"
+    "DATA_VERSION": "8",
+    "COMPOSITE_VERSION": "8.28",
+    "APP_COUNT": 28
   },
   "apps": [
     {
@@ -24,7 +26,7 @@
       "img": "https://static.vecteezy.com/system/resources/thumbnails/008/245/451/small/artificial-intelligence-technology-infographic-template-free-vector.jpg",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 13,
+      "views": 204,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -45,7 +47,7 @@
       "img": "https://itchronicles.com/wp-content/uploads/2021/04/Optimized-Illustration-from-Adobe-Stock-for-ITC-Post-on-AI-in-Game-Development-scaled.jpeg",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 5,
+      "views": 345,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -54,7 +56,7 @@
         "Prompt"
       ],
       "rating": 5,
-      "reviewCount": 1,
+      "reviewCount": 2,
       "badge": "Mới"
     },
     {
@@ -66,7 +68,7 @@
       "img": "https://cdn-media.sforum.vn/storage/app/media/ai-tao-mindmap-1.jpg",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 0,
+      "views": 150,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -87,7 +89,7 @@
       "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREOFKWvqZPqjv_fLujfhA82R9cUM6kI2skEA&s",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 3,
+      "views": 53,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -108,7 +110,7 @@
       "img": "https://cdnv2.tgdd.vn/mwg-static/common/News/1575133/tao-de-thi-trac-nghiem-online%20%281%29.jpg",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 7,
+      "views": 131,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -129,7 +131,7 @@
       "img": "https://imgv3.fotor.com/images/share/Various-QR-code-types-to-choose-from-on-Fotors-QR-code-generator.jpg",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 4,
+      "views": 84,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -150,7 +152,7 @@
       "img": "https://www.yeldocollege.org/Uploads/Blogs/is-ai-a-threat-or-a-tool-for-2d-animators-exploring-the-future-of-your-craft/chatgpt-image-jun-21-2025-04-22-28-pm.webp",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 0,
+      "views": 59,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -213,7 +215,7 @@
       "img": "https://res.cloudinary.com/dejnvixvn/image/upload/v1772290329/Screenshot_2026-02-28_190842_ftyhid.png",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 3,
+      "views": 61,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -234,7 +236,7 @@
       "img": "https://res.cloudinary.com/dejnvixvn/image/upload/v1773043053/fb9e9efd-9298-4ad4-a4e5-d1fb6f07b5f4.png",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 0,
+      "views": 22,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -255,7 +257,7 @@
       "img": "https://res.cloudinary.com/dejnvixvn/image/upload/v1773126459/c5b8f4b1-0d67-4e9e-a81d-86c0c2319f50.png",
       "mode": "EMBED",
       "status": "Ẩn",
-      "views": 0,
+      "views": 1,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -276,7 +278,7 @@
       "img": "https://res.cloudinary.com/dejnvixvn/image/upload/v1773387844/3cef09bf-9f2b-4134-bce0-bd1934724496.png",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 0,
+      "views": 21,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -297,7 +299,7 @@
       "img": "https://res.cloudinary.com/dejnvixvn/image/upload/v1776787344/Screenshot_2026-04-21_225728_xlec9r.png",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 6,
+      "views": 67,
       "category": "classroom",
       "category_name": "Lớp học & Trò chơi",
       "tags": [
@@ -318,7 +320,7 @@
       "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHeXy5Fa0_L4bGSB2BRKpkYAJ8d48HyvV36Q&s",
       "mode": "NEW_TAB",
       "status": "Hiện",
-      "views": 0,
+      "views": 10,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -339,7 +341,7 @@
       "img": "https://imgv3.fotor.com/images/side/crop-photos-without-stretching-with-Fotor.png",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 0,
+      "views": 16,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -360,7 +362,7 @@
       "img": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/e9/48/bc/e948bc5f-95ef-71b3-5e1f-3463bd291fe9/AppIcon-0-0-1x_U007ephone-0-1-0-85-220.png/1200x630wa.png",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 1,
+      "views": 29,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -381,7 +383,7 @@
       "img": "https://cdn.luatvietnam.vn/uploaded/Images/Original/2023/05/19/van-ban-di-van-ban-den-1_1905144229.jpg",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 1,
+      "views": 17,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -402,7 +404,7 @@
       "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjSB9Dqqa-lyzSDAUD4kj8leA7H1aMWJvsOrIVzBvftY4X7F3aR6ZLWHpJ&s=10",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 1,
+      "views": 50,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -423,7 +425,7 @@
       "img": "https://res.cloudinary.com/dejnvixvn/image/upload/v1788665809/e72f668a-e7c8-443d-bc2e-c2c3ca4d9c4a.png",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 11,
+      "views": 195,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -444,7 +446,7 @@
       "img": "https://22675444.fs1.hubspotusercontent-na1.net/hubfs/22675444/prompt-optimization-techniques.png",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 2,
+      "views": 18,
       "category": "teacher",
       "category_name": "Công việc Giáo viên",
       "tags": [
@@ -465,7 +467,7 @@
       "img": "https://res.cloudinary.com/dejnvixvn/image/upload/v1790928662/B%C3%A9_ch%C6%A1i_game_h%E1%BB%8Dc_%C4%91%E1%BB%99ng_v%E1%BA%ADt_de95ac.png",
       "mode": "EMBED",
       "status": "Hiện",
-      "views": 75,
+      "views": 1298,
       "category": "classroom",
       "category_name": "Lớp học & Trò chơi",
       "tags": [
@@ -475,6 +477,125 @@
       ],
       "rating": 5,
       "reviewCount": 0,
+      "badge": "Phổ biến"
+    },
+    {
+      "id": "UD23",
+      "name": "Anh Hùng Tri Thức",
+      "short_desc": "Game học tập hành động vui nhộn: trả lời câu hỏi, bắn cầu lửa và đánh bại quái vật để chinh phục thử thách tri thức.",
+      "desc": "Anh Hùng Tri Thức là trò chơi giáo dục kết hợp giữa trả lời câu hỏi và phiêu lưu hành động 2D. Học sinh hóa thân thành anh hùng, trả lời đúng để bắn cầu lửa tiêu diệt quái vật và vượt qua các màn chơi. Nếu trả lời sai hoặc hết thời gian, người chơi có thể bị mất lượt sống. Giáo viên có thể tùy chỉnh bộ câu hỏi theo nội dung bài học, tổ chức hoạt động ôn tập, củng cố kiến thức và thi đua giữa các cá nhân hoặc nhóm học sinh. Trò chơi có hình ảnh hoạt hình sinh động, hiệu ứng bắt mắt và hỗ trợ nhiều người chơi đồng thời, phù hợp để tăng hứng thú học tập trong lớp học.",
+      "link": "https://frolicking-swan-d436d3.netlify.app/",
+      "img": "https://res.cloudinary.com/dejnvixvn/image/upload/v1791591575/Fantasy_adventurer_throwing_fire__20261009172117-Photoroom_htwiis.png",
+      "mode": "EMBED",
+      "status": "Hiện",
+      "views": 914,
+      "category": "classroom",
+      "category_name": "Lớp học & Trò chơi",
+      "tags": [
+        "Game học tập",
+        "Trò chơi giáo dục"
+      ],
+      "rating": 5,
+      "reviewCount": 1,
+      "badge": "Phổ biến"
+    },
+    {
+      "id": "UD24",
+      "name": "UFO Ơi, Bắt Em Này",
+      "short_desc": "Game 2D vui nhộn giúp giáo viên chọn ngẫu nhiên học sinh bằng màn truy đuổi UFO, hút học sinh lên tàu vũ trụ và công bố kết quả đầy bất ngờ.",
+      "desc": "UFO ƠI, BẮT EM NÀY! là trò chơi tương tác dành cho giáo viên sử dụng trong lớp học. Các nhân vật học sinh đang sinh hoạt trên phố đêm thì bất ngờ bị đĩa bay ngoài hành tinh truy đuổi. UFO quét tìm mục tiêu, chọn ngẫu nhiên một học sinh, hút lên tàu và đưa vào phòng thí nghiệm ngoài hành tinh trước khi công bố tên người được chọn. Trò chơi có đồ họa hoạt hình 2D sinh động, hiệu ứng vui nhộn, âm thanh, tùy chỉnh tốc độ, quản lý nhiều lớp, nhập danh sách học sinh, chế độ chọn không lặp lại và lưu dữ liệu trên trình duyệt. Phù hợp để gọi tên học sinh, tạo không khí hào hứng và tăng tương tác trong giờ học.",
+      "link": "https://dashing-snickerdoodle-f6b6b7.netlify.app",
+      "img": "https://res.cloudinary.com/dejnvixvn/image/upload/v1792334391/a9b00db6-f115-4ccd-8972-2182cfaa4df1.png",
+      "mode": "EMBED",
+      "status": "Hiện",
+      "views": 7268,
+      "category": "classroom",
+      "category_name": "Lớp học & Trò chơi",
+      "tags": [
+        "Chọn ngẫu nhiên học sinh",
+        "Gọi tên học sinh"
+      ],
+      "rating": 5,
+      "reviewCount": 6,
+      "badge": "Hot"
+    },
+    {
+      "id": "UD25",
+      "name": "Đập Muỗi Gọi Tên",
+      "short_desc": "Game 2D vui nhộn gọi tên học sinh ngẫu nhiên qua màn đập muỗi trong phòng.",
+      "desc": "Trò chơi 2D vui nhộn dùng để gọi tên học sinh ngẫu nhiên. Mỗi học sinh hóa thân thành một con muỗi bay lượn trong phòng, trên đầu mỗi con có tên học sinh. Người chơi có thể tạo nhiều hồ sơ lớp, mỗi hồ sơ gồm tên lớp và danh sách học sinh được thêm nhanh bằng cách dán vào khung, mỗi dòng một tên. Khi vào phòng chơi, số muỗi hiển thị đúng bằng sĩ số lớp. Bấm \"Gọi tên\", toàn bộ nút điều khiển biến mất, nhân vật chính đỏ mặt bực tức và nhìn dáo dác vài giây, sau đó bất ngờ đập trúng một con muỗi ngẫu nhiên — có thể đập hụt để tạo tiếng cười. Kết quả hiện ra tên học sinh kèm hình con muỗi bẹp dí, sau đó các nút Gọi tên tiếp, Chơi mới và Thoát xuất hiện trở lại",
+      "link": "https://superb-chaja-011f86.netlify.app/",
+      "img": "https://res.cloudinary.com/dejnvixvn/image/upload/v1792572001/c13a2e6c-2209-47e3-bceb-0c4e02ca3bd6.png",
+      "mode": "EMBED",
+      "status": "Hiện",
+      "views": 5180,
+      "category": "classroom",
+      "category_name": "Lớp học & Trò chơi",
+      "tags": [
+        "Chọn ngẫu nhiên học sinh",
+        "Gọi tên học sinh"
+      ],
+      "rating": 5,
+      "reviewCount": 6,
+      "badge": "Hot"
+    },
+    {
+      "id": "UD26",
+      "name": "EduPose, Vui Học Cùng Cử Chỉ",
+      "short_desc": "EduPose là ứng dụng trò chơi học tập tương tác thông minh sử dụng trí tuệ nhân tạo (AI Camera) để nhận diện cử chỉ cơ thể học sinh khi trả lời trắc nghiệm theo thời gian thực. Giao diện tone hồng pastel viền may thủ công dễ thương cùng nhân vật Chibi sinh động, pháo hoa ăn mừng và âm thanh vui tươi, biến mỗi tiết học thành một ngày hội hào hứng!",
+      "desc": "Trong lớp học hiện đại, việc khởi động hay ôn tập bài học bằng các câu hỏi trắc nghiệm truyền thống đôi khi gây cảm giác thụ động. **EduPose** ra đời nhằm đưa hoạt động thể chất và công nghệ nhận diện chuyển động cơ thể vào giờ học:\r\n- Học sinh không cần chạm vào bàn phím hay chuột.\r\n- Đứng trước camera/máy chiếu, quan sát câu hỏi và chỉ cần giơ tay theo cử chỉ của các bé Chibi đáng yêu để chốt đáp án!\r\n- Hệ thống chấm điểm tự động, đếm ngược thông minh và phản hồi tức thì với pháo hoa rực rỡ.",
+      "link": "https://astonishing-banoffee-f3f72a.netlify.app/",
+      "img": "https://res.cloudinary.com/dejnvixvn/image/upload/v1793975489/5372234e-a70f-4ee0-b61a-df9fe5d86179.png",
+      "mode": "EMBED",
+      "status": "Hiện",
+      "views": 112,
+      "category": "classroom",
+      "category_name": "Lớp học & Trò chơi",
+      "tags": [
+        "Game giáo dục",
+        "Trắc nghiệm cử chỉ",
+        "Nhận diện camera AI"
+      ],
+      "rating": 5,
+      "reviewCount": 0,
+      "badge": "Mới"
+    },
+    {
+      "id": "UD27",
+      "name": "Khóa học: Tạo Game Học Tập Với Gemini",
+      "short_desc": "Cẩm nang hướng dẫn giáo viên tự kiến tạo trò chơi tương tác chuẩn GDPT 2018 không cần biết lập trình",
+      "desc": "Với sự ra đời của Google Gemini (đặc biệt là các mô hình Gemini 1.5 Flash và Gemini 1.5 Pro với khả năng xử lý ngữ cảnh cực lớn và sinh mã nguồn HTML5 siêu việt), cánh cửa công nghệ đã hoàn toàn rộng mở cho mọi thầy cô. Thầy cô không cần gõ một dòng lệnh lập trình nào, chỉ cần nắm vững phương pháp sư phạm và kỹ năng viết Prompt, Gemini sẽ biến ý tưởng của thầy cô thành một trò chơi hoàn chỉnh, đóng gói trong đúng 1 file HTML chạy mượt mà trên mọi thiết bị!",
+      "link": "https://heartfelt-hummingbird-17a792.netlify.app",
+      "img": "https://res.cloudinary.com/dejnvixvn/image/upload/v1794043875/922427ae-9ea7-4530-8dad-f54a2c91bd8b.png",
+      "mode": "EMBED",
+      "status": "Hiện",
+      "views": 163,
+      "category": "teacher",
+      "category_name": "Công việc Giáo viên",
+      "tags": [
+        "Khóa hoc"
+      ],
+      "rating": 5,
+      "reviewCount": 0,
+      "badge": "Mới"
+    },
+    {
+      "id": "UD28",
+      "name": "Người Lái Đò – Trò Chơi Gọi Tên Học Sinh",
+      "short_desc": "Trò chơi giáo dục tương tác thú vị mô phỏng chuyến đò làng đưa học sinh qua sông. Ứng dụng giúp giáo viên gọi tên ngẫu nhiên hoặc kiểm tra bài cũ đầy bất ngờ, kịch tính qua hình ảnh học sinh ngủ quên trên thuyền với phong cách Chibi Việt Nam đáng yêu.",
+      "desc": "Người Lái Đò là công cụ trò chơi hóa lớp học (Gamification) độc đáo, biến hoạt động gọi tên ngẫu nhiên, kiểm tra bài cũ hay khởi động đầu giờ thành một chuyến phiêu lưu sông nước đầy ắp tiếng cười.\n\nCốt truyện & Cơ chế trò chơi:\nChuyến đò qua sông: Thầy giáo hoặc Cô giáo vững tay chèo đưa các em học sinh (áo trắng, khăn quàng đỏ) vượt qua dòng sông quê hương rực rỡ với hàng tre, rặng dừa và những khúc sông nổi sóng gió chòng chành.\nCập bến bất ngờ: Hết thời gian đếm ngược, thuyền cập bến trường học. Những em học sinh chăm ngoan, tỉnh táo sẽ tự động bước xuống cầu tàu đi vào lớp.\nCao trào gọi tên: Những học sinh \"ngủ quên\" vẫn say giấc trên thuyền (Zzz) sẽ được Thầy/Cô xướng tên qua bảng Spotlight nổi bật kèm âm thanh hồi hộp, bất ngờ trước cả lớp.\n\nTính năng nổi bật dành cho giáo viên:\nTùy biến danh sách lớp: Dán trực tiếp danh sách sĩ số của lớp (hỗ trợ mẫu nhanh 10, 16, 24 học sinh).\n\n2 chế độ gọi tên linh hoạt:\nBất ngờ ngẫu nhiên: Tự động chọn 1, 2, 3... học sinh ngủ quên ngẫu nhiên.\nChọn trước bí mật: Giáo viên tick chọn bí mật học sinh cần kiểm tra bài từ trước mà cả lớp không hề hay biết.\nTùy chỉnh thời gian di chuyển: Chọn nhanh các mốc 10s, 15s, 20s, 30s, 45s, 60s phù hợp với từng hoạt động dạy học.\nĐồ họa Chibi Việt Nam sống động: Hoạt họa 2 khung hình nhịp nhàng (thầy/cô khua chèo lướt sóng, học sinh nam nữ tươi cười vẫy tay, vỗ tay, chỉ trỏ cảnh đẹp).\nTương tác trực tiếp: Giáo viên có thể click thẳng vào bất kỳ em nào trên thuyền để gọi tên ngay tức thì.\nChạy mượt mà trên mọi thiết bị: Tương thích hoàn hảo với màn hình tương tác, máy chiếu, bảng thông minh, laptop và máy tính bảng mà không cần cài đặt thêm phần mềm.",
+      "link": "https://loquacious-cranachan-6b93c0.netlify.app",
+      "img": "https://res.cloudinary.com/dejnvixvn/image/upload/v1794146244/61469a64-de38-4229-b529-f7a677a29b96.png",
+      "mode": "EMBED",
+      "status": "Hiện",
+      "views": 129,
+      "category": "classroom",
+      "category_name": "Lớp học & Trò chơi",
+      "tags": [
+        "Trò chơi gọi tên học sinh"
+      ],
+      "rating": 5,
+      "reviewCount": 1,
       "badge": "Mới"
     }
   ],
@@ -487,7 +608,7 @@
       "youtubeId": "dQw4w9WgXcQ",
       "thumbnail": "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
       "status": "Hiện",
-      "views": 1450
+      "views": 1468
     },
     {
       "id": "VD02",
@@ -497,7 +618,7 @@
       "youtubeId": "dQw4w9WgXcQ",
       "thumbnail": "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
       "status": "Hiện",
-      "views": 982
+      "views": 990
     },
     {
       "id": "VD03",
@@ -507,7 +628,7 @@
       "youtubeId": "dQw4w9WgXcQ",
       "thumbnail": "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
       "status": "Hiện",
-      "views": 10002
+      "views": 10024
     }
   ],
   "ads": [
@@ -596,6 +717,171 @@
       "school": "THCS Lê Quý Đôn",
       "rating": 5,
       "comment": "Quay bài giảng trực tiếp trên trình duyệt nhẹ nhàng, ghi cả âm thanh mic giảng bài rất trong.",
+      "status": "Hiện"
+    },
+    {
+      "id": "REV8",
+      "time": "20/10/2026",
+      "appId": "UD24",
+      "appName": "UFO Ơi, Bắt Em Này",
+      "name": "Thầy Hải",
+      "school": "THPT Nguyễn Trân",
+      "rating": 5,
+      "comment": "Một sản phẩm tuyệt vời, tạo được hứng thú cho học sinh trong một số tiết học",
+      "status": "Hiện"
+    },
+    {
+      "id": "REV9",
+      "time": "22/10/2026",
+      "appId": "UD25",
+      "appName": "Đập Muỗi Gọi Tên",
+      "name": "Thảo",
+      "school": "THPT XG",
+      "rating": 5,
+      "comment": "tốt",
+      "status": "Hiện"
+    },
+    {
+      "id": "REV10",
+      "time": "22/10/2026",
+      "appId": "UD25",
+      "appName": "Đập Muỗi Gọi Tên",
+      "name": "Thảo",
+      "school": "THPT XG",
+      "rating": 5,
+      "comment": "tốt",
+      "status": "Hiện"
+    },
+    {
+      "id": "REV11",
+      "time": "22/10/2026",
+      "appId": "UD25",
+      "appName": "Đập Muỗi Gọi Tên",
+      "name": "Thảo",
+      "school": "THPT XG",
+      "rating": 5,
+      "comment": "hào hứng",
+      "status": "Hiện"
+    },
+    {
+      "id": "REV12",
+      "time": "23/10/2026",
+      "appId": "UD24",
+      "appName": "UFO Ơi, Bắt Em Này",
+      "name": "Thầy Cường",
+      "school": "TH Hồ văn Tứ",
+      "rating": 5,
+      "comment": "Rất tuyệt vời",
+      "status": "Hiện"
+    },
+    {
+      "id": "REV13",
+      "time": "24/10/2026",
+      "appId": "UD25",
+      "appName": "Đập Muỗi Gọi Tên",
+      "name": "HONGPHUOC",
+      "school": "TIEU HOC CO LOA",
+      "rating": 5,
+      "comment": "HAY VÀ VUI QUÁ THẦY ƠI",
+      "status": "Hiện"
+    },
+    {
+      "id": "REV14",
+      "time": "25/10/2026",
+      "appId": "UD25",
+      "appName": "Đập Muỗi Gọi Tên",
+      "name": "Ms Ella",
+      "school": "tự do",
+      "rating": 5,
+      "comment": "xin cảm ơi thầy/cô rất nhiều",
+      "status": "Hiện"
+    },
+    {
+      "id": "REV15",
+      "time": "25/10/2026",
+      "appId": "UD24",
+      "appName": "UFO Ơi, Bắt Em Này",
+      "name": "Lệnh Anh Thành",
+      "school": "TH&THCS Quyết Tiến",
+      "rating": 5,
+      "comment": "rất hay dùng để chọn học sinh kiểm tra bài cũ",
+      "status": "Hiện"
+    },
+    {
+      "id": "REV16",
+      "time": "26/10/2026",
+      "appId": "UD25",
+      "appName": "Đập Muỗi Gọi Tên",
+      "name": "huY",
+      "school": "TU DO",
+      "rating": 5,
+      "comment": "TUYET  VOI",
+      "status": "Hiện"
+    },
+    {
+      "id": "REV17",
+      "time": "30/10/2026",
+      "appId": "UD24",
+      "appName": "UFO Ơi, Bắt Em Này",
+      "name": "Nguyễn Uyên",
+      "school": "TH lê Danh Phương",
+      "rating": 5,
+      "comment": "Rất tuyệt vời",
+      "status": "Hiện"
+    },
+    {
+      "id": "REV18",
+      "time": "30/10/2026",
+      "appId": "UD24",
+      "appName": "UFO Ơi, Bắt Em Này",
+      "name": "Nguyễn Uyên",
+      "school": "TH lê Danh Phương",
+      "rating": 5,
+      "comment": "Thầy ơi muốn đổi lớp thì vào đâu ạ",
+      "status": "Hiện"
+    },
+    {
+      "id": "REV19",
+      "time": "30/10/2026",
+      "appId": "UD2",
+      "appName": "Trợ Lý Sinh Prompt Game Tương Tác",
+      "name": "Cô Huế",
+      "school": "Ti.H Phùng Hưng",
+      "rating": 5,
+      "comment": "Thật là  tuyệt vời! Cảm ơn Thày rất nhiều!",
+      "status": "Hiện"
+    },
+    {
+      "id": "REV20",
+      "time": "01/11/2026",
+      "appId": "UD24",
+      "appName": "UFO Ơi, Bắt Em Này",
+      "name": "Cô Hương",
+      "school": "TH Đại Bản",
+      "rating": 5,
+      "comment": "Trò chơi gây kích thích, hứng thú cho  học sinh. Tuyệt với thầy nhé!",
+      "status": "Hiện"
+    },
+    {
+      "id": "REV21",
+      "time": "04/11/2026",
+      "appId": "UD23",
+      "appName": "Anh Hùng Tri Thức",
+      "name": "TRẦN ANH KHOA",
+      "school": "",
+      "rating": 5,
+      "comment": "OK",
+      "status": "Hiện"
+    },
+    {
+      "id": "REV22",
+      "time": "09/11/2026",
+      "appId": "UD28",
+      "appName": "Người Lái Đò – Trò Chơi Gọi Tên Học Sinh",
+      "name": "Le Thi Nhung",
+      "school": "THCS N Lâm",
+      "rating": 5,
+      "comment": "rất thú vị",
       "status": "Hiện"
     }
   ]

@@ -24,6 +24,45 @@ function doGet(e) {
       });
     }
 
+    // Tra cứu siêu tốc thông tin 1 ứng dụng duy nhất (cho chia sẻ link, Open Graph)
+    if (action === 'getApp' || action === 'getShareApp') {
+      var targetId = String(params.id || params.app || '').trim().toLowerCase();
+      if (!targetId) return responseJSON({ success: false, message: 'Thiếu mã ứng dụng (id)' });
+      var sheetAppOnly = ss.getSheetByName('Ứng dụng');
+      if (!sheetAppOnly) return responseJSON({ success: false, message: 'Sheet Ứng dụng không tồn tại' });
+      var appRows = sheetAppOnly.getDataRange().getValues();
+      for (var aIdx = 1; aIdx < appRows.length; aIdx++) {
+        var rowAppId = String(appRows[aIdx][0] || '').trim();
+        if (rowAppId.toLowerCase() === targetId) {
+          var appName = String(appRows[aIdx][1] || '').trim();
+          var appShortDesc = String(appRows[aIdx][2] || '').trim();
+          var appDesc = String(appRows[aIdx][3] || appShortDesc).trim();
+          var appLink = String(appRows[aIdx][4] || '').trim();
+          var appImg = String(appRows[aIdx][5] || '').trim();
+          var appMode = String(appRows[aIdx][6] || 'EMBED').trim();
+          var appStatus = String(appRows[aIdx][7] || 'Hiện').trim();
+          var appViews = Number(appRows[aIdx][8]) || 0;
+          var appCat = appRows[aIdx][9] ? String(appRows[aIdx][9]).trim() : '';
+          return responseJSON({
+            success: true,
+            data: {
+              id: rowAppId,
+              name: appName,
+              short_desc: appShortDesc,
+              desc: appDesc,
+              link: appLink,
+              img: appImg,
+              mode: appMode,
+              status: appStatus,
+              views: appViews,
+              category: appCat
+            }
+          });
+        }
+      }
+      return responseJSON({ success: false, message: 'Không tìm thấy ứng dụng: ' + targetId });
+    }
+
     if (action === 'getAll') {
       var reviews = getSheetReviews(ss);
       var apps = getSheetApps(ss, reviews);
